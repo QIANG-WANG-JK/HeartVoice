@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">心声</string>
+    <string name="heart">心</string>
+    <string name="voice">声</string>
+    <string name="Copyright">Copyright © 2019 WQ. All Rights Reserved</string>
+    <string name="forgtPassword">忘记密码</string>
+    <string name="tecentLogin">QQ登录</string>
+    <string name="userRegister">用户注册</string>
+    <string name="heartVoice">心声</string>
+    <string name="outAccountNumber">请输入账号</string>
+    <string name="outPassword">请输入密码</string>
+    <string name="outNickName">请输入昵称</string>
+    <string name="outEmail">请输入邮箱</string>
+    <string name="loginServiceApprove">登录即代表同意服务协议</string>
+    <string name="registerServiceApprove">注册即代表同意服务协议</string>
+    <string name="register">注册</string>
+    <string name="loginSuccess">登录成功</string>
+    <string name="registerSuccess">注册成功</string>
+    <string name="numberFormatError">账号格式不正确</string>
+    <string name="passwordFormatError">密码长度小于6位</string>
+    <string name="error_network_not_auth">错误的网络地址</string>
+    <string name="error_network_not_permission">无网络权限</string>
+    <string name="error_network_not_found">请求失败</string>
+    <string name="error_network_server">无服务</string>
+    <string name="error_network_unknown">网络错误类型位置</string>
+    <string name="error_network_unknown_host">错误的主机地址</string>
+    <string name="error_network_connect">无网络连接</string>
+    <string name="error_network_timeout">连接超时</string>
+</resources>
