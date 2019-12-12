@@ -71,7 +71,7 @@ public class LoginActivity extends BaseLoginActivity {
 
     @OnClick(R.id.forgetPassword)
     public void forget(){
-
+        startActivity(ForgetPasswordActivity.class);
     }
 
 }

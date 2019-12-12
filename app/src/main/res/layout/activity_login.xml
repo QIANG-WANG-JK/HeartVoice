@@ -136,7 +136,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/blue"
-                android:text="@string/tecentLogin"
+                android:text="@string/forgtPassword"
                 android:layout_marginRight="@dimen/dp_30" />
 
             <TextView

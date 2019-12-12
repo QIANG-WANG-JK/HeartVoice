@@ -22,20 +22,20 @@ android {
     }
 
     //配置不同的环境
-    productFlavors{
+    productFlavors {
         //开发环境
         dev {
             //API端点
-            buildConfigField('String',"ENDPOINT",'"http://dev-my-cloud-music-api-rails.ixuea.com/"')
-            buildConfigField('String',"RESOURCE_ENDPOINT",'"http://dev-my-cloud-music-api-rails.ixuea.com/%s"')
+            buildConfigField('String', "ENDPOINT", '"http://dev-my-cloud-music-api-rails.ixuea.com/"')
+            buildConfigField('String', "RESOURCE_ENDPOINT", '"http://dev-my-cloud-music-api-rails.ixuea.com/%s"')
             dimension = minSdkVersion
         }
 
         //正式环境
         prod {
             //API端点
-            buildConfigField 'String','ENDPOINT','"http://api-courses-misuc.ixuea.com/"'
-            buildConfigField('String',"RESOURCE_ENDPOINT",'"http://dev-my-cloud-music-api-rails.ixuea.com/%s"')
+            buildConfigField 'String', 'ENDPOINT', '"http://api-courses-misuc.ixuea.com/"'
+            buildConfigField('String', "RESOURCE_ENDPOINT", '"http://dev-my-cloud-music-api-rails.ixuea.com/%s"')
             dimension = minSdkVersion
         }
 
@@ -87,4 +87,3 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.1.1'
 
 }
-

@@ -1,5 +1,6 @@
 package com.hv.heartvoice.Model;
 
+import com.hv.heartvoice.Base.BaseResponse;
 import com.hv.heartvoice.Domain.BaseModel;
 import com.hv.heartvoice.Domain.Session;
 import com.hv.heartvoice.Domain.User;
@@ -63,6 +64,17 @@ public class Api {
      */
     public Observable<DetailResponse<Session>> login(User data){
         return service.login(data)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * 重置密碼
+     * @param data
+     * @return
+     */
+    public Observable<BaseResponse> resetPassword(User data){
+        return service.resetPassword(data)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

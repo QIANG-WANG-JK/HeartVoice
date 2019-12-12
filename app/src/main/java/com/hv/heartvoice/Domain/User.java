@@ -23,6 +23,12 @@ public class User extends BaseModel{
      */
     private String password;
 
+    /**
+     * 验证码
+     * 只有找回密码的时候才会用到
+     */
+    private String code;
+
     public String getNickname() {
         return nickname;
     }
@@ -53,6 +59,14 @@ public class User extends BaseModel{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Override

@@ -4,7 +4,6 @@ import com.hv.heartvoice.Base.BaseCommonActivity;
 import com.hv.heartvoice.Base.BaseResponse;
 import com.hv.heartvoice.Util.HttpUtil;
 import com.hv.heartvoice.Util.LoadingUtil;
-import com.hv.heartvoice.Util.LogUtil;
 
 import io.reactivex.disposables.Disposable;
 import retrofit2.Response;

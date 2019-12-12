@@ -6,17 +6,21 @@
     <string name="forgtPassword">忘记密码</string>
     <string name="tecentLogin">QQ登录</string>
     <string name="userRegister">用户注册</string>
+    <string name="resetPassword">找回密码</string>
     <string name="heartVoice">心声</string>
-    <string name="outAccountNumber">请输入账号</string>
+    <string name="outAccountNumber">请输入手机号</string>
     <string name="outPassword">请输入密码</string>
+    <string name="outNewPassword">请输入新密码</string>
+    <string name="outPasswordRetry">确认密码</string>
     <string name="outNickName">请输入昵称</string>
     <string name="outEmail">请输入邮箱</string>
     <string name="loginServiceApprove">登录即代表同意服务协议</string>
     <string name="registerServiceApprove">注册即代表同意服务协议</string>
     <string name="register">注册</string>
+    <string name="reset">确认修改</string>
     <string name="loginSuccess">登录成功</string>
     <string name="registerSuccess">注册成功</string>
-    <string name="numberFormatError">账号格式不正确</string>
+    <string name="numberFormatError">手机号格式不正确</string>
     <string name="passwordFormatError">密码长度小于6位</string>
     <string name="error_network_not_auth">错误的网络地址</string>
     <string name="error_network_not_permission">无网络权限</string>
@@ -26,4 +30,9 @@
     <string name="error_network_unknown_host">错误的主机地址</string>
     <string name="error_network_connect">无网络连接</string>
     <string name="error_network_timeout">连接超时</string>
+    <string name="outCode">请输入验证码</string>
+    <string name="sendCode">发送验证码</string>
+    <string name="codeFormatError">验证码格式不正确</string>
+    <string name="confirmPasswordError">两次密码不一致</string>
+    <string name="countSecond">%1$ds</string>
 </resources>
