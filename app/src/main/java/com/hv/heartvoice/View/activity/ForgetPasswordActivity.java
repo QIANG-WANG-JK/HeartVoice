@@ -7,9 +7,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import com.hv.heartvoice.Base.BaseLoginActivity;
 import com.hv.heartvoice.Base.BaseResponse;
+import com.hv.heartvoice.Domain.BaseModel;
 import com.hv.heartvoice.Domain.User;
 import com.hv.heartvoice.Model.Api;
 import com.hv.heartvoice.Model.MyObserver.HttpObserver;
+import com.hv.heartvoice.Model.Response.DetailResponse;
 import com.hv.heartvoice.R;
 import com.hv.heartvoice.Util.StringUtil;
 import com.hv.heartvoice.Util.ToastUtil;
@@ -53,7 +55,18 @@ public class ForgetPasswordActivity extends BaseLoginActivity {
     @OnClick(R.id.sendCheck)
     public void send(){
         //发送验证码
-        startCountDown();
+        //startCountDown();
+        //获取手机号
+        String phone = String.valueOf(forgetOutNumber.getText()).trim();
+        if(StringUtils.isBlank(phone)){
+            ToastUtil.errorShort(R.string.outAccountNumber);
+            return;
+        }
+        if(!StringUtil.isPhone(phone)){
+            ToastUtil.errorShort(R.string.numberFormatError);
+            return;
+        }
+        sendSMSCode(phone);
     }
 
     @OnClick(R.id.confirmChange)
@@ -115,6 +128,19 @@ public class ForgetPasswordActivity extends BaseLoginActivity {
     @OnClick(R.id.forgetBackLogin)
     public void backLogin(){
         onBackPressed();
+    }
+
+    private void sendSMSCode(String phone) {
+        User user = new User();
+        user.setPhone(phone);
+        Api.getInstance().sendSMSCode(user)
+                .subscribe(new HttpObserver<DetailResponse<BaseModel>>(getMainActivity(),false) {
+                    @Override
+                    public void onSucceeded(DetailResponse<BaseModel> data) {
+                        ToastUtil.successShort(R.string.sendSuccess);
+                        startCountDown();
+                    }
+                });
     }
 
     /**

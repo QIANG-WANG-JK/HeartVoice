@@ -34,4 +34,12 @@ public interface Service {
     @POST("v1/users/reset_password")
     Observable<BaseResponse>  resetPassword(@Body User data);
 
+    /**
+     * 发送短信验证码
+     * @param data
+     * @return
+     */
+    @POST("v1/codes/request_sms_code")
+    Observable<DetailResponse<BaseModel>> sendSMSCode(@Body User data);
+
 }

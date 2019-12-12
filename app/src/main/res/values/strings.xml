@@ -35,4 +35,5 @@
     <string name="codeFormatError">验证码格式不正确</string>
     <string name="confirmPasswordError">两次密码不一致</string>
     <string name="countSecond">%1$ds</string>
+    <string name="sendSuccess">验证码发送成功</string>
 </resources>
