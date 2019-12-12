@@ -2,11 +2,14 @@ package com.hv.heartvoice.Base;
 
 import com.hv.heartvoice.Domain.Session;
 import com.hv.heartvoice.Domain.User;
+import com.hv.heartvoice.Domain.event.CloseLoginActivityEvent;
 import com.hv.heartvoice.Model.Api;
 import com.hv.heartvoice.Model.MyObserver.HttpObserver;
 import com.hv.heartvoice.Model.Response.DetailResponse;
 import com.hv.heartvoice.MyApplication;
 import com.hv.heartvoice.View.activity.MainActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class BaseLoginActivity extends BaseCommonActivity {
 
@@ -26,6 +29,9 @@ public class BaseLoginActivity extends BaseCommonActivity {
                         MyApplication.getContext().login(sp,data.getData());
                         //关闭当前界面并启动主界面
                         startActivityAfterFinsh(MainActivity.class);
+                        if(!isLogin){
+                            EventBus.getDefault().post(new CloseLoginActivityEvent());
+                        }
                     }
                 });
     }

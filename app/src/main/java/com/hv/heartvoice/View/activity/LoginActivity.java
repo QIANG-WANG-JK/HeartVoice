@@ -5,10 +5,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import com.hv.heartvoice.Base.BaseLoginActivity;
+import com.hv.heartvoice.Domain.event.CloseLoginActivityEvent;
 import com.hv.heartvoice.R;
 import com.hv.heartvoice.Util.StringUtil;
 import com.hv.heartvoice.Util.ToastUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -39,6 +43,12 @@ public class LoginActivity extends BaseLoginActivity {
     protected void initViews() {
         super.initViews();
         lightStatusBar();
+    }
+
+    @Override
+    public void initData() {
+        super.initData();
+        EventBus.getDefault().register(this);
     }
 
     @OnClick(R.id.userRegister)
@@ -74,4 +84,14 @@ public class LoginActivity extends BaseLoginActivity {
         startActivity(ForgetPasswordActivity.class);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void closeLoginEvent(CloseLoginActivityEvent event){
+        finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
 }
