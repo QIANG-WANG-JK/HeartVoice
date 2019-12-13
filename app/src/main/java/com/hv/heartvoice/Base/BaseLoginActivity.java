@@ -36,4 +36,8 @@ public class BaseLoginActivity extends BaseCommonActivity {
                 });
     }
 
+    public void startActivityForServiceApprove(){
+
+    }
+
 }

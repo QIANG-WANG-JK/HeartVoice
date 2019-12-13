@@ -14,8 +14,9 @@
     <string name="outPasswordRetry">确认密码</string>
     <string name="outNickName">请输入昵称</string>
     <string name="outEmail">请输入邮箱</string>
-    <string name="loginServiceApprove">登录即代表同意服务协议</string>
-    <string name="registerServiceApprove">注册即代表同意服务协议</string>
+    <string name="loginServiceApprove">登录即代表同意《服务协议》</string>
+    <string name="registerServiceApprove">注册即代表同意《服务协议》</string>
+    <string name="serviceApprove">《服务协议》</string>
     <string name="register">注册</string>
     <string name="reset">确认修改</string>
     <string name="loginSuccess">登录成功</string>

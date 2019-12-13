@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.hv.heartvoice.Base.BaseLoginActivity;
 import com.hv.heartvoice.Domain.BaseModel;
 import com.hv.heartvoice.Domain.User;
@@ -36,6 +38,8 @@ public class RegisterActivity extends BaseLoginActivity {
     EditText registerPassowrd;
     @BindView(R.id.register)
     Button register;
+    @BindView(R.id.registerServiceApprove)
+    TextView registerServiceApprove;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +95,11 @@ public class RegisterActivity extends BaseLoginActivity {
                         login(phone,password,false);
                     }
                 });
+    }
+
+    @OnClick(R.id.registerServiceApprove)
+    public void serviceApprove(){
+
     }
 
     @OnClick(R.id.backLogin)

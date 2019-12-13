@@ -1,9 +1,11 @@
 package com.hv.heartvoice.Base;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -101,6 +103,25 @@ public class BaseCommonActivity extends BaseActivity {
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                             | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             );
+        }
+    }
+
+    /**
+     * 获取状态栏高度
+     */
+    public int getStatusBarHeight(Context context) {
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        return context.getResources().getDimensionPixelSize(resourceId);
+    }
+
+    /**
+     * 兼容全面屏的状态栏高度
+     */
+    public void setMargins(View view, int l, int t, int r, int b) {
+        if (view.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+            p.setMargins(l, t, r, b);
+            view.requestLayout();
         }
     }
 

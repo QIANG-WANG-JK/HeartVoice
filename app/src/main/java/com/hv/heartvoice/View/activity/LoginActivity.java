@@ -31,6 +31,8 @@ public class LoginActivity extends BaseLoginActivity {
     TextView forgetPassword;
     @BindView(R.id.userRegister)
     TextView userRegister;
+    @BindView(R.id.loginServiceApprove)
+    TextView loginServiceApprove;
 
 
     @Override
@@ -82,6 +84,11 @@ public class LoginActivity extends BaseLoginActivity {
     @OnClick(R.id.forgetPassword)
     public void forget(){
         startActivity(ForgetPasswordActivity.class);
+    }
+
+    @OnClick(R.id.loginServiceApprove)
+    public void serviceApprove(){
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

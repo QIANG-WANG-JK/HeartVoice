@@ -158,10 +158,20 @@
             android:layout_height="@dimen/dp_20">
 
             <TextView
+                android:id="@+id/approve"
                 android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/loginServiceApprove" />
+
+            <TextView
+                android:id="@+id/loginServiceApprove"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/approve"
+                android:textColor="@color/black"
+                android:text="@string/serviceApprove" />
 
         </RelativeLayout>
 
