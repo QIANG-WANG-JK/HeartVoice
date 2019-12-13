@@ -13,6 +13,7 @@ import com.hv.heartvoice.Model.Api;
 import com.hv.heartvoice.Model.MyObserver.HttpObserver;
 import com.hv.heartvoice.Model.Response.DetailResponse;
 import com.hv.heartvoice.R;
+import com.hv.heartvoice.Util.Constant;
 import com.hv.heartvoice.Util.StringUtil;
 import com.hv.heartvoice.Util.ToastUtil;
 
@@ -49,14 +50,11 @@ public class ForgetPasswordActivity extends BaseLoginActivity {
     @Override
     protected void initViews() {
         super.initViews();
-        lightStatusBar();
+        lightStatusBar(Constant.Transparent);
     }
 
     @OnClick(R.id.sendCheck)
     public void send(){
-        //发送验证码
-        //startCountDown();
-        //获取手机号
         String phone = String.valueOf(forgetOutNumber.getText()).trim();
         if(StringUtils.isBlank(phone)){
             ToastUtil.errorShort(R.string.outAccountNumber);

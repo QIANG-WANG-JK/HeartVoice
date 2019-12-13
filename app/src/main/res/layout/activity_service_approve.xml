@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/serviceRelative"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".View.activity.ServiceApproveActivity">
+
+    <FrameLayout
+        android:id="@+id/serviceFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_52"/>
+
+    <RelativeLayout
+        android:id="@+id/serviceTitle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_52"
+        android:background="@color/grey">
+
+        <ImageView
+            android:id="@+id/serviceBack"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_16"
+            android:src="@mipmap/ic_back" />
+
+        <TextView
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_45"
+            android:text="@string/serviceApprove"
+            android:textSize="@dimen/sp_16"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/dp_30"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

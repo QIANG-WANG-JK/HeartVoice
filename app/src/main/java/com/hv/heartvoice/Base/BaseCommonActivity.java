@@ -2,14 +2,17 @@ package com.hv.heartvoice.Base;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
+import androidx.annotation.IdRes;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import com.hv.heartvoice.Util.PreferenceUtil;
+import com.hv.heartvoice.View.fragment.ServiceFragment;
 
 import butterknife.ButterKnife;
 
@@ -61,6 +64,13 @@ public class BaseCommonActivity extends BaseActivity {
         return this;
     }
 
+    protected void setFragment(@IdRes int id, ServiceFragment fragment) {
+        FragmentManager fragmentManager=getSupportFragmentManager();
+        FragmentTransaction transaction=fragmentManager.beginTransaction();
+        transaction.replace(id,fragment);
+        transaction.commit();
+    }
+
     /**
      * 全屏设置
      */
@@ -88,12 +98,12 @@ public class BaseCommonActivity extends BaseActivity {
      * 将内容显示到状态栏
      * 状态栏显示白色
      */
-    protected void lightStatusBar(){
+    protected void lightStatusBar(int color){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             //获取Window
             Window window = getWindow();
             //设置状态栏背景颜色为透明
-            window.setStatusBarColor(Color.TRANSPARENT);
+            window.setStatusBarColor(color);
             //去除半透明效果(如果有的话就去除)
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             //SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN：让内容显示到状态栏

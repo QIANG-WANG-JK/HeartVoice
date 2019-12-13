@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.hv.heartvoice.Base.BaseLoginActivity;
 import com.hv.heartvoice.Domain.event.CloseLoginActivityEvent;
 import com.hv.heartvoice.R;
+import com.hv.heartvoice.Util.Constant;
 import com.hv.heartvoice.Util.StringUtil;
 import com.hv.heartvoice.Util.ToastUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -44,7 +45,7 @@ public class LoginActivity extends BaseLoginActivity {
     @Override
     protected void initViews() {
         super.initViews();
-        lightStatusBar();
+        lightStatusBar(Constant.Transparent);
     }
 
     @Override
@@ -88,7 +89,7 @@ public class LoginActivity extends BaseLoginActivity {
 
     @OnClick(R.id.loginServiceApprove)
     public void serviceApprove(){
-
+        startActivity(ServiceApproveActivity.class);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

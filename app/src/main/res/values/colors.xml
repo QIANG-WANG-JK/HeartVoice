@@ -9,5 +9,4 @@
     <color name="black">@android:color/black</color>
     <color name="blue">@android:color/holo_blue_light</color>
     <color name="red">@android:color/holo_red_light</color>
-
 </resources>

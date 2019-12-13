@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import com.hv.heartvoice.Base.BaseCommonActivity;
 import com.hv.heartvoice.R;
+import com.hv.heartvoice.Util.Constant;
 
 import butterknife.BindView;
 
@@ -22,7 +23,7 @@ public class MainActivity extends BaseCommonActivity {
     @Override
     protected void initViews() {
         super.initViews();
-        lightStatusBar();
+        lightStatusBar(Constant.Transparent);
         setMargins(text,0,getStatusBarHeight(getMainActivity()),0,0);
     }
 }

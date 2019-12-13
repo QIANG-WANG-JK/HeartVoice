@@ -13,8 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".View.activity.ForgetPasswordActivity"></activity>
-        <!-- 新版本默认不允许HTTP -->
+        <activity android:name=".View.activity.ServiceApproveActivity"></activity>
+        <activity android:name=".View.activity.ForgetPasswordActivity" /> <!-- 新版本默认不允许HTTP -->
         <activity android:name=".View.activity.RegisterActivity" />
         <activity android:name=".View.activity.LoginActivity" />
         <activity android:name=".View.activity.MainActivity" />

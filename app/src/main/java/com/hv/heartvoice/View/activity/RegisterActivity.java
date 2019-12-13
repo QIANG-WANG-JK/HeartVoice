@@ -13,6 +13,7 @@ import com.hv.heartvoice.Model.Api;
 import com.hv.heartvoice.Model.MyObserver.HttpObserver;
 import com.hv.heartvoice.Model.Response.DetailResponse;
 import com.hv.heartvoice.R;
+import com.hv.heartvoice.Util.Constant;
 import com.hv.heartvoice.Util.LogUtil;
 import com.hv.heartvoice.Util.StringUtil;
 import com.hv.heartvoice.Util.ToastUtil;
@@ -50,7 +51,7 @@ public class RegisterActivity extends BaseLoginActivity {
     @Override
     protected void initViews() {
         super.initViews();
-        lightStatusBar();
+        lightStatusBar(Constant.Transparent);
     }
 
     @OnClick(R.id.register)
@@ -99,7 +100,7 @@ public class RegisterActivity extends BaseLoginActivity {
 
     @OnClick(R.id.registerServiceApprove)
     public void serviceApprove(){
-
+        startActivity(ServiceApproveActivity.class);
     }
 
     @OnClick(R.id.backLogin)
