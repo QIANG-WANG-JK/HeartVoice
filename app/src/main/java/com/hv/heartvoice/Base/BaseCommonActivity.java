@@ -78,7 +78,7 @@ public class BaseCommonActivity extends BaseActivity {
         View decorView = getWindow().getDecorView();
         if(Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB && Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT){
             decorView.setSystemUiVisibility(View.GONE);
-        }else if(Build.VERSION.SDK_INT >= 19){
+        }else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
             int options = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
                     View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
                     View.SYSTEM_UI_FLAG_FULLSCREEN;
@@ -119,7 +119,7 @@ public class BaseCommonActivity extends BaseActivity {
     /**
      * 获取状态栏高度
      */
-    public int getStatusBarHeight(Context context) {
+    protected int getStatusBarHeight(Context context) {
         int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
         return context.getResources().getDimensionPixelSize(resourceId);
     }
@@ -127,7 +127,7 @@ public class BaseCommonActivity extends BaseActivity {
     /**
      * 兼容全面屏的状态栏高度
      */
-    public void setMargins(View view, int l, int t, int r, int b) {
+    protected void setMargins(View view, int l, int t, int r, int b) {
         if (view.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
             ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
             p.setMargins(l, t, r, b);

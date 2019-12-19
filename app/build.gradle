@@ -88,4 +88,7 @@ dependencies {
     //eventBus
     implementation 'org.greenrobot:eventbus:3.1.1'
 
+    //添加material design依赖 AppBarLayout在这里
+    implementation 'com.google.android.material:material:1.0.0'
+
 }

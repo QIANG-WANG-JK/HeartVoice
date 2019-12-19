@@ -24,6 +24,7 @@ public class Api {
     private final Service service;
 
     private Api(){
+
         OkHttpClient.Builder ok = new OkHttpClient.Builder();
         if(LogUtil.isDebug){
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
