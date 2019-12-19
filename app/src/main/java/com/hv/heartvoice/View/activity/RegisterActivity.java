@@ -51,7 +51,7 @@ public class RegisterActivity extends BaseLoginActivity {
     @Override
     protected void initViews() {
         super.initViews();
-        lightStatusBar(Constant.Transparent);
+        lightStatusBarAndBAR(Constant.Transparent);
     }
 
     @OnClick(R.id.register)

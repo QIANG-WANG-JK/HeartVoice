@@ -50,7 +50,7 @@ public class ForgetPasswordActivity extends BaseLoginActivity {
     @Override
     protected void initViews() {
         super.initViews();
-        lightStatusBar(Constant.Transparent);
+        lightStatusBarAndBAR(Constant.Transparent);
     }
 
     @OnClick(R.id.sendCheck)

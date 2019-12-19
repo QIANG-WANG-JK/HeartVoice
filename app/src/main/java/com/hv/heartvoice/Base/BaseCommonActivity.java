@@ -7,10 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import androidx.annotation.IdRes;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
+import com.hv.heartvoice.R;
 import com.hv.heartvoice.Util.PreferenceUtil;
 import com.hv.heartvoice.View.fragment.ServiceFragment;
 
@@ -98,7 +104,25 @@ public class BaseCommonActivity extends BaseActivity {
      * 将内容显示到状态栏
      * 状态栏显示白色
      */
-    protected void lightStatusBar(int color){
+    protected void lightStatusBarAndSTABLE(int color){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            //获取Window
+            Window window = getWindow();
+            //设置状态栏背景颜色为透明
+            window.setStatusBarColor(color);
+            //去除半透明效果(如果有的话就去除)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            //SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN：让内容显示到状态栏
+            //SYSTEM_UI_FLAG_LAYOUT_STABLE：状态栏文字显示白色
+            //SYSTEM_UI_FLAG_LIGHT_STATUS_BAR：状态栏文字显示黑色
+            window.getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            );
+        }
+    }
+
+    protected void lightStatusBarAndBAR(int color){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             //获取Window
             Window window = getWindow();
@@ -133,6 +157,11 @@ public class BaseCommonActivity extends BaseActivity {
             p.setMargins(l, t, r, b);
             view.requestLayout();
         }
+    }
+
+    protected void CropImage(int id, ImageView img) {
+        Glide.with(getMainActivity()).load(id)
+                .apply(RequestOptions.bitmapTransform(new CircleCrop())).into(img);
     }
 
 }

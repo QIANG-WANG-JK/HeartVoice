@@ -1,14 +1,18 @@
 package com.hv.heartvoice.View.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.hv.heartvoice.Base.BaseTitleActivity;
 import com.hv.heartvoice.R;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class MainActivity extends BaseTitleActivity {
 
@@ -17,6 +21,16 @@ public class MainActivity extends BaseTitleActivity {
      */
     @BindView(R.id.drawerLayout)
     DrawerLayout drawerLayout;
+    @BindView(R.id.mainClose)
+    ImageView mainClose;
+    @BindView(R.id.userHead)
+    ImageView userHead;
+    @BindView(R.id.mainNickname)
+    TextView mainNickname;
+    @BindView(R.id.mainDescription)
+    TextView mainDescription;
+    @BindView(R.id.userHeadToolBar)
+    ImageView userHeadToolBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +41,25 @@ public class MainActivity extends BaseTitleActivity {
     @Override
     protected void initViews() {
         super.initViews();
-        //侧滑配置
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(getMainActivity(), drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        //添加侧滑监听器
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        //同步状态
-        actionBarDrawerToggle.syncState();
-        //toolbar.setNavigationIcon(R.mipmap.email);设置小按钮图标
+        lightStatusBarAndBAR(Color.TRANSPARENT);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        setMargins(toolbar,0,getStatusBarHeight(getMainActivity()),0,0);
+        setMargins(mainClose,0,getStatusBarHeight(getMainActivity()),0,0);
+        setMargins(userHead,0,getStatusBarHeight(getMainActivity()),0,0);
+        setMargins(mainNickname,0,getStatusBarHeight(getMainActivity()),0,0);
+        setMargins(mainDescription,0,getStatusBarHeight(getMainActivity()),0,0);
+        CropImage(R.mipmap.user_head,userHead);
+        CropImage(R.mipmap.user_head,userHeadToolBar);
+    }
+
+    @OnClick(R.id.userHeadToolBar)
+    public void open(){
+        drawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    @OnClick(R.id.mainClose)
+    public void close(){
+        drawerLayout.closeDrawer(GravityCompat.START);
     }
 
 }

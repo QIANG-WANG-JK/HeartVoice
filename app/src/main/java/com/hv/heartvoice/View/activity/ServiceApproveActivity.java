@@ -32,7 +32,7 @@ public class ServiceApproveActivity extends BaseCommonActivity {
     protected void initViews() {
         super.initViews();
         setMargins(serviceRelative,0,getStatusBarHeight(getMainActivity()),0,0);
-        lightStatusBar(Constant.serviceApproveActivityColor);
+        lightStatusBarAndBAR(Constant.serviceApproveActivityColor);
     }
 
     @Override

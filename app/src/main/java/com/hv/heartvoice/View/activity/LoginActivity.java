@@ -45,7 +45,7 @@ public class LoginActivity extends BaseLoginActivity {
     @Override
     protected void initViews() {
         super.initViews();
-        lightStatusBar(Constant.Transparent);
+        lightStatusBarAndBAR(Constant.Transparent);
     }
 
     @Override

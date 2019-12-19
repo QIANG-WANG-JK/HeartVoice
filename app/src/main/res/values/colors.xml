@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/red</color>
+    <color name="colorPrimary">@color/white</color>
     <color name="colorPrimaryDark">@color/colorPrimary</color>
     <color name="colorAccent">@color/colorPrimary</color>
     <color name="white">@android:color/white</color>
@@ -9,4 +9,5 @@
     <color name="black">@android:color/black</color>
     <color name="blue">@android:color/holo_blue_light</color>
     <color name="red">@android:color/holo_red_light</color>
+    <color name="transparent">@android:color/transparent</color>
 </resources>
