@@ -77,4 +77,7 @@
         如您发现自己的个人信息泄密，请您立即联络本软件客服，以便本软件采取相应措施。
     </string>
 
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
 </resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout
+    android:id="@+id/drawerLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,8 +8,11 @@
     tools:context=".View.activity.MainActivity"
     tools:openDrawer="start">
 
-    <include layout="@layout/app_bar_home"/>
+    <include layout="@layout/app_bar_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
+    <!--android:layout_gravity="start"从哪儿开始,必须设定-->
     <LinearLayout
         android:layout_gravity="start"
         android:layout_width="match_parent"
