@@ -1,5 +1,7 @@
 package com.hv.heartvoice.Domain;
 
+import android.text.TextUtils;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class User extends BaseModel{
@@ -28,6 +30,8 @@ public class User extends BaseModel{
      * 只有找回密码的时候才会用到
      */
     private String code;
+
+    private String description;
 
     public String getNickname() {
         return nickname;
@@ -67,6 +71,21 @@ public class User extends BaseModel{
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescriptionFormat(){
+        if(TextUtils.isEmpty(description)){
+            return "~~~~~~";
+        }
+        return description;
     }
 
     @Override

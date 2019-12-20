@@ -6,9 +6,14 @@ import com.hv.heartvoice.Domain.Session;
 import com.hv.heartvoice.Domain.User;
 import com.hv.heartvoice.Model.Response.DetailResponse;
 
+import java.util.Map;
+
 import io.reactivex.Observable;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.QueryMap;
 
 public interface Service {
 
@@ -41,5 +46,14 @@ public interface Service {
      */
     @POST("v1/codes/request_sms_code")
     Observable<DetailResponse<BaseModel>> sendSMSCode(@Body User data);
+
+    /**
+     * 用户详情
+     * @param id
+     * @param data
+     * @return
+     */
+    @GET("v1/users/{id}")
+    Observable<DetailResponse<User>> userDetail(@Path("id") String id, @QueryMap Map<String,String> data);
 
 }

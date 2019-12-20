@@ -16,7 +16,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
-import com.hv.heartvoice.R;
 import com.hv.heartvoice.Util.PreferenceUtil;
 import com.hv.heartvoice.View.fragment.ServiceFragment;
 

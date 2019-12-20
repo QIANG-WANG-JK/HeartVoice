@@ -8,6 +8,13 @@
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
+    <style name="WhiteTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/white</item>
+    </style>
+
     <!--去掉ActionBar 如果利用Toolbar需要去掉ActionBar-->
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
