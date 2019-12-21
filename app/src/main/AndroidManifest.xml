@@ -13,16 +13,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".View.activity.ServiceApproveActivity"></activity>
+        <activity android:name=".View.activity.SettingActivity"
+            android:theme="@style/WhiteTheme"/>
+        <activity android:name=".View.activity.ServiceApproveActivity" />
         <activity android:name=".View.activity.ForgetPasswordActivity" /> <!-- 新版本默认不允许HTTP -->
         <activity android:name=".View.activity.RegisterActivity" />
         <activity android:name=".View.activity.LoginActivity" />
-        <activity android:name=".View.activity.MainActivity"
-            android:theme="@style/WhiteTheme"
+        <activity
+            android:name=".View.activity.MainActivity"
             android:label=""
-            android:launchMode="singleTask" />
-        <activity android:name=".View.activity.SplashActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/WhiteTheme" />
+        <activity
+            android:name=".View.activity.SplashActivity"
             android:theme="@style/WhiteTheme">
+
             <!-- 启动界面 -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

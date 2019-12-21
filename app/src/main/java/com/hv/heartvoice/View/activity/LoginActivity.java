@@ -5,7 +5,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import com.hv.heartvoice.Base.BaseLoginActivity;
-import com.hv.heartvoice.Domain.event.CloseLoginActivityEvent;
+import com.hv.heartvoice.Domain.event.CloseLoginEvent;
 import com.hv.heartvoice.R;
 import com.hv.heartvoice.Util.Constant;
 import com.hv.heartvoice.Util.StringUtil;
@@ -93,7 +93,7 @@ public class LoginActivity extends BaseLoginActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void closeLoginEvent(CloseLoginActivityEvent event){
+    public void closeLoginEvent(CloseLoginEvent event){
         finish();
     }
 

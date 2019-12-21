@@ -57,4 +57,16 @@ public class PreferenceUtil {
         return preference.getString(USER_ID,null);
     }
 
+    /**
+     * 退出
+     */
+    public void logout(){
+        delete(USER_ID);
+        delete(SESSION);
+    }
+
+    private void delete(String key){
+        preference.edit().remove(key).commit();
+    }
+
 }

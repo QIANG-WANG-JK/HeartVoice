@@ -91,5 +91,6 @@
     <string name="myFriends">我的好友</string>
     <string name="LogOutApp">退出应用</string>
     <string name="setting">设置</string>
+    <string name="logout">退出</string>
 
 </resources>

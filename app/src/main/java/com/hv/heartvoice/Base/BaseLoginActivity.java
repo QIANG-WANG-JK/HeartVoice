@@ -2,7 +2,7 @@ package com.hv.heartvoice.Base;
 
 import com.hv.heartvoice.Domain.Session;
 import com.hv.heartvoice.Domain.User;
-import com.hv.heartvoice.Domain.event.CloseLoginActivityEvent;
+import com.hv.heartvoice.Domain.event.CloseLoginEvent;
 import com.hv.heartvoice.Model.Api;
 import com.hv.heartvoice.Model.MyObserver.HttpObserver;
 import com.hv.heartvoice.Model.Response.DetailResponse;
@@ -30,14 +30,10 @@ public class BaseLoginActivity extends BaseCommonActivity {
                         //关闭当前界面并启动主界面
                         startActivityAfterFinsh(MainActivity.class);
                         if(!isLogin){
-                            EventBus.getDefault().post(new CloseLoginActivityEvent());
+                            EventBus.getDefault().post(new CloseLoginEvent());
                         }
                     }
                 });
-    }
-
-    public void startActivityForServiceApprove(){
-
     }
 
 }

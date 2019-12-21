@@ -2,6 +2,8 @@ package com.hv.heartvoice.Domain;
 
 import android.text.TextUtils;
 
+import com.hv.heartvoice.R;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class User extends BaseModel{
@@ -88,7 +90,7 @@ public class User extends BaseModel{
 
     public String getDescriptionFormat(){
         if(TextUtils.isEmpty(description)){
-            return "";
+            return "~~~~~~";
         }
         return description;
     }

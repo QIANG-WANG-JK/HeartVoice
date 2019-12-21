@@ -69,7 +69,7 @@
     <style name="ItemNextIcon">
         <!--左侧margin-->
         <item name="android:layout_alignParentRight">true</item>
-        <item name="android:layout_marginRight">@dimen/dp_20</item>
+        <item name="android:layout_marginRight">@dimen/dp_5</item>
         <item name="android:layout_width">@dimen/dp_30</item>
         <item name="android:layout_height">@dimen/dp_30</item>
         <item name="android:gravity">center_vertical</item>
