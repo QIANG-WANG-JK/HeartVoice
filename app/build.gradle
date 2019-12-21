@@ -16,7 +16,8 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            //开启Proguard混淆
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -27,7 +28,7 @@ android {
         dev {
             //API端点
             buildConfigField('String', "ENDPOINT", '"http://dev-my-cloud-music-api-rails.ixuea.com/"')
-            buildConfigField('String', "RESOURCE_ENDPOINT", '"http://dev-my-cloud-music-api-rails.ixuea.com/%s"')
+            buildConfigField('String', "RESOURCE_ENDPOINT", '"http://dev-courses-misuc.ixuea.com/%s"')
             dimension = minSdkVersion
         }
 
@@ -35,7 +36,7 @@ android {
         prod {
             //API端点
             buildConfigField 'String', 'ENDPOINT', '"http://api-courses-misuc.ixuea.com/"'
-            buildConfigField('String', "RESOURCE_ENDPOINT", '"http://dev-my-cloud-music-api-rails.ixuea.com/%s"')
+            buildConfigField('String', "RESOURCE_ENDPOINT", '"http://dev-courses-misuc.ixuea.com/%s"')
             dimension = minSdkVersion
         }
 

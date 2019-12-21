@@ -7,15 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
 
 import androidx.annotation.IdRes;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.bumptech.glide.request.RequestOptions;
 import com.hv.heartvoice.Util.PreferenceUtil;
 import com.hv.heartvoice.View.fragment.ServiceFragment;
 
@@ -156,11 +152,6 @@ public class BaseCommonActivity extends BaseActivity {
             p.setMargins(l, t, r, b);
             view.requestLayout();
         }
-    }
-
-    protected void CropImage(int id, ImageView img) {
-        Glide.with(getMainActivity()).load(id)
-                .apply(RequestOptions.bitmapTransform(new CircleCrop())).into(img);
     }
 
 }

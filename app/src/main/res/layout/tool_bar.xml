@@ -19,7 +19,6 @@
             android:id="@+id/userHeadToolBar"
             android:layout_width="@dimen/dp_30"
             android:layout_height="@dimen/dp_30"
-            android:src="@mipmap/user_password"
             android:scaleType="centerCrop"/>
 
     </androidx.appcompat.widget.Toolbar>

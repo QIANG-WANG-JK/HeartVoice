@@ -1,7 +1,7 @@
 package com.hv.heartvoice.View.activity;
 
-import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,12 +10,16 @@ import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.hv.heartvoice.Base.BaseTitleActivity;
 import com.hv.heartvoice.Domain.User;
 import com.hv.heartvoice.Model.Api;
 import com.hv.heartvoice.Model.MyObserver.HttpObserver;
 import com.hv.heartvoice.Model.Response.DetailResponse;
 import com.hv.heartvoice.R;
+import com.hv.heartvoice.Util.Constant;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -47,41 +51,19 @@ public class MainActivity extends BaseTitleActivity {
     @Override
     protected void initViews() {
         super.initViews();
-        lightStatusBarAndBAR(Color.TRANSPARENT);
+        lightStatusBarAndBAR(Constant.Transparent);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         setMargins(toolbar,0,getStatusBarHeight(getMainActivity()),0,0);
         setMargins(mainClose,0,getStatusBarHeight(getMainActivity()),0,0);
         setMargins(userHead,0,getStatusBarHeight(getMainActivity()),0,0);
         setMargins(mainNickname,0,getStatusBarHeight(getMainActivity()),0,0);
         setMargins(mainDescription,0,getStatusBarHeight(getMainActivity()),0,0);
-        CropImage(R.mipmap.user_head,userHead);
-        CropImage(R.mipmap.user_head,userHeadToolBar);
     }
 
     @Override
-    public void initListeners() {
-        super.initListeners();
-        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-
-            }
-
-            @Override
-            public void onDrawerOpened(@NonNull View drawerView) {
-                fetchData();
-            }
-
-            @Override
-            public void onDrawerClosed(@NonNull View drawerView) {
-
-            }
-
-            @Override
-            public void onDrawerStateChanged(int newState) {
-
-            }
-        });
+    public void initData() {
+        super.initData();
+        fetchData();
     }
 
     private void fetchData() {
@@ -99,6 +81,44 @@ public class MainActivity extends BaseTitleActivity {
      * @param data
      */
     private void next(User data){
+        if (TextUtils.isEmpty(data.getAvatar())){
+            //没有头像,显示默认头像
+            Glide.with(getMainActivity()).load(R.mipmap.user_head)
+                    .placeholder(R.mipmap.place_holder)
+                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                    .into(userHead);
+            Glide.with(getMainActivity()).load(R.mipmap.user_head)
+                    .placeholder(R.mipmap.place_holder)
+                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                    .into(userHeadToolBar);
+        }else{
+            //有头像
+            if(data.getAvatar().startsWith("http")){
+                //绝对路径 第三方登录时
+                Glide.with(getMainActivity()).load(data.getAvatar())
+                        .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                        .placeholder(R.mipmap.place_holder)
+                        .into(userHead);
+                Glide.with(getMainActivity()).load(data.getAvatar())
+                        .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                        .placeholder(R.mipmap.place_holder)
+                        .into(userHeadToolBar);
+            }else{
+                //相对路径
+                //自身服务器内的图片
+                String uri = String.format(Constant.RESOURCE_ENDPOINT, data.getAvatar());
+                Glide.with(getMainActivity())
+                        .load(uri)
+                        .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                        .placeholder(R.mipmap.place_holder)
+                        .into(userHead);
+                Glide.with(getMainActivity())
+                        .load(uri)
+                        .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                        .placeholder(R.mipmap.place_holder)
+                        .into(userHeadToolBar);
+            }
+        }
         mainNickname.setText(data.getNickname());
         mainDescription.setText(data.getDescriptionFormat());
     }

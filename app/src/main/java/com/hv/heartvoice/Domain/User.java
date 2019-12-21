@@ -31,7 +31,12 @@ public class User extends BaseModel{
      */
     private String code;
 
+    /**
+     * 头像
+     */
     private String description;
+
+    private String avatar;
 
     public String getNickname() {
         return nickname;
@@ -83,9 +88,17 @@ public class User extends BaseModel{
 
     public String getDescriptionFormat(){
         if(TextUtils.isEmpty(description)){
-            return "~~~~~~";
+            return "";
         }
         return description;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     @Override
