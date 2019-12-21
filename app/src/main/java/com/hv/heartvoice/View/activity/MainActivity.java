@@ -1,18 +1,12 @@
 package com.hv.heartvoice.View.activity;
 
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.bumptech.glide.request.RequestOptions;
 import com.hv.heartvoice.Base.BaseTitleActivity;
 import com.hv.heartvoice.Domain.User;
 import com.hv.heartvoice.Model.Api;
@@ -20,11 +14,15 @@ import com.hv.heartvoice.Model.MyObserver.HttpObserver;
 import com.hv.heartvoice.Model.Response.DetailResponse;
 import com.hv.heartvoice.R;
 import com.hv.heartvoice.Util.Constant;
+import com.hv.heartvoice.Util.ImageUtil;
+import com.hv.heartvoice.Util.LogUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseTitleActivity {
+
+    public static final String TAG = "MainActivity";
 
     /**
      * 侧滑控件
@@ -58,6 +56,9 @@ public class MainActivity extends BaseTitleActivity {
         setMargins(userHead,0,getStatusBarHeight(getMainActivity()),0,0);
         setMargins(mainNickname,0,getStatusBarHeight(getMainActivity()),0,0);
         setMargins(mainDescription,0,getStatusBarHeight(getMainActivity()),0,0);
+        //就算无网络也可以加载出站位图
+        ImageUtil.showImage(getMainActivity(),userHead,"",0);
+        ImageUtil.showImage(getMainActivity(),userHeadToolBar,"",0);
     }
 
     @Override
@@ -81,44 +82,8 @@ public class MainActivity extends BaseTitleActivity {
      * @param data
      */
     private void next(User data){
-        if (TextUtils.isEmpty(data.getAvatar())){
-            //没有头像,显示默认头像
-            Glide.with(getMainActivity()).load(R.mipmap.user_head)
-                    .placeholder(R.mipmap.place_holder)
-                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-                    .into(userHead);
-            Glide.with(getMainActivity()).load(R.mipmap.user_head)
-                    .placeholder(R.mipmap.place_holder)
-                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-                    .into(userHeadToolBar);
-        }else{
-            //有头像
-            if(data.getAvatar().startsWith("http")){
-                //绝对路径 第三方登录时
-                Glide.with(getMainActivity()).load(data.getAvatar())
-                        .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-                        .placeholder(R.mipmap.place_holder)
-                        .into(userHead);
-                Glide.with(getMainActivity()).load(data.getAvatar())
-                        .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-                        .placeholder(R.mipmap.place_holder)
-                        .into(userHeadToolBar);
-            }else{
-                //相对路径
-                //自身服务器内的图片
-                String uri = String.format(Constant.RESOURCE_ENDPOINT, data.getAvatar());
-                Glide.with(getMainActivity())
-                        .load(uri)
-                        .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-                        .placeholder(R.mipmap.place_holder)
-                        .into(userHead);
-                Glide.with(getMainActivity())
-                        .load(uri)
-                        .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-                        .placeholder(R.mipmap.place_holder)
-                        .into(userHeadToolBar);
-            }
-        }
+        ImageUtil.showImage(getMainActivity(),userHead,data.getAvatar(),0);
+        ImageUtil.showImage(getMainActivity(),userHeadToolBar,data.getAvatar(),0);
         mainNickname.setText(data.getNickname());
         mainDescription.setText(data.getDescriptionFormat());
     }

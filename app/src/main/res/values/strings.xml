@@ -80,5 +80,16 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nickName">昵称</string>
+    <string name="noneDescription">~~~~~~</string>
+    <string name="my">我的</string>
+    <string name="myMessage">我的消息</string>
+    <string name="changeBack">个性换肤</string>
+    <string name="IdentifySong">听歌识曲</string>
+    <string name="scanIt">扫一扫</string>
+    <string name="timingStop">定时停止播放</string>
+    <string name="AboutUs">关于我们</string>
+    <string name="myFriends">我的好友</string>
+    <string name="LogOutApp">退出应用</string>
+    <string name="setting">设置</string>
 
 </resources>

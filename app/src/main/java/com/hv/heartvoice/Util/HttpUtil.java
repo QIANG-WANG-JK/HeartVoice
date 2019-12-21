@@ -24,7 +24,7 @@ public class HttpUtil {
             //先处理有异常的请求
             //判断错误类型
             if (error instanceof UnknownHostException) {
-                ToastUtil.errorShort(R.string.error_network_unknown_host);
+                ToastUtil.errorShort(R.string.error_network_connect);
             } else if (error instanceof ConnectException) {
                 ToastUtil.errorShort(R.string.error_network_connect);
             } else if (error instanceof SocketTimeoutException) {

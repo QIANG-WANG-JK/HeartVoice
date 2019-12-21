@@ -28,7 +28,10 @@ android {
         dev {
             //API端点
             buildConfigField('String', "ENDPOINT", '"http://dev-my-cloud-music-api-rails.ixuea.com/"')
-            buildConfigField('String', "RESOURCE_ENDPOINT", '"http://dev-courses-misuc.ixuea.com/%s"')
+
+            //资源端点
+            buildConfigField 'String', 'RESOURCE_ENDPOINT', '"http://dev-courses-misuc.ixuea.com/%s"'
+
             dimension = minSdkVersion
         }
 
@@ -36,7 +39,10 @@ android {
         prod {
             //API端点
             buildConfigField 'String', 'ENDPOINT', '"http://api-courses-misuc.ixuea.com/"'
-            buildConfigField('String', "RESOURCE_ENDPOINT", '"http://dev-courses-misuc.ixuea.com/%s"')
+
+            //资源端点
+            buildConfigField 'String', 'RESOURCE_ENDPOINT', '"http://courses-misuc.ixuea.com/%s"'
+
             dimension = minSdkVersion
         }
 

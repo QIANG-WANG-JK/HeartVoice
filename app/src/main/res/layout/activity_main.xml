@@ -41,21 +41,165 @@
         </RelativeLayout>
 
         <androidx.core.widget.NestedScrollView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/dp_0"
             android:layout_weight="6.25">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/mainMy"
+                    style="@style/ItemContainer">
+                    <ImageView
+                        style="@style/ItemIcon"
+                        android:src="@mipmap/user_account"/>
+                    <TextView
+                        style="@style/ItemText"
+                        android:text="@string/my"/>
+                    <ImageView
+                        style="@style/ItemNextIcon"
+                        android:src="@mipmap/next"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/mainMyFriends"
+                    style="@style/ItemContainer">
+                    <ImageView
+                        style="@style/ItemIcon"
+                        android:src="@mipmap/my_friends"/>
+                    <TextView
+                        style="@style/ItemText"
+                        android:text="@string/myFriends"/>
+                    <ImageView
+                        style="@style/ItemNextIcon"
+                        android:src="@mipmap/next"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/mainMessage"
+                    style="@style/ItemContainer">
+                    <ImageView
+                        style="@style/ItemIcon"
+                        android:src="@mipmap/message"/>
+                    <TextView
+                        style="@style/ItemText"
+                        android:text="@string/myMessage"/>
+                    <ImageView
+                        style="@style/ItemNextIcon"
+                        android:src="@mipmap/next"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/mainIdentify"
+                    style="@style/ItemContainer">
+                    <ImageView
+                        style="@style/ItemIcon"
+                        android:src="@mipmap/identify_song"/>
+                    <TextView
+                        style="@style/ItemText"
+                        android:text="@string/IdentifySong"/>
+                    <ImageView
+                        style="@style/ItemNextIcon"
+                        android:src="@mipmap/next"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/mainScan"
+                    style="@style/ItemContainer">
+                    <ImageView
+                        style="@style/ItemIcon"
+                        android:src="@mipmap/scan_it"/>
+                    <TextView
+                        style="@style/ItemText"
+                        android:text="@string/scanIt"/>
+                    <ImageView
+                        style="@style/ItemNextIcon"
+                        android:src="@mipmap/next"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/mainTimingStop"
+                    style="@style/ItemContainer">
+                    <ImageView
+                        style="@style/ItemIcon"
+                        android:src="@mipmap/timing_stop"/>
+                    <TextView
+                        style="@style/ItemText"
+                        android:text="@string/timingStop"/>
+                    <ImageView
+                        style="@style/ItemNextIcon"
+                        android:src="@mipmap/next"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/mainChangeBac"
+                    style="@style/ItemContainer">
+                    <ImageView
+                        style="@style/ItemIcon"
+                        android:src="@mipmap/change_back"/>
+                    <TextView
+                        style="@style/ItemText"
+                        android:text="@string/changeBack"/>
+                    <ImageView
+                        style="@style/ItemNextIcon"
+                        android:src="@mipmap/next"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/mainAboutUs"
+                    style="@style/ItemContainer">
+                    <ImageView
+                        style="@style/ItemIcon"
+                        android:src="@mipmap/about_us"/>
+                    <TextView
+                        style="@style/ItemText"
+                        android:text="@string/AboutUs"/>
+                    <ImageView
+                        style="@style/ItemNextIcon"
+                        android:src="@mipmap/next"/>
+                </LinearLayout>
+
+            </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/dp_0"
-            android:layout_weight="0.75">
+            android:layout_weight="0.75"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="测试"/>
+            <RelativeLayout
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/setting"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/LogOutApp"/>
+
+            </RelativeLayout>
 
         </LinearLayout>
 
