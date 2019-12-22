@@ -8,7 +8,6 @@ import com.hv.heartvoice.Base.BaseTitleActivity;
 import com.hv.heartvoice.Domain.event.CloseEvent;
 import com.hv.heartvoice.MyApplication;
 import com.hv.heartvoice.R;
-import com.hv.heartvoice.Util.Constant;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -16,6 +15,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.hv.heartvoice.Util.Constant.Transparent;
 
 public class SettingActivity extends BaseTitleActivity {
 
@@ -44,7 +45,7 @@ public class SettingActivity extends BaseTitleActivity {
         EventBus.getDefault().register(this);
 
         //设置状态栏透明并且字体黑色
-        lightStatusBarAndBAR(Constant.Transparent);
+        lightStatusBarAndBAR(Transparent);
 
         //设置内容到状态栏下
         setMargins(toolbar,0,getStatusBarHeight(getMainActivity()),0,0);

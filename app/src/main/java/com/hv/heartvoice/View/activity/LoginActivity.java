@@ -7,7 +7,6 @@ import android.widget.TextView;
 import com.hv.heartvoice.Base.BaseLoginActivity;
 import com.hv.heartvoice.Domain.event.CloseLoginEvent;
 import com.hv.heartvoice.R;
-import com.hv.heartvoice.Util.Constant;
 import com.hv.heartvoice.Util.StringUtil;
 import com.hv.heartvoice.Util.ToastUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -17,6 +16,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.hv.heartvoice.Util.Constant.Transparent;
 
 public class LoginActivity extends BaseLoginActivity {
 
@@ -45,7 +46,7 @@ public class LoginActivity extends BaseLoginActivity {
     @Override
     protected void initViews() {
         super.initViews();
-        lightStatusBarAndBAR(Constant.Transparent);
+        lightStatusBarAndBAR(Transparent);
     }
 
     @Override

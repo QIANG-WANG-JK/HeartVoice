@@ -20,7 +20,6 @@ import com.hv.heartvoice.Model.Api;
 import com.hv.heartvoice.Model.MyObserver.HttpObserver;
 import com.hv.heartvoice.Model.Response.DetailResponse;
 import com.hv.heartvoice.R;
-import com.hv.heartvoice.Util.Constant;
 import com.hv.heartvoice.Util.ImageUtil;
 import com.hv.heartvoice.Util.ToastUtil;
 
@@ -41,6 +40,8 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.hv.heartvoice.Util.Constant.Transparent;
 
 public class MainActivity extends BaseTitleActivity {
 
@@ -178,7 +179,7 @@ public class MainActivity extends BaseTitleActivity {
         EventBus.getDefault().register(this);
 
         //透明状态栏,黑色字体
-        lightStatusBarAndBAR(Constant.Transparent);
+        lightStatusBarAndBAR(Transparent);
 
         //禁用ToolBar按钮
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);

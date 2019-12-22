@@ -7,11 +7,12 @@ import android.widget.RelativeLayout;
 
 import com.hv.heartvoice.Base.BaseCommonActivity;
 import com.hv.heartvoice.R;
-import com.hv.heartvoice.Util.Constant;
 import com.hv.heartvoice.View.fragment.ServiceFragment;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.hv.heartvoice.Util.Constant.serviceApproveActivityColor;
 
 public class ServiceApproveActivity extends BaseCommonActivity {
 
@@ -32,7 +33,7 @@ public class ServiceApproveActivity extends BaseCommonActivity {
     protected void initViews() {
         super.initViews();
         setMargins(serviceRelative,0,getStatusBarHeight(getMainActivity()),0,0);
-        lightStatusBarAndBAR(Constant.serviceApproveActivityColor);
+        lightStatusBarAndBAR(serviceApproveActivityColor);
     }
 
     @Override

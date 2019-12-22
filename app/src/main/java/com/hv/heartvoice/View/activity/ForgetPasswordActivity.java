@@ -13,7 +13,6 @@ import com.hv.heartvoice.Model.Api;
 import com.hv.heartvoice.Model.MyObserver.HttpObserver;
 import com.hv.heartvoice.Model.Response.DetailResponse;
 import com.hv.heartvoice.R;
-import com.hv.heartvoice.Util.Constant;
 import com.hv.heartvoice.Util.StringUtil;
 import com.hv.heartvoice.Util.ToastUtil;
 
@@ -21,6 +20,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.hv.heartvoice.Util.Constant.Transparent;
 
 public class ForgetPasswordActivity extends BaseLoginActivity {
 
@@ -50,7 +51,7 @@ public class ForgetPasswordActivity extends BaseLoginActivity {
     @Override
     protected void initViews() {
         super.initViews();
-        lightStatusBarAndBAR(Constant.Transparent);
+        lightStatusBarAndBAR(Transparent);
     }
 
     @OnClick(R.id.sendCheck)
