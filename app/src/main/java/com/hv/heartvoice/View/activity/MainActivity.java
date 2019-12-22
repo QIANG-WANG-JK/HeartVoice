@@ -8,7 +8,9 @@ import android.widget.TextView;
 
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.viewpager.widget.ViewPager;
 
+import com.hv.heartvoice.Adapter.MainAdapter;
 import com.hv.heartvoice.Base.BaseTitleActivity;
 import com.hv.heartvoice.Domain.User;
 import com.hv.heartvoice.Domain.event.CloseEvent;
@@ -24,6 +26,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -32,40 +36,116 @@ public class MainActivity extends BaseTitleActivity {
     public static final String TAG = "MainActivity";
 
     /**
+     * 主界面适配器
+     */
+    private MainAdapter adapter;
+
+    /**
+     * viewPager数据
+     */
+    private ArrayList<Integer> datas;
+
+    /**
      * 侧滑控件
      */
     @BindView(R.id.drawerLayout)
     DrawerLayout drawerLayout;
+
+    /**
+     * 关闭侧滑图片
+     */
     @BindView(R.id.mainClose)
     ImageView mainClose;
+
+    /**
+     * 侧滑头像
+     */
     @BindView(R.id.userHead)
     ImageView userHead;
+
+    /**
+     * 昵称
+     */
     @BindView(R.id.mainNickname)
     TextView mainNickname;
+
+    /**
+     * 描述
+     */
     @BindView(R.id.mainDescription)
     TextView mainDescription;
+
+    /**
+     * 主界面头像
+     */
     @BindView(R.id.userHeadToolBar)
     ImageView userHeadToolBar;
+
+    /**
+     * 我的
+     */
     @BindView(R.id.mainMy)
     LinearLayout mainMy;
+
+    /**
+     * 我的朋友
+     */
     @BindView(R.id.mainMyFriends)
     LinearLayout mainMyFriends;
+
+    /**
+     * 我的消息
+     */
     @BindView(R.id.mainMessage)
     LinearLayout mainMessage;
+
+    /**
+     * 歌曲识别
+     */
     @BindView(R.id.mainIdentify)
     LinearLayout mainIdentify;
+
+    /**
+     * 扫一扫
+     */
     @BindView(R.id.mainScan)
     LinearLayout mainScan;
+
+    /**
+     * 设置停止时间
+     */
     @BindView(R.id.mainTimingStop)
     LinearLayout mainTimingStop;
+
+    /**
+     * 背景更换
+     */
     @BindView(R.id.mainChangeBac)
     LinearLayout mainChangeBac;
+
+    /**
+     * 关于我们
+     */
     @BindView(R.id.mainAboutUs)
     LinearLayout mainAboutUs;
+
+    /**
+     * 设置
+     */
     @BindView(R.id.mainSetting)
     RelativeLayout mainSetting;
+
+    /**
+     * 登出APP
+     */
     @BindView(R.id.mainLogOutApp)
     RelativeLayout mainLogOutApp;
+
+    /**
+     * 滚动视图
+     */
+    @BindView(R.id.mainViewPager)
+    ViewPager mainViewPager;//看一下懒加载
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,22 +156,43 @@ public class MainActivity extends BaseTitleActivity {
     @Override
     protected void initViews() {
         super.initViews();
+
+        //注册EventBus
         EventBus.getDefault().register(this);
+
+        //透明状态栏,黑色字体
         lightStatusBarAndBAR(Constant.Transparent);
+
+        //禁用ToolBar按钮
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+        //调整控件到状态栏以下
         setMargins(toolbar,0,getStatusBarHeight(getMainActivity()),0,0);
         setMargins(userHead,0,getStatusBarHeight(getMainActivity()),0,0);
         setMargins(mainNickname,0,getStatusBarHeight(getMainActivity()),0,0);
         setMargins(mainDescription,0,getStatusBarHeight(getMainActivity()),0,0);
+
         //就算无网络也可以加载出站位图
         ImageUtil.showImage(getMainActivity(),userHead,"",0);
         ImageUtil.showImage(getMainActivity(),userHeadToolBar,"",0);
+
+        //缓存页面数量
+        //默认是缓存一个
+        mainViewPager.setOffscreenPageLimit(4);
     }
 
     @Override
     public void initData() {
         super.initData();
         fetchData();
+        //创建adapter
+        adapter = new MainAdapter(getSupportFragmentManager(), getMainActivity());
+        mainViewPager.setAdapter(adapter);
+        datas = new ArrayList<>();
+        datas.add(0);
+        datas.add(1);
+        datas.add(2);
+        adapter.setData(datas);
     }
 
     private void fetchData() {

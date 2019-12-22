@@ -11,22 +11,41 @@ import java.util.List;
  * 页面切换碎片适配器
  * @param <T>
  */
-public abstract class BaseFragmentPagerAdapter<T extends Fragment> extends FragmentPagerAdapter {
+public abstract class BaseFragmentPagerAdapter<T> extends FragmentPagerAdapter {
 
+    /**
+     * 上下文
+     */
     protected final Context context;
 
+    /**
+     * 列表数据源
+     */
     protected List<T> datas = new ArrayList<>();
 
+    /**
+     * 构造方法
+     * @param fm
+     * @param context
+     */
     public BaseFragmentPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.context = context;
     }
 
-    @Override
-    public T getItem(int i) {
-        return datas.get(i);
+    /**
+     * 获取当前数据
+     * @param position
+     * @return
+     */
+    public T getData(int position) {
+        return datas.get(position);
     }
 
+    /**
+     * 有多少个
+     * @return
+     */
     @Override
     public int getCount() {
         return datas.size();
