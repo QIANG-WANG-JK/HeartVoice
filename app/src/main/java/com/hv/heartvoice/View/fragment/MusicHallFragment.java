@@ -8,8 +8,16 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hv.heartvoice.Adapter.MusicHallAdapter;
 import com.hv.heartvoice.Base.BaseCommonFragment;
+import com.hv.heartvoice.Domain.BaseMultiItemEntity;
+import com.hv.heartvoice.Domain.Sheet;
+import com.hv.heartvoice.Domain.Song;
+import com.hv.heartvoice.Domain.Title;
 import com.hv.heartvoice.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -25,6 +33,11 @@ public class MusicHallFragment extends BaseCommonFragment {
      * 网格式布局控制器
      */
     private GridLayoutManager manager;
+
+    /**
+     * 音乐馆适配器
+     */
+    private MusicHallAdapter adapter;
 
     /**
      * 返回实例
@@ -62,7 +75,47 @@ public class MusicHallFragment extends BaseCommonFragment {
         manager = new GridLayoutManager(getMainActivity(), 3);
         //需要有layoutManager
         recyclerView.setLayoutManager(manager);
+    }
 
+    @Override
+    protected void initData() {
+        super.initData();
+
+        //创建适配器
+        adapter = new MusicHallAdapter();
+
+        //设置适配器
+        recyclerView.setAdapter(adapter);
+
+        //请求数据
+        fetchData();
+    }
+
+    /**
+     * 数据请求
+     */
+    private void fetchData() {
+        List<BaseMultiItemEntity> datas = new ArrayList<>();
+
+        //添加标题
+        datas.add(new Title());
+
+        //添加歌单数据
+        for (int i = 0; i < 5; i++) {
+            datas.add(new Sheet());
+        }
+
+        //添加标题
+        datas.add(new Title());
+
+        //添加单曲数据
+        for (int i = 0; i < 9; i++) {
+            datas.add(new Song());
+        }
+
+        //将数据设置到适配器
+        adapter.replaceData(datas);
 
     }
 }
+

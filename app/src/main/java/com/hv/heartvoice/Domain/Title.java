@@ -10,6 +10,17 @@ public class Title extends BaseMultiItemEntity {
     private String title;
 
     /**
+     * 构造方法
+     * @param title
+     */
+    public Title(String title) {
+        this.title = title;
+    }
+
+    public Title() {
+    }
+
+    /**
      * 标题
      * @return
      */
@@ -18,4 +29,11 @@ public class Title extends BaseMultiItemEntity {
         return TYPE_TITLE;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }
