@@ -28,7 +28,7 @@ public abstract class BaseCommonFragment extends BaseFragment {
     }
 
     protected void bindView() {
-        ButterKnife.bind(getMainActivity());
+        ButterKnife.bind(this,getView());
     }
 
     protected void startActivity(Class<?> cls){
