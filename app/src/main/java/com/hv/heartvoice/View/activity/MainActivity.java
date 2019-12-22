@@ -1,6 +1,8 @@
 package com.hv.heartvoice.View.activity;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -21,6 +23,15 @@ import com.hv.heartvoice.R;
 import com.hv.heartvoice.Util.Constant;
 import com.hv.heartvoice.Util.ImageUtil;
 import com.hv.heartvoice.Util.ToastUtil;
+
+import net.lucode.hackware.magicindicator.MagicIndicator;
+import net.lucode.hackware.magicindicator.ViewPagerHelper;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -147,6 +158,12 @@ public class MainActivity extends BaseTitleActivity {
     @BindView(R.id.mainViewPager)
     ViewPager mainViewPager;//看一下懒加载
 
+    /**
+     * 指示器
+     */
+    @BindView(R.id.Indicator)
+    MagicIndicator Indicator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -178,7 +195,7 @@ public class MainActivity extends BaseTitleActivity {
 
         //缓存页面数量
         //默认是缓存一个
-        mainViewPager.setOffscreenPageLimit(4);
+        mainViewPager.setOffscreenPageLimit(3);
     }
 
     @Override
@@ -193,6 +210,85 @@ public class MainActivity extends BaseTitleActivity {
         datas.add(1);
         datas.add(2);
         adapter.setData(datas);
+
+        //将指示器和ViewPager关联
+        CommonNavigator commonNavigator = new CommonNavigator(getMainActivity());
+
+        //设置适配器
+        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
+
+            /**
+             * 指示器数量
+             * @return
+             */
+            @Override
+            public int getCount() {
+                return datas.size();
+            }
+
+            /**
+             * 返回当前位置的标题
+             * @param context
+             * @param index
+             * @return
+             */
+            @Override
+            public IPagerTitleView getTitleView(Context context, int index) {
+                //创建简单的文本控件
+                SimplePagerTitleView titleView = new SimplePagerTitleView(context);
+
+                //默认颜色
+                titleView.setNormalColor(getResources().getColor(R.color.light_grey,null));
+
+                //选中后的颜色
+                titleView.setSelectedColor(getResources().getColor(R.color.red,null));
+
+                //显示的文本
+                titleView.setText(adapter.getPageTitle(index));
+
+                //设置回调监听
+                titleView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //让viewPager跳转到当前的位置
+                        mainViewPager.setCurrentItem(index);
+                    }
+                });
+
+                return titleView;
+            }
+
+            /**
+             * 获取下面的白线
+             * @param context
+             * @return
+             */
+            @Override
+            public IPagerIndicator getIndicator(Context context) {
+                //创建一条线
+                LinePagerIndicator indicator = new LinePagerIndicator(context);
+
+                //线的内容和宽度一样 MODE_WRAP_CONTENT内容有多宽就有多宽
+                indicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
+
+                //高亮颜色
+                indicator.setColors(getResources().getColor(R.color.red,null));
+
+                return indicator;
+            }
+        });
+
+        commonNavigator.setAdjustMode(true);
+
+        //设置到导航器
+        Indicator.setNavigator(commonNavigator);
+
+        //让指示器和ViewPager配合工作
+        ViewPagerHelper.bind(Indicator,mainViewPager);
+
+        //默认选中第二个界面
+        mainViewPager.setCurrentItem(1);
+
     }
 
     private void fetchData() {

@@ -92,5 +92,7 @@
     <string name="LogOutApp">退出应用</string>
     <string name="setting">设置</string>
     <string name="logout">退出</string>
+    <string name="dynamic">动态</string>
+    <string name="musicHall">音乐馆</string>
 
 </resources>

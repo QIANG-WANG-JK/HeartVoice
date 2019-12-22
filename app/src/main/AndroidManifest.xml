@@ -14,7 +14,8 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity android:name=".View.activity.SettingActivity"
-            android:theme="@style/WhiteTheme"/>
+            android:theme="@style/WhiteTheme"
+            android:label=""/>
         <activity android:name=".View.activity.ServiceApproveActivity" />
         <activity android:name=".View.activity.ForgetPasswordActivity" /> <!-- 新版本默认不允许HTTP -->
         <activity android:name=".View.activity.RegisterActivity" />

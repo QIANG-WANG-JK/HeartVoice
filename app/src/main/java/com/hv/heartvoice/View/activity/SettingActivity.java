@@ -2,11 +2,13 @@ package com.hv.heartvoice.View.activity;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.hv.heartvoice.Base.BaseTitleActivity;
 import com.hv.heartvoice.Domain.event.CloseEvent;
 import com.hv.heartvoice.MyApplication;
 import com.hv.heartvoice.R;
+import com.hv.heartvoice.Util.Constant;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -17,8 +19,14 @@ import butterknife.OnClick;
 
 public class SettingActivity extends BaseTitleActivity {
 
+    /**
+     * 退出登录
+     */
     @BindView(R.id.settingLogOut)
     Button settingLogOut;
+
+    @BindView(R.id.back)
+    ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +37,17 @@ public class SettingActivity extends BaseTitleActivity {
     @Override
     protected void initViews() {
         super.initViews();
+
+        //禁用ToolBar按钮
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
         EventBus.getDefault().register(this);
+
+        //设置状态栏透明并且字体黑色
+        lightStatusBarAndBAR(Constant.Transparent);
+
+        //设置内容到状态栏下
+        setMargins(toolbar,0,getStatusBarHeight(getMainActivity()),0,0);
     }
 
     @OnClick(R.id.settingLogOut)
@@ -40,6 +58,11 @@ public class SettingActivity extends BaseTitleActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void close(CloseEvent event){
         finish();
+    }
+
+    @OnClick(R.id.back)
+    public void back(){
+        onBackPressed();
     }
 
     @Override
