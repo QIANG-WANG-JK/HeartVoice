@@ -1,4 +1,4 @@
-package com.hv.heartvoice.Model.MyObserver;
+package com.hv.heartvoice.Model.myObserver;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;

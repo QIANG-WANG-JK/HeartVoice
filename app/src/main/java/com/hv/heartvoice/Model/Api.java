@@ -3,14 +3,18 @@ package com.hv.heartvoice.Model;
 import com.hv.heartvoice.Base.BaseResponse;
 import com.hv.heartvoice.Domain.BaseModel;
 import com.hv.heartvoice.Domain.Session;
+import com.hv.heartvoice.Domain.Sheet;
+import com.hv.heartvoice.Domain.Song;
 import com.hv.heartvoice.Domain.User;
-import com.hv.heartvoice.Model.Response.DetailResponse;
+import com.hv.heartvoice.Model.response.DetailResponse;
+import com.hv.heartvoice.Model.response.ListResponse;
 import com.hv.heartvoice.Util.Constant;
 import com.hv.heartvoice.Util.LogUtil;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -120,6 +124,26 @@ public class Api {
      */
     public Observable<DetailResponse<User>> userDeatil(String id){
         return userDetail(id,null);
+    }
+
+    /**
+     * 歌单列表
+     * @return
+     */
+    public Observable<ListResponse<Sheet>> sheets(){
+        return service.sheets()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * 单曲
+     * @return
+     */
+    public Observable<ListResponse<Song>> songs(){
+        return service.songs()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
 }

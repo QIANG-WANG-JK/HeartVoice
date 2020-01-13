@@ -1,4 +1,4 @@
-package com.hv.heartvoice.Model.Response;
+package com.hv.heartvoice.Model.response;
 
 import com.hv.heartvoice.Base.BaseResponse;
 

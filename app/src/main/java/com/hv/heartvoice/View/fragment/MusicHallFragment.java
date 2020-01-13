@@ -8,18 +8,23 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hv.heartvoice.Adapter.MusicHallAdapter;
 import com.hv.heartvoice.Base.BaseCommonFragment;
 import com.hv.heartvoice.Domain.BaseMultiItemEntity;
 import com.hv.heartvoice.Domain.Sheet;
 import com.hv.heartvoice.Domain.Song;
 import com.hv.heartvoice.Domain.Title;
+import com.hv.heartvoice.Model.Api;
+import com.hv.heartvoice.Model.myObserver.HttpObserver;
+import com.hv.heartvoice.Model.response.ListResponse;
 import com.hv.heartvoice.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
 
 public class MusicHallFragment extends BaseCommonFragment {
 
@@ -84,6 +89,15 @@ public class MusicHallFragment extends BaseCommonFragment {
         //创建适配器
         adapter = new MusicHallAdapter();
 
+        //设置列宽度
+        adapter.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(GridLayoutManager gridLayoutManager, int i) {
+                //在模型上面的宽度
+                return adapter.getItem(i).getSpanSize();
+            }
+        });
+
         //设置适配器
         recyclerView.setAdapter(adapter);
 
@@ -97,25 +111,34 @@ public class MusicHallFragment extends BaseCommonFragment {
     private void fetchData() {
         List<BaseMultiItemEntity> datas = new ArrayList<>();
 
-        //添加标题
-        datas.add(new Title());
+        //歌单请求API
+        Observable<ListResponse<Sheet>> sheets = Api.getInstance().sheets();
 
-        //添加歌单数据
-        for (int i = 0; i < 5; i++) {
-            datas.add(new Sheet());
-        }
+        //单曲API
+        Observable<ListResponse<Song>> songs = Api.getInstance().songs();
 
-        //添加标题
-        datas.add(new Title());
+        //请求数据
+        sheets.subscribe(new HttpObserver<ListResponse<Sheet>>(getMainActivity(),false) {
+            @Override
+            public void onSucceeded(ListResponse<Sheet> data) {
+                //歌单数据
+                datas.add(new Title("推荐歌单"));
+                datas.addAll(data.getData());
 
-        //添加单曲数据
-        for (int i = 0; i < 9; i++) {
-            datas.add(new Song());
-        }
+                //单曲数据
+                songs.subscribe(new HttpObserver<ListResponse<Song>>(getMainActivity(),false) {
+                    @Override
+                    public void onSucceeded(ListResponse<Song> data) {
+                        //添加单曲
+                        datas.add(new Title("推荐单曲"));
+                        datas.addAll(data.getData());
 
-        //将数据设置到适配器
-        adapter.replaceData(datas);
-
+                        //将数据设置到适配器
+                        adapter.replaceData(datas);
+                    }
+                });
+            }
+        });
     }
 }
 

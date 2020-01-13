@@ -1,4 +1,4 @@
-package com.hv.heartvoice.Model.MyObserver;
+package com.hv.heartvoice.Model.myObserver;
 
 import com.hv.heartvoice.Base.BaseCommonActivity;
 import com.hv.heartvoice.Base.BaseResponse;

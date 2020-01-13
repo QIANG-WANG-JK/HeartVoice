@@ -3,9 +3,13 @@ package com.hv.heartvoice.Model;
 import com.hv.heartvoice.Base.BaseResponse;
 import com.hv.heartvoice.Domain.BaseModel;
 import com.hv.heartvoice.Domain.Session;
+import com.hv.heartvoice.Domain.Sheet;
+import com.hv.heartvoice.Domain.Song;
 import com.hv.heartvoice.Domain.User;
-import com.hv.heartvoice.Model.Response.DetailResponse;
+import com.hv.heartvoice.Model.response.DetailResponse;
+import com.hv.heartvoice.Model.response.ListResponse;
 
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -56,4 +60,17 @@ public interface Service {
     @GET("v1/users/{id}")
     Observable<DetailResponse<User>> userDetail(@Path("id") String id, @QueryMap Map<String,String> data);
 
+    /**
+     * 歌单列表
+     * @return
+     */
+    @GET("v1/sheets")
+    Observable<ListResponse<Sheet>> sheets();
+
+    /**
+     * 单曲
+     * @return
+     */
+    @GET("v1/songs")
+    Observable<ListResponse<Song>> songs();
 }

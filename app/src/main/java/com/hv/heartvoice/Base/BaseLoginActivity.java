@@ -4,8 +4,8 @@ import com.hv.heartvoice.Domain.Session;
 import com.hv.heartvoice.Domain.User;
 import com.hv.heartvoice.Domain.event.CloseLoginEvent;
 import com.hv.heartvoice.Model.Api;
-import com.hv.heartvoice.Model.MyObserver.HttpObserver;
-import com.hv.heartvoice.Model.Response.DetailResponse;
+import com.hv.heartvoice.Model.myObserver.HttpObserver;
+import com.hv.heartvoice.Model.response.DetailResponse;
 import com.hv.heartvoice.MyApplication;
 import com.hv.heartvoice.View.activity.MainActivity;
 
