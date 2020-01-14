@@ -1,6 +1,7 @@
 package com.hv.heartvoice.Util;
 
 import android.app.Activity;
+import android.content.Context;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
@@ -83,6 +84,16 @@ public class ImageUtil {
                 .load(R.mipmap.place_holder)
                 .apply(options)
                 .into(imageView);
+    }
+
+    /**
+     * 显示本地图片
+     * @param context
+     * @param id
+     * @param imageView
+     */
+    public static void showLocal(Context context,Integer id,ImageView imageView){
+        Glide.with(context).load(id).apply(getCommonRequestOptions().centerCrop()).into(imageView);
     }
 
     /**

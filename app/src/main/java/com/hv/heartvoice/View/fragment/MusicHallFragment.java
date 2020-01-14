@@ -1,13 +1,21 @@
 package com.hv.heartvoice.View.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.bitmap_recycle.IntegerArrayAdapter;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hv.heartvoice.Adapter.MusicHallAdapter;
 import com.hv.heartvoice.Base.BaseCommonFragment;
@@ -19,6 +27,10 @@ import com.hv.heartvoice.Model.Api;
 import com.hv.heartvoice.Model.myObserver.HttpObserver;
 import com.hv.heartvoice.Model.response.ListResponse;
 import com.hv.heartvoice.R;
+import com.hv.heartvoice.Util.DateUtil;
+import com.hv.heartvoice.Util.ImageUtil;
+import com.youth.banner.Banner;
+import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +55,21 @@ public class MusicHallFragment extends BaseCommonFragment {
      * 音乐馆适配器
      */
     private MusicHallAdapter adapter;
+
+    /**
+     * 日期
+     */
+    private TextView date;
+
+    /**
+     * 轮播图
+      */
+    private Banner banner;
+
+    /**
+     * 轮播图数据
+     */
+    private List<Integer> bannerData;
 
     /**
      * 返回实例
@@ -112,7 +139,57 @@ public class MusicHallFragment extends BaseCommonFragment {
     private View createHeaderView() {
         //从XML中创建View
         View view = getLayoutInflater().inflate(R.layout.header_music_hall, (ViewGroup) recyclerView.getParent(), false);
+
+        banner = view.findViewById(R.id.banner);
+
+        banner.setImageLoader(new GlideImageLoad());
+
+        showBanner();
+
+        date = view.findViewById(R.id.musicHallHeaderDate);
+
+        date.setText(String.valueOf(DateUtil.getDayOfMonth()));
+
         return view;
+    }
+
+    private void showBanner() {
+        bannerData = new ArrayList<>();
+        bannerData.add(R.mipmap.banner1);
+        bannerData.add(R.mipmap.banner2);
+        banner.setImages(bannerData);
+
+        //显示数据
+        banner.start();
+
+    }
+
+    /**
+     * 第一次也要滚动
+     */
+    private void startBannerScroll() {
+        banner.startAutoPlay();
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(bannerData != null){
+            //有数据才开始滚动
+            startBannerScroll();
+        }
+    }
+
+    /**
+     *当界面不见执行
+     */
+    @Override
+    public void onPause() {
+        super.onPause();
+        banner.stopAutoPlay();
     }
 
     /**
@@ -152,6 +229,24 @@ public class MusicHallFragment extends BaseCommonFragment {
                 });
             }
         });
+
     }
+
+    class GlideImageLoad extends ImageLoader{
+
+        /**
+         * 加载图片
+         * @param context
+         * @param path
+         * @param imageView
+         */
+        @Override
+        public void displayImage(Context context, Object path, ImageView imageView) {
+            Integer id = (Integer) path;
+            ImageUtil.showLocal(context,id,imageView);
+        }
+
+    }
+
 }
 

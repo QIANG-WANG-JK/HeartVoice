@@ -19,11 +19,10 @@
             app:cardCornerRadius="@dimen/dp_5"
             app:cardElevation="@dimen/dp_0">
 
-            <ImageView
+            <com.youth.banner.Banner
+                android:id="@+id/banner"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_130"
-                android:src="@mipmap/place_holder"
-                android:scaleType="centerCrop"/>
+                android:layout_height="@dimen/dp_250"/>
 
         </androidx.cardview.widget.CardView>
 
@@ -73,11 +72,26 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <!--图标-->
-                <ImageView
-                    android:src="@drawable/selector_day"
-                    android:layout_width="@dimen/dp_50"
-                    android:layout_height="@dimen/dp_50"/>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <!--图标-->
+                    <ImageView
+                        android:src="@drawable/selector_day"
+                        android:layout_width="@dimen/dp_50"
+                        android:layout_height="@dimen/dp_50"/>
+
+                    <TextView
+                        android:id="@+id/musicHallHeaderDate"
+                        android:layout_marginTop="@dimen/dp_18"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@drawable/selector_text_reverse"/>
+
+                </RelativeLayout>
+
                 <!--文本-->
                 <TextView
                     android:layout_marginTop="@dimen/dp_10"
@@ -135,7 +149,7 @@
 
                 <!--图标-->
                 <ImageView
-                    android:src="@drawable/selector_fm"
+                    android:src="@drawable/selector_rank"
                     android:layout_width="@dimen/dp_50"
                     android:layout_height="@dimen/dp_50"/>
                 <!--文本-->
