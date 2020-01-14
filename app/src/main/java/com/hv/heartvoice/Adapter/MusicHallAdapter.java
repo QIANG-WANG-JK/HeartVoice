@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hv.heartvoice.Domain.BaseMultiItemEntity;
 import com.hv.heartvoice.Domain.Sheet;
+import com.hv.heartvoice.Domain.Song;
 import com.hv.heartvoice.Domain.Title;
 import com.hv.heartvoice.R;
 import com.hv.heartvoice.Util.ImageUtil;
@@ -66,6 +67,23 @@ public class MusicHallAdapter extends BaseMultiItemQuickAdapter<BaseMultiItemEnt
 
                 break;
             case TYPE_SONG:
+                //单曲
+                Song song = (Song) item;
+
+                //显示封面
+                ImageUtil.show((Activity) mContext,helper.getView(R.id.musicHallSongBanner),song.getBanner(),1);
+
+                //设置标题
+                helper.setText(R.id.musicHallSongName,song.getTitle());
+
+                //播放量
+                helper.setText(R.id.musicHallSongNumber,String.valueOf(song.getClicks_count()));
+
+                //歌手头像
+                ImageUtil.show((Activity) mContext,helper.getView(R.id.musicHallSongHead),song.getSinger().getAvatar(),0);
+
+                //歌手昵称
+                helper.setText(R.id.musicHallSongNickName,song.getSinger().getNickname());
                 break;
         }
     }
