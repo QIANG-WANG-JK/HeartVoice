@@ -5,13 +5,13 @@
     android:layout_height="@dimen/dp_50"
     android:orientation="vertical"
     android:layout_marginLeft="@dimen/dp_10"
-    android:layout_marginRight="@dimen/dp_10"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_marginRight="@dimen/dp_10">
 
     <TextView
         android:id="@+id/musicHallTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="这是标题"/>
+        android:textColor="@color/black"
+        android:textStyle="bold" />
 
 </LinearLayout>

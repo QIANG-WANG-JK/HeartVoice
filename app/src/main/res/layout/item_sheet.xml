@@ -1,14 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:gravity="center_vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_marginLeft="@dimen/dp_10"
+    android:layout_marginRight="@dimen/dp_10">
 
+    <!--封面图正方形容器-->
+    <com.hv.heartvoice.View.design.SquareLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--封面图容器-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!--卡片布局-->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardCornerRadius="@dimen/dp_5"
+                app:cardElevation="@dimen/dp_0">
+
+                <ImageView
+                    android:id="@+id/musicHallBanner"
+                    android:src="@mipmap/place_holder"
+                    android:scaleType="centerCrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <ImageView
+                android:src="@mipmap/musichall_play"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/dp_5"/>
+
+        </RelativeLayout>
+
+    </com.hv.heartvoice.View.design.SquareLinearLayout>
+
+    <!--标题-->
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/musicHallSheetTitle"
+        android:textColor="@color/black"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:lineSpacingMultiplier="1.2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="这是歌单"/>
+        />
 
 </LinearLayout>
