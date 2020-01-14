@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hv.heartvoice.Domain.BaseMultiItemEntity;
+import com.hv.heartvoice.Domain.Title;
 import com.hv.heartvoice.R;
 
 import java.util.ArrayList;
@@ -42,7 +43,18 @@ public class MusicHallAdapter extends BaseMultiItemQuickAdapter<BaseMultiItemEnt
      */
     @Override
     protected void convert(@NonNull BaseViewHolder helper, BaseMultiItemEntity item) {
-
+        switch (helper.getItemViewType()){
+            case TYPE_TITLE:
+                //标题
+                Title title = (Title) item;
+                //设置标题
+                helper.setText(R.id.musicHallTitle,title.getTitle());
+                break;
+            case TYPE_SHEET:
+                break;
+            case TYPE_SONG:
+                break;
+        }
     }
 
 }

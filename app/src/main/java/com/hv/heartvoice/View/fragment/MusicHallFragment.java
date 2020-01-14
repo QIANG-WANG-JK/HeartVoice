@@ -117,7 +117,7 @@ public class MusicHallFragment extends BaseCommonFragment {
         //单曲API
         Observable<ListResponse<Song>> songs = Api.getInstance().songs();
 
-        //请求数据
+        //请求数据  分开请求  也可用RXJAVA合并请求
         sheets.subscribe(new HttpObserver<ListResponse<Sheet>>(getMainActivity(),false) {
             @Override
             public void onSucceeded(ListResponse<Sheet> data) {
