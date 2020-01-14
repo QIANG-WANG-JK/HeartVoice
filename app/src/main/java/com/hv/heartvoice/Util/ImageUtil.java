@@ -43,7 +43,7 @@ public class ImageUtil {
      * @param imageView
      * @param uri
      */
-    private static void show(Activity activity, ImageView imageView, String uri,int select) {
+    public static void show(Activity activity, ImageView imageView, String uri,int select) {
         uri = ResourceUtil.resourceUri(uri);
         showFull(activity,imageView,uri,select);
     }

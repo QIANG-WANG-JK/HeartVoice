@@ -123,7 +123,10 @@ public class MusicHallFragment extends BaseCommonFragment {
             public void onSucceeded(ListResponse<Sheet> data) {
                 //歌单数据
                 datas.add(new Title("推荐歌单"));
-                datas.addAll(data.getData());
+
+                List<Sheet> list = data.getData().subList(0,5);
+
+                datas.addAll(list);
 
                 //单曲数据
                 songs.subscribe(new HttpObserver<ListResponse<Song>>(getMainActivity(),false) {

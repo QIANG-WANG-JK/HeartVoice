@@ -1,12 +1,16 @@
 package com.hv.heartvoice.Adapter;
 
+import android.app.Activity;
+
 import androidx.annotation.NonNull;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hv.heartvoice.Domain.BaseMultiItemEntity;
+import com.hv.heartvoice.Domain.Sheet;
 import com.hv.heartvoice.Domain.Title;
 import com.hv.heartvoice.R;
+import com.hv.heartvoice.Util.ImageUtil;
 
 import java.util.ArrayList;
 
@@ -51,6 +55,15 @@ public class MusicHallAdapter extends BaseMultiItemQuickAdapter<BaseMultiItemEnt
                 helper.setText(R.id.musicHallTitle,title.getTitle());
                 break;
             case TYPE_SHEET:
+                //歌单
+                Sheet sheet = (Sheet) item;
+
+                //显示图片
+                ImageUtil.show((Activity) mContext,helper.getView(R.id.musicHallBanner),sheet.getBanner(),1);
+
+                //设置歌单标题
+                helper.setText(R.id.musicHallSheetTitle,sheet.getTitle());
+
                 break;
             case TYPE_SONG:
                 break;
