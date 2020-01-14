@@ -100,5 +100,7 @@
     <string name="rank">排行榜</string>
     <string name="banner1">不能说的秘密</string>
     <string name="banner2">前世情人</string>
+    <string name="jay">周杰伦</string>
+    <string name="jayUrl">https://baike.baidu.com/item/%E5%91%A8%E6%9D%B0%E4%BC%A6</string>
 
 </resources>

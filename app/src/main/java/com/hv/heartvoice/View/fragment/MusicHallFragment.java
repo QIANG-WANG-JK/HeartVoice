@@ -242,7 +242,7 @@ public class MusicHallFragment extends BaseCommonFragment implements OnBannerLis
      */
     @Override
     public void OnBannerClick(int position) {
-        WebViewActivity.start(getMainActivity(),"周杰伦","https://baike.baidu.com/item/%E5%91%A8%E6%9D%B0%E4%BC%A6");
+        WebViewActivity.start(getMainActivity(),getString(R.string.jay),getString(R.string.jayUrl));
     }
 
     class GlideImageLoad extends ImageLoader{
