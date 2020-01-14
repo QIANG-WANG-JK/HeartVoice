@@ -98,11 +98,21 @@ public class MusicHallFragment extends BaseCommonFragment {
             }
         });
 
+        //添加头部
+        adapter.addHeaderView(createHeaderView());
+
         //设置适配器
         recyclerView.setAdapter(adapter);
 
         //请求数据
         fetchData();
+    }
+
+    //添加头部控件逻辑
+    private View createHeaderView() {
+        //从XML中创建View
+        View view = getLayoutInflater().inflate(R.layout.header_music_hall, (ViewGroup) recyclerView.getParent(), false);
+        return view;
     }
 
     /**
