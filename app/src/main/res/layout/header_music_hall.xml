@@ -1,10 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10">
+        <!--轮播图圆角-->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardCornerRadius="@dimen/dp_5"
+            app:cardElevation="@dimen/dp_0">
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_130"
+                android:src="@mipmap/place_holder"
+                android:scaleType="centerCrop"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <!--快捷按钮-->
+        <LinearLayout
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--私人电台容器-->
+            <LinearLayout
+                android:id="@+id/ll_fm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <!--图标-->
+                <ImageView
+                    android:src="@drawable/selector_fm"
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_50"/>
+                <!--文本-->
+                <TextView
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="@string/person_fm"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <!--站位控件-->
+            <View
+                android:layout_width="@dimen/dp_0"
+                android:layout_weight="1"
+                android:layout_height="@dimen/dp_0"/>
+
+            <!--每日推荐容器-->
+            <LinearLayout
+                android:id="@+id/ll_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <!--图标-->
+                <ImageView
+                    android:src="@drawable/selector_day"
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_50"/>
+                <!--文本-->
+                <TextView
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="@string/day_recommend"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <!--站位控件-->
+            <View
+                android:layout_width="@dimen/dp_0"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+            <!--每日歌单容器-->
+            <LinearLayout
+                android:id="@+id/ll_sheet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <!--图标-->
+                <ImageView
+                    android:src="@drawable/selector_sheet"
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_50"/>
+                <!--文本-->
+                <TextView
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="@string/everyday_sheet"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <!--站位控件-->
+            <View
+                android:layout_width="@dimen/dp_0"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+            <!--私人电台容器-->
+            <LinearLayout
+                android:id="@+id/ll_rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <!--图标-->
+                <ImageView
+                    android:src="@drawable/selector_fm"
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_50"/>
+                <!--文本-->
+                <TextView
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="@string/rank"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

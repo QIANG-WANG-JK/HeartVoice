@@ -94,5 +94,9 @@
     <string name="logout">退出</string>
     <string name="dynamic">动态</string>
     <string name="musicHall">音乐馆</string>
+    <string name="person_fm">私人电台</string>
+    <string name="day_recommend">每日推荐</string>
+    <string name="everyday_sheet">歌单</string>
+    <string name="rank">排行榜</string>
 
 </resources>
