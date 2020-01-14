@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,7 +30,10 @@ import com.hv.heartvoice.Model.response.ListResponse;
 import com.hv.heartvoice.R;
 import com.hv.heartvoice.Util.DateUtil;
 import com.hv.heartvoice.Util.ImageUtil;
+import com.hv.heartvoice.Util.ToastUtil;
+import com.hv.heartvoice.View.activity.WebViewActivity;
 import com.youth.banner.Banner;
+import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
@@ -38,7 +42,7 @@ import java.util.List;
 import butterknife.BindView;
 import io.reactivex.Observable;
 
-public class MusicHallFragment extends BaseCommonFragment {
+public class MusicHallFragment extends BaseCommonFragment implements OnBannerListener {
 
     /**
      * 列表控件
@@ -158,7 +162,7 @@ public class MusicHallFragment extends BaseCommonFragment {
         bannerData.add(R.mipmap.banner1);
         bannerData.add(R.mipmap.banner2);
         banner.setImages(bannerData);
-
+        banner.setOnBannerListener(this);
         //显示数据
         banner.start();
 
@@ -230,6 +234,15 @@ public class MusicHallFragment extends BaseCommonFragment {
             }
         });
 
+    }
+
+    /**
+     * 轮播图点击回调
+     * @param position
+     */
+    @Override
+    public void OnBannerClick(int position) {
+        WebViewActivity.start(getMainActivity(),"周杰伦","https://baike.baidu.com/item/%E5%91%A8%E6%9D%B0%E4%BC%A6");
     }
 
     class GlideImageLoad extends ImageLoader{

@@ -46,4 +46,14 @@ public class Constant {
      */
     public static final int TYPE_SONG = 2;
 
+    /**
+     * 传递url key
+     */
+    public static final String URL = "URL";
+
+    /**
+     * 传递标题 key
+     */
+    public static final String TITLE = "TITLE";
+
 }
