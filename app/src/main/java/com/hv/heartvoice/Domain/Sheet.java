@@ -51,6 +51,12 @@ public class Sheet extends BaseMultiItemEntity {
      */
     private List<Song> songs;
 
+    /**
+     * 是否收藏
+     * 如果有值代表收藏了
+     */
+    private Integer collection_id;
+
     public String getTitle() {
         return title;
     }
@@ -121,6 +127,14 @@ public class Sheet extends BaseMultiItemEntity {
 
     public void setSongs(List<Song> songs) {
         this.songs = songs;
+    }
+
+    public Integer getCollection_id() {
+        return collection_id;
+    }
+
+    public void setCollection_id(Integer collection_id) {
+        this.collection_id = collection_id;
     }
 
     /**

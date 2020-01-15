@@ -30,7 +30,7 @@
                 android:id="@+id/back"
                 android:layout_width="@dimen/dp_30"
                 android:layout_height="@dimen/dp_30"
-                android:src="@mipmap/ic_back"
+                android:src="@mipmap/next_white"
                 android:scaleType="centerCrop" />
 
             <TextView

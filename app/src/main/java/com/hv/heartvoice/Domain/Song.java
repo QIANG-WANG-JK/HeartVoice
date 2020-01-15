@@ -132,4 +132,5 @@ public class Song extends BaseMultiItemEntity {
     public void setSinger(User singer) {
         this.singer = singer;
     }
+
 }
