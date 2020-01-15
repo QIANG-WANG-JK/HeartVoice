@@ -4,12 +4,13 @@ import android.os.Bundle;
 
 import com.hv.heartvoice.Base.BaseTitleActivity;
 import com.hv.heartvoice.R;
-import com.hv.heartvoice.Util.Constant;
 
 /**
  * 歌单详情界面
  */
 public class SheetDetailActivity extends BaseTitleActivity {
+
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,6 @@ public class SheetDetailActivity extends BaseTitleActivity {
         super.initData();
 
         //获取传递的id
-        getIntent().getStringExtra(Constant.ID);
+        id = extraId();
     }
 }

@@ -3,6 +3,7 @@ package com.hv.heartvoice.Base;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -12,6 +13,7 @@ import androidx.annotation.IdRes;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.hv.heartvoice.Util.Constant;
 import com.hv.heartvoice.Util.PreferenceUtil;
 import com.hv.heartvoice.View.fragment.ServiceFragment;
 
@@ -162,6 +164,29 @@ public class BaseCommonActivity extends BaseActivity {
      */
     protected String extraString(String key) {
         return getIntent().getStringExtra(key);
+    }
+
+    /**
+     * 获取ID
+     * @return
+     */
+    protected String extraId() {
+        return extraString(Constant.ID);
+    }
+
+    /**
+     * 启动界面传递一个字符串参数
+     * @param cls
+     * @param id
+     */
+    protected void startActivityExtraId(Class<?> cls,String id){
+        Intent intent = new Intent(getMainActivity(), cls);
+
+        if(!TextUtils.isEmpty(id)){
+            intent.putExtra(Constant.ID,id);
+        }
+
+        startActivity(intent);
     }
 
 }

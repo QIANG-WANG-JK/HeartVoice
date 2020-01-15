@@ -150,11 +150,7 @@ public class MusicHallFragment extends BaseCommonFragment implements OnBannerLis
                 if(data instanceof Sheet){
                     Sheet sheet = (Sheet) data;
 
-                    Intent intent = new Intent(getMainActivity(), SheetDetailActivity.class);
-
-                    intent.putExtra(Constant.ID,sheet.getId());
-
-                    startActivity(intent);
+                    startActivityExtraId(SheetDetailActivity.class,sheet.getId());
 
                 }
 
