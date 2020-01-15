@@ -146,4 +146,16 @@ public class Api {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    /**
+     * 歌单详情
+     *
+     * @param id
+     * @return
+     */
+    public Observable<DetailResponse<Sheet>> sheetDetail(String id) {
+        return service.sheetDetail(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
 }

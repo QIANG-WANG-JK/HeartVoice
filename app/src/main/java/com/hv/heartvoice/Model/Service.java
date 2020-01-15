@@ -9,7 +9,6 @@ import com.hv.heartvoice.Domain.User;
 import com.hv.heartvoice.Model.response.DetailResponse;
 import com.hv.heartvoice.Model.response.ListResponse;
 
-import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -73,4 +72,14 @@ public interface Service {
      */
     @GET("v1/songs")
     Observable<ListResponse<Song>> songs();
+
+    /**
+     * 歌单详情
+     *
+     * @param id
+     * @return
+     */
+    @GET("v1/sheets/{id}")
+    Observable<DetailResponse<Sheet>> sheetDetail(@Path("id") String id);
+
 }
