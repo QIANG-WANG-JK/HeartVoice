@@ -102,5 +102,6 @@
     <string name="banner2">前世情人</string>
     <string name="jay">周杰伦</string>
     <string name="jayUrl">https://baike.baidu.com/item/%E5%91%A8%E6%9D%B0%E4%BC%A6</string>
+    <string name="activity_sheet_detail">歌单详情</string>
 
 </resources>

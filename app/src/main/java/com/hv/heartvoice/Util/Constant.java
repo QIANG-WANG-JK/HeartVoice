@@ -56,4 +56,9 @@ public class Constant {
      */
     public static final String TITLE = "TITLE";
 
+    /**
+     * Id常量
+     */
+    public static final String ID = "ID";
+
 }

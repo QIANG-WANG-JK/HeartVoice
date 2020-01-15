@@ -1,22 +1,17 @@
 package com.hv.heartvoice.View.fragment;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.bitmap_recycle.IntegerArrayAdapter;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hv.heartvoice.Adapter.MusicHallAdapter;
 import com.hv.heartvoice.Base.BaseCommonFragment;
@@ -28,9 +23,11 @@ import com.hv.heartvoice.Model.Api;
 import com.hv.heartvoice.Model.myObserver.HttpObserver;
 import com.hv.heartvoice.Model.response.ListResponse;
 import com.hv.heartvoice.R;
+import com.hv.heartvoice.Util.Constant;
 import com.hv.heartvoice.Util.DateUtil;
 import com.hv.heartvoice.Util.ImageUtil;
 import com.hv.heartvoice.Util.ToastUtil;
+import com.hv.heartvoice.View.activity.SheetDetailActivity;
 import com.hv.heartvoice.View.activity.WebViewActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
@@ -137,6 +134,33 @@ public class MusicHallFragment extends BaseCommonFragment implements OnBannerLis
 
         //请求数据
         fetchData();
+    }
+
+    @Override
+    protected void initListener() {
+        super.initListener();
+
+        //设置ITEM点击事件
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                //获取点击类型数据
+                Object data = adapter.getItem(position);
+
+                if(data instanceof Sheet){
+                    Sheet sheet = (Sheet) data;
+
+                    Intent intent = new Intent(getMainActivity(), SheetDetailActivity.class);
+
+                    intent.putExtra(Constant.ID,sheet.getId());
+
+                    startActivity(intent);
+
+                }
+
+            }
+        });
+
     }
 
     //添加头部控件逻辑

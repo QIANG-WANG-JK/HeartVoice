@@ -3,7 +3,8 @@
     package="com.hv.heartvoice">
     <!-- 网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -13,16 +14,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".View.activity.SettingActivity"
-            android:theme="@style/WhiteTheme"
+        <activity android:name=".View.activity.SheetDetailActivity"
             android:label=""/>
+        <activity
+            android:name=".View.activity.SettingActivity"
+            android:label=""
+            android:theme="@style/WhiteTheme" />
         <activity android:name=".View.activity.ServiceApproveActivity" />
         <activity android:name=".View.activity.ForgetPasswordActivity" /> <!-- 新版本默认不允许HTTP -->
         <activity android:name=".View.activity.RegisterActivity" />
         <activity android:name=".View.activity.LoginActivity" />
-        <activity android:name=".View.activity.WebViewActivity"
-            android:theme="@style/WhiteTheme"
-            android:label=""/>
+        <activity
+            android:name=".View.activity.WebViewActivity"
+            android:label=""
+            android:theme="@style/WhiteTheme" />
         <activity
             android:name=".View.activity.MainActivity"
             android:label=""
