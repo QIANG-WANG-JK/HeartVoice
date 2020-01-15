@@ -8,8 +8,10 @@ import com.hv.heartvoice.Domain.Song;
 import com.hv.heartvoice.Domain.User;
 import com.hv.heartvoice.Model.response.DetailResponse;
 import com.hv.heartvoice.Model.response.ListResponse;
+import com.hv.heartvoice.MyApplication;
 import com.hv.heartvoice.Util.Constant;
 import com.hv.heartvoice.Util.LogUtil;
+import com.hv.heartvoice.Util.PreferenceUtil;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -20,6 +22,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -39,6 +42,30 @@ public class Api {
             interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
             ok.addInterceptor(interceptor);
         }
+
+        //公共请求参数
+        ok.addNetworkInterceptor(chain -> {
+            //获取偏好设置工具类
+            PreferenceUtil sp = PreferenceUtil.getInstance(MyApplication.getInstance());
+
+            //获取到request
+            Request request = chain.request();
+
+            if(sp.isLogin()){
+                String user = sp.getUserId();
+                String session = sp.getSession();
+
+                //将id和token添加到请求头
+                request.newBuilder()
+                        .addHeader("User",user)
+                        .addHeader("Authorization",session)
+                        .build();
+            }
+
+            //继续执行
+            return chain.proceed(request);
+        });
+
         Retrofit retrofit = new Retrofit.Builder()
                 .client(ok.build())
                 .baseUrl(Constant.ENDPOINT)
