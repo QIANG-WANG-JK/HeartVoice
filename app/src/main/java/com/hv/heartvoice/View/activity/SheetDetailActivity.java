@@ -1,18 +1,27 @@
 package com.hv.heartvoice.View.activity;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.palette.graphics.Palette;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.hv.heartvoice.Adapter.SongAdapter;
 import com.hv.heartvoice.Base.BaseTitleActivity;
 import com.hv.heartvoice.Domain.Sheet;
@@ -21,7 +30,7 @@ import com.hv.heartvoice.Model.myObserver.HttpObserver;
 import com.hv.heartvoice.Model.response.DetailResponse;
 import com.hv.heartvoice.R;
 import com.hv.heartvoice.Util.ImageUtil;
-import com.hv.heartvoice.Util.LogUtil;
+import com.hv.heartvoice.Util.ResourceUtil;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -196,19 +205,85 @@ public class SheetDetailActivity extends BaseTitleActivity {
         //显示封面
         if(StringUtils.isBlank(data.getBanner())){
             //如果图片为空 用默认图片
-            iv_banner.setImageResource(R.mipmap.place_holder);
+            ImageUtil.showLocal(getMainActivity(),R.mipmap.user_head,iv_banner);
         }else{
             //有图片
-            ImageUtil.show(getMainActivity(),iv_banner,data.getBanner(),1);
+            //ImageUtil.show(getMainActivity(),iv_banner,data.getBanner(),1);
+            Glide.with(getMainActivity())
+                    .asBitmap()
+                    .load(ResourceUtil.resourceUri(data.getBanner()))
+                    .into(new CustomTarget<Bitmap>() {
+
+                        /**
+                         * 资源加载完成
+                         * @param resource
+                         * @param transition
+                         */
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                            //显示封面
+                            iv_banner.setImageBitmap(resource);
+
+                            //调色板
+                            Palette.from(resource)
+                                    .generate(new Palette.PaletteAsyncListener() {
+
+                                        /**
+                                         * 颜色计算完成
+                                         * @param palette
+                                         */
+                                        @Override
+                                        public void onGenerated(@Nullable Palette palette) {
+                                            //获取有活力的颜色
+                                            Palette.Swatch swatch = palette.getVibrantSwatch();
+
+                                            if(swatch != null){
+                                                //获取颜色RGB
+                                                int rgb = swatch.getRgb();
+
+                                                //设置toolbar颜色
+                                                toolbar.setBackgroundColor(rgb);
+
+                                                //设置头部容器颜色
+                                                //ll_header.setBackgroundColor(rgb);
+
+                                                //状态栏
+                                                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                                                    //设置状态栏颜色
+                                                    Window window = getWindow();
+
+                                                    //设置状态栏颜色
+                                                    window.setStatusBarColor(rgb);
+
+                                                    //设置导航栏颜色
+                                                    //window.setNavigationBarColor(rgb);
+                                                }
+                                            }
+                                        }
+                                    });
+                        }
+
+                        /**
+                         * 加载任务取消  释放资源
+                         * @param placeholder
+                         */
+                        @Override
+                        public void onLoadCleared(@Nullable Drawable placeholder) {
+
+                        }
+                    });
         }
 
         //标题
         tv_title.setText(data.getTitle());
-
         //头像
-        ImageUtil.showImage(getMainActivity(),iv_avatar,data.getUser().getAvatar(),0);
+        //ImageUtil.showImage(getMainActivity(),iv_avatar,data.getUser().getAvatar(),0);
+        ImageUtil.showLocalWithCicle(getMainActivity(),R.mipmap.user_head,iv_avatar);
+
         //昵称
-        tv_nickname.setText(data.getUser().getNickname());
+        //tv_nickname.setText(data.getUser().getNickname());
+
+        tv_nickname.setText(getString(R.string.heartVoice));
 
         tv_count.setText(getResources().getString(R.string.music_count,data.getSongs_count()));
 

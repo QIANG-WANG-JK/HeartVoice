@@ -93,7 +93,17 @@ public class ImageUtil {
      * @param imageView
      */
     public static void showLocal(Context context,Integer id,ImageView imageView){
-        Glide.with(context).load(id).apply(getCommonRequestOptions().centerCrop()).into(imageView);
+        Glide.with(context).load(id).apply(getCommonRequestOptions()).into(imageView);
+    }
+
+    /**
+     * 显示本地图片
+     * @param context
+     * @param id
+     * @param imageView
+     */
+    public static void showLocalWithCicle(Context context,Integer id,ImageView imageView){
+        Glide.with(context).load(id).apply(getCircleRequestOptions()).into(imageView);
     }
 
     /**
