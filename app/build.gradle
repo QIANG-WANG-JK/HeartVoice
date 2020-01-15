@@ -119,4 +119,7 @@ dependencies {
     //轮播图
     implementation 'com.youth.banner:banner:1.4.10'
 
+    //内存泄漏  监测  只有在deBug阶段
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-2'
+
 }

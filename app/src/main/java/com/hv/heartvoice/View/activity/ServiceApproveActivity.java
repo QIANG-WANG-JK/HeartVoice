@@ -23,6 +23,8 @@ public class ServiceApproveActivity extends BaseCommonActivity {
     @BindView(R.id.serviceBack)
     ImageView serviceBack;
 
+    private ServiceFragment service;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +41,8 @@ public class ServiceApproveActivity extends BaseCommonActivity {
     @Override
     public void initData() {
         super.initData();
-        ServiceFragment serviceFragment=ServiceFragment.newInstance();
-        setFragment(R.id.serviceFragment,serviceFragment);
+        service = new ServiceFragment();
+        setFragment(R.id.serviceFragment,service);
     }
 
     @OnClick(R.id.serviceBack)

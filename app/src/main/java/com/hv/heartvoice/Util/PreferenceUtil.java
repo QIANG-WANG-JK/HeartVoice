@@ -10,6 +10,7 @@ import android.text.TextUtils;
 public class PreferenceUtil {
 
     private static final String NAME = "heartVoice";
+
     /**
      * 用户登录session key
      */

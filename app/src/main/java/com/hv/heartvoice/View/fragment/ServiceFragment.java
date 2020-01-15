@@ -11,18 +11,18 @@ import com.hv.heartvoice.R;
 
 public class ServiceFragment extends BaseCommonFragment {
 
-    private static ServiceFragment serviceFragment;
-
     @Override
     protected View getLayoutView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_service,container,false);
     }
 
-    public static ServiceFragment newInstance(){
-        if(serviceFragment == null){
-            serviceFragment = new ServiceFragment();
-        }
-        return serviceFragment;
-    }
+    //单例方法会内存泄漏
+    //private static ServiceFragment serviceFragment;
+//    public static ServiceFragment newInstance(){
+//        if(serviceFragment == null){
+//            serviceFragment = new ServiceFragment();
+//        }
+//        return serviceFragment;
+//    }
 
 }
