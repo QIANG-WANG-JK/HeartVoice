@@ -46,6 +46,6 @@
 
    </LinearLayout>
 
-    <include layout="@layout/divier_small"/>
+<!--    <include layout="@layout/divier_small"/>-->
 
 </LinearLayout>

@@ -32,7 +32,7 @@ public class SongAdapter extends BaseQuickAdapter<Song, BaseViewHolder> {
     protected void convert(@NonNull BaseViewHolder helper, Song item) {
 
         //显示位置
-        helper.setText(R.id.songPosition,String.valueOf(helper.getAdapterPosition() + 1));
+        helper.setText(R.id.songPosition,String.valueOf(helper.getAdapterPosition()));
 
         //显示标题
         helper.setText(R.id.songTitle,item.getTitle());

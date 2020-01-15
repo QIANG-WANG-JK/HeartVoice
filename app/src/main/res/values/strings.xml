@@ -103,5 +103,10 @@
     <string name="jay">周杰伦</string>
     <string name="jayUrl">https://baike.baidu.com/item/%E5%91%A8%E6%9D%B0%E4%BC%A6</string>
     <string name="activity_sheet_detail">歌单详情</string>
+    <string name="download">下载</string>
+    <string name="play_all">播放全部</string>
+    <string name="music_count">(共%1$d首)</string>
+    <string name="select">选择歌词</string>
+    <string name="collection">收藏</string>
 
 </resources>
