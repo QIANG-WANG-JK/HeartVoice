@@ -10,6 +10,7 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import retrofit2.HttpException;
+import retrofit2.Response;
 
 public class HttpUtil {
 
@@ -34,23 +35,21 @@ public class HttpUtil {
 
                 //获取响应码
                 int code = exception.code();
-
-                if (code == 401) {
-                    ToastUtil.errorShort(R.string.error_network_not_auth);
-                } else if (code == 403) {
-                    ToastUtil.errorShort(R.string.error_network_not_permission);
-                } else if (code == 404) {
-                    ToastUtil.errorShort(R.string.error_network_not_found);
-                } else if (code >= 500) {
-                    ToastUtil.errorShort(R.string.error_network_server);
-                } else {
-                    ToastUtil.errorShort(R.string.error_network_unknown);
-                }
+                handlerHttpError(code);
             } else {
                 ToastUtil.errorShort(R.string.error_network_unknown);
             }
         } else {
-            if (data instanceof BaseResponse) {
+            if(data instanceof Response){
+                //获取响应对象
+                Response response = (Response) data;
+                int code = response.code();
+                if(code >= 200 && code <= 299){
+                    //网络请求正常
+                }else{
+                    handlerHttpError(code);
+                }
+            } else if (data instanceof BaseResponse) {
                 //判断具体的业务请求是否成功
                 BaseResponse response = (BaseResponse) data;
 
@@ -62,6 +61,20 @@ public class HttpUtil {
                     ToastUtil.errorShort(response.getMessage());
                 }
             }
+        }
+    }
+
+    private static void handlerHttpError(int code) {
+        if (code == 401) {
+            ToastUtil.errorShort(R.string.error_network_not_auth);
+        } else if (code == 403) {
+            ToastUtil.errorShort(R.string.error_network_not_permission);
+        } else if (code == 404) {
+            ToastUtil.errorShort(R.string.error_network_not_found);
+        } else if (code >= 500) {
+            ToastUtil.errorShort(R.string.error_network_server);
+        } else {
+            ToastUtil.errorShort(R.string.error_network_unknown);
         }
     }
 

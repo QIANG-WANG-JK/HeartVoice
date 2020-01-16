@@ -1,5 +1,6 @@
 package com.hv.heartvoice.View.activity;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -30,12 +31,15 @@ import com.hv.heartvoice.Model.myObserver.HttpObserver;
 import com.hv.heartvoice.Model.response.DetailResponse;
 import com.hv.heartvoice.R;
 import com.hv.heartvoice.Util.ImageUtil;
+import com.hv.heartvoice.Util.LogUtil;
 import com.hv.heartvoice.Util.ResourceUtil;
+import com.hv.heartvoice.Util.ToastUtil;
 
 import org.apache.commons.lang3.StringUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import retrofit2.Response;
 
 /**
  * 歌单详情界面
@@ -181,12 +185,60 @@ public class SheetDetailActivity extends BaseTitleActivity {
     }
 
     /**
+     * 按钮点击回调方法
+     */
+    @Override
+    public void initListeners() {
+        super.initListeners();
+
+        bt_collection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                processCollectionClick();
+            }
+        });
+
+    }
+
+    /**
+     * 处理歌单收藏与取消
+     */
+    private void processCollectionClick() {
+
+        if(data.isCollection()){
+            Api.getInstance()
+                    .cancelCollection(id)
+                    .subscribe(new HttpObserver<Response<Void>>(getMainActivity(),false) {
+                        @Override
+                        public void onSucceeded(Response<Void> d) {
+                            ToastUtil.successShort(R.string.cancel_collection_success);
+                            data.setCollection_id(null);
+                            data.setClicks_count(data.getCollections_count() - 1);
+                            showCollectionStatus();
+                        }
+                    });
+        }else{
+            Api.getInstance()
+                    .collection(id)
+                    .subscribe(new HttpObserver<Response<Void>>(getMainActivity(),false) {
+                        @Override
+                        public void onSucceeded(Response<Void> d) {
+                            ToastUtil.successShort(R.string.collection_success);
+                            data.setCollection_id(1);
+                            data.setClicks_count(data.getCollections_count() + 1);
+                            showCollectionStatus();
+                        }
+                    });
+        }
+    }
+
+    /**
      * 请求数据
      */
     private void fetchData() {
         Api.getInstance()
                 .sheetDetail(id)
-                .subscribe(new HttpObserver<DetailResponse<Sheet>>(getMainActivity(),true) {
+                .subscribe(new HttpObserver<DetailResponse<Sheet>>(getMainActivity(),false) {
                     @Override
                     public void onSucceeded(DetailResponse<Sheet> data) {
                         next(data.getData());
@@ -285,9 +337,33 @@ public class SheetDetailActivity extends BaseTitleActivity {
 
         tv_nickname.setText(getString(R.string.heartVoice));
 
-        tv_count.setText(getResources().getString(R.string.music_count,data.getSongs_count()));
+        if(data.getSongs() == null){
+            tv_count.setText(getString(R.string.music_count,0));
+        }else{
+            tv_count.setText(getString(R.string.music_count,data.getSongs().size()));
+        }
 
+        //显示收藏状态
+        showCollectionStatus();
 
+    }
+
+    @SuppressLint("ResourceType")
+    private void showCollectionStatus() {
+        if(data.isCollection()){
+            //收藏了
+            bt_collection.setText(getString(R.string.cancel_collection,data.getCollections_count()));
+
+            //弱化取消收藏按钮
+            bt_collection.setBackground(null);
+
+            //设置文字颜色为灰色
+            bt_collection.setTextColor(getColor(R.color.light_grey));
+        }else{
+            bt_collection.setText(getString(R.string.collection,data.getCollections_count()));
+            bt_collection.setBackgroundResource(R.drawable.selector_register_button);
+            bt_collection.setTextColor(getResources().getColorStateList(R.drawable.selector_text,null));
+        }
     }
 
     @OnClick(R.id.back)

@@ -61,4 +61,11 @@ public class Constant {
      */
     public static final String ID = "ID";
 
+    /**
+     * 网络缓存目录大小
+     * 100M
+     */
+    public static final long NETWORK_CACHE_SIZE = 1024 * 1024 * 100;
+
+
 }

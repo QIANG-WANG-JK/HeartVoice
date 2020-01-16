@@ -120,7 +120,6 @@
         <!--收藏按钮-->
         <Button
             android:id="@+id/bt_collection"
-            android:text="@string/collection"
             android:background="@null"
             android:layout_marginRight="@dimen/dp_10"
             android:layout_width="wrap_content"

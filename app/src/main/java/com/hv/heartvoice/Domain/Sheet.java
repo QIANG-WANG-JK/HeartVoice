@@ -1,5 +1,7 @@
 package com.hv.heartvoice.Domain;
 
+import com.hv.heartvoice.Util.LogUtil;
+
 import java.util.List;
 
 import static com.hv.heartvoice.Util.Constant.TYPE_SHEET;
@@ -30,6 +32,11 @@ public class Sheet extends BaseMultiItemEntity {
      * 收藏数
      */
     private int collection;
+
+    /**
+     * 收藏数
+     */
+    private int collections_count;
 
     /**
      * 评论数
@@ -135,6 +142,22 @@ public class Sheet extends BaseMultiItemEntity {
 
     public void setCollection_id(Integer collection_id) {
         this.collection_id = collection_id;
+    }
+
+    public int getCollections_count() {
+        return collections_count;
+    }
+
+    public void setCollections_count(int collections_count) {
+        this.collections_count = collections_count;
+    }
+
+    /**
+     * 是否收藏
+     * @return
+     */
+    public boolean isCollection(){
+        return collection_id != null;
     }
 
     /**

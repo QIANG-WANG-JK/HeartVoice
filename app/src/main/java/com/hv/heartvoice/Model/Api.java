@@ -16,14 +16,14 @@ import com.hv.heartvoice.Util.PreferenceUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
-import java.util.List;
-
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -37,6 +37,10 @@ public class Api {
     private Api(){
 
         OkHttpClient.Builder ok = new OkHttpClient.Builder();
+
+        Cache cache = new Cache(MyApplication.getInstance().getCacheDir(), Constant.NETWORK_CACHE_SIZE);
+        ok.cache(cache);
+
         if(LogUtil.isDebug){
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
@@ -56,10 +60,11 @@ public class Api {
                 String session = sp.getSession();
 
                 //将id和token添加到请求头
-                request.newBuilder()
-                        .addHeader("User",user)
-                        .addHeader("Authorization",session)
-                        .build();
+                request = request.newBuilder()
+                         .addHeader("Content-Type","application/json")
+                         .addHeader("User",user)
+                         .addHeader("Authorization",session)
+                         .build();
             }
 
             //继续执行
@@ -181,6 +186,28 @@ public class Api {
      */
     public Observable<DetailResponse<Sheet>> sheetDetail(String id) {
         return service.sheetDetail(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * 收藏歌单
+     * @param id
+     * @return
+     */
+    public Observable<Response<Void>> collection(String id){
+        return service.collect(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * 取消收藏歌单
+     * @param id
+     * @return
+     */
+    public Observable<Response<Void>> cancelCollection(String id){
+        return service.deleteCollect(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
