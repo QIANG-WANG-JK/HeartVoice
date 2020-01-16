@@ -14,9 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".View.activity.CommentActivity"
+        <activity android:name=".View.activity.UserDetailActivity"
             android:label=""
             android:theme="@style/WhiteTheme"></activity>
+        <activity
+            android:name=".View.activity.CommentActivity"
+            android:label=""
+            android:theme="@style/WhiteTheme" />
         <activity
             android:name=".View.activity.SheetDetailActivity"
             android:label="" />

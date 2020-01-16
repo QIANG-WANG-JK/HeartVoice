@@ -54,4 +54,5 @@ public class MainAdapter extends BaseFragmentPagerAdapter<Integer> {
     public CharSequence getPageTitle(int position) {
         return context.getString(titleName[position]);
     }
+
 }

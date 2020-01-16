@@ -1,20 +1,20 @@
 package com.hv.heartvoice.View.activity;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.hv.heartvoice.Base.BaseTitleActivity;
 import com.hv.heartvoice.R;
-import com.hv.heartvoice.Util.Constant;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.hv.heartvoice.Util.Constant.Transparent;
 
-public class CommentActivity extends BaseTitleActivity {
+/**
+ * 用户详情
+ */
+public class UserDetailActivity extends BaseTitleActivity {
 
     @BindView(R.id.back)
     ImageView back;
@@ -22,13 +22,12 @@ public class CommentActivity extends BaseTitleActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comment);
+        setContentView(R.layout.activity_user_detail);
     }
 
     @Override
     protected void initViews() {
         super.initViews();
-        //禁用ToolBar按钮
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         //设置状态栏透明并且字体黑色
@@ -41,15 +40,6 @@ public class CommentActivity extends BaseTitleActivity {
     @OnClick(R.id.back)
     public void back(){
         onBackPressed();
-    }
-
-    public static void start(Activity activity,String sheetId){
-        Intent intent = new Intent(activity,CommentActivity.class);
-
-        intent.putExtra(Constant.SHEET_ID,sheetId);
-
-        activity.startActivity(intent);
-
     }
 
 }

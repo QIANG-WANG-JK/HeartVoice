@@ -218,11 +218,14 @@ public class SheetDetailActivity extends BaseTitleActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(getMainActivity(),CommentActivity.class);
+                CommentActivity.start(getMainActivity(),id);
+            }
+        });
 
-                intent.putExtra(Constant.SHEET_ID,id);
-
-                startActivity(intent);
+        iv_avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityExtraId(UserDetailActivity.class,data.getUser().getId());
             }
         });
 

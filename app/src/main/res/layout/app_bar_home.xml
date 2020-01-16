@@ -29,10 +29,26 @@
                 android:layout_height="@dimen/dp_30"
                 android:scaleType="centerCrop"/>
 
-            <net.lucode.hackware.magicindicator.MagicIndicator
-                android:id="@+id/Indicator"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize" />
+                android:layout_height="?attr/actionBarSize">
+
+
+                <net.lucode.hackware.magicindicator.MagicIndicator
+                    android:id="@+id/Indicator"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_weight="1"
+                    android:layout_height="?attr/actionBarSize" />
+
+                    <ImageView
+                        android:layout_gravity="center_vertical"
+                        android:src="@mipmap/search"
+                        android:layout_width="@dimen/dp_20"
+                        android:layout_height="@dimen/dp_20"
+                        android:scaleType="centerCrop"
+                        android:layout_marginRight="@dimen/dp_20"/>
+
+            </LinearLayout>
 
         </androidx.appcompat.widget.Toolbar>
 
