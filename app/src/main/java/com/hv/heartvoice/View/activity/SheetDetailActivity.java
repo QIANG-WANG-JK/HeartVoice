@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hv.heartvoice.Adapter.SongAdapter;
 import com.hv.heartvoice.Base.BaseTitleActivity;
 import com.hv.heartvoice.Domain.Sheet;
@@ -226,6 +227,13 @@ public class SheetDetailActivity extends BaseTitleActivity {
             @Override
             public void onClick(View v) {
                 startActivityExtraId(UserDetailActivity.class,data.getUser().getId());
+            }
+        });
+
+        songAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                SimplePlayerActivity.start(getMainActivity());
             }
         });
 
