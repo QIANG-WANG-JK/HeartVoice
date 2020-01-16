@@ -3,7 +3,12 @@ package com.hv.heartvoice.View.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.hv.heartvoice.Base.BaseTitleActivity;
 import com.hv.heartvoice.R;
@@ -20,11 +25,79 @@ public class SimplePlayerActivity extends BaseTitleActivity {
 
     @BindView(R.id.back)
     ImageView back;
+    @BindView(R.id.recycleView)
+    RecyclerView recyclerView;
+    @BindView(R.id.songTitle)
+    TextView songTitle;
+    @BindView(R.id.tv_start)
+    TextView tv_start;
+    @BindView(R.id.sb_progress)
+    SeekBar sb_progress;
+    @BindView(R.id.tv_end)
+    TextView tv_end;
+    @BindView(R.id.bt_previous)
+    Button bt_previous;
+    @BindView(R.id.bt_play)
+    Button bt_play;
+    @BindView(R.id.bt_next)
+    Button bt_next;
+    @BindView(R.id.bt_loop_model)
+    Button bt_loop_model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple_player);
+    }
+
+    @Override
+    public void initListeners() {
+        super.initListeners();
+
+        sb_progress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            /**
+             * 当进度改变
+             * @param seekBar
+             * @param progress
+             * @param fromUser
+             */
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+    }
+
+    @OnClick(R.id.bt_previous)
+    public void previous(){
+
+    }
+
+    @OnClick(R.id.bt_play)
+    public void play(){
+
+    }
+
+    @OnClick(R.id.bt_next)
+    public void next(){
+
+    }
+
+    @OnClick(R.id.bt_loop_model)
+    public void loop(){
+
     }
 
     @Override
