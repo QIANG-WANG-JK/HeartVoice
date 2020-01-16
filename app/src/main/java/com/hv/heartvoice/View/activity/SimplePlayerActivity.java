@@ -1,6 +1,7 @@
 package com.hv.heartvoice.View.activity;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import com.hv.heartvoice.Manager.MusicPlayerManager;
 import com.hv.heartvoice.R;
 import com.hv.heartvoice.Service.MusicPlayerService;
 import com.hv.heartvoice.Util.LogUtil;
+import com.hv.heartvoice.Util.NotificationUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -96,7 +98,10 @@ public class SimplePlayerActivity extends BaseTitleActivity {
 
     @OnClick(R.id.bt_play)
     public void play(){
+        Notification notification = NotificationUtil.getServiceForeground(getApplicationContext());
 
+        //显示通知
+        NotificationUtil.showNotification(100,notification);
     }
 
     @OnClick(R.id.bt_next)
