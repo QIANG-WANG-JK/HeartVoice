@@ -11,7 +11,10 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hv.heartvoice.Base.BaseTitleActivity;
+import com.hv.heartvoice.Manager.MusicPlayerManager;
 import com.hv.heartvoice.R;
+import com.hv.heartvoice.Service.MusicPlayerService;
+import com.hv.heartvoice.Util.LogUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -78,6 +81,12 @@ public class SimplePlayerActivity extends BaseTitleActivity {
             }
         });
 
+    }
+
+    @Override
+    public void initData() {
+        super.initData();
+        MusicPlayerManager musicPlayerManager = MusicPlayerService.getMusicPlayerManager(getMainActivity());
     }
 
     @OnClick(R.id.bt_previous)

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hv.heartvoice">
+
     <!-- 网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -14,9 +15,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".View.activity.SimplePlayerActivity"
+        <service
+            android:name=".Service.MusicPlayerService"
+            android:enabled="true"
+            android:exported="false"
+            android:persistent="true"></service>
+
+        <activity
+            android:name=".View.activity.SimplePlayerActivity"
             android:label=""
-            android:theme="@style/WhiteTheme"></activity>
+            android:theme="@style/WhiteTheme" />
         <activity
             android:name=".View.activity.UserDetailActivity"
             android:label=""
