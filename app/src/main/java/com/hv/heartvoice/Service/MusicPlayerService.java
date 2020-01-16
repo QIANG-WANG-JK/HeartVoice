@@ -1,13 +1,16 @@
 package com.hv.heartvoice.Service;
 
+import android.app.Notification;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
 
 import com.hv.heartvoice.Manager.MusicPlayerManager;
 import com.hv.heartvoice.Manager.MusicPlayerManagerImpl;
 import com.hv.heartvoice.Util.LogUtil;
+import com.hv.heartvoice.Util.NotificationUtil;
 import com.hv.heartvoice.Util.ServiceUtil;
 
 /**
@@ -46,6 +49,18 @@ public class MusicPlayerService extends Service {
      */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
+        /**
+         * 设置前台服务
+         */
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+
+            Notification notification = NotificationUtil.getServiceForeground(getApplicationContext());
+
+            //传0不显示通知
+            startForeground(0,notification);
+        }
+
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -54,6 +69,8 @@ public class MusicPlayerService extends Service {
      */
     @Override
     public void onDestroy() {
+        //停止前台服务 移除之前通知
+        stopForeground(true);
         super.onDestroy();
     }
 
