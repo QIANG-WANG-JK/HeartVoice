@@ -76,10 +76,26 @@
                     <!--昵称-->
                     <TextView
                         android:id="@+id/tv_nickname"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp_10"
                         android:textColor="@color/black" />
+
+                    <ImageView
+                        android:id="@+id/comment"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_width="@dimen/dp_20"
+                        android:layout_height="@dimen/dp_20"
+                        android:src="@mipmap/comment"
+                        />
+
+                    <TextView
+                        android:id="@+id/comment_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/light_grey"
+                        android:layout_marginLeft="@dimen/dp_10"/>
+
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

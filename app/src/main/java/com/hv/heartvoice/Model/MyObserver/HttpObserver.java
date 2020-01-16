@@ -57,16 +57,20 @@ public abstract class HttpObserver<T> extends ObserverAdapter<T> {
     }
 
     protected boolean isSucceeded(T t) {
+
         if(t instanceof Response){
             Response response = (Response) t;
             //无状态码代表成功
             int code = response.code();
-            return code >= 200 && code <= 299 ? true : false;
+            if(code >= 200 && code <= 299){
+                return true;
+            }
         } else if(t instanceof BaseResponse){
             BaseResponse response = (BaseResponse) t;
             return response.getStatus() == 0;
         }
         return false;
+
     }
 
     @Override

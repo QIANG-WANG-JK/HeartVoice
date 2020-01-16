@@ -67,5 +67,10 @@ public class Constant {
      */
     public static final long NETWORK_CACHE_SIZE = 1024 * 1024 * 100;
 
+    /**
+     * 歌单ID
+     */
+    public static final String SHEET_ID = "SHEET_ID";
+
 
 }

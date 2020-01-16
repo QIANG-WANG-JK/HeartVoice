@@ -1,6 +1,7 @@
 package com.hv.heartvoice.View.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -30,6 +31,7 @@ import com.hv.heartvoice.Model.Api;
 import com.hv.heartvoice.Model.myObserver.HttpObserver;
 import com.hv.heartvoice.Model.response.DetailResponse;
 import com.hv.heartvoice.R;
+import com.hv.heartvoice.Util.Constant;
 import com.hv.heartvoice.Util.ImageUtil;
 import com.hv.heartvoice.Util.LogUtil;
 import com.hv.heartvoice.Util.ResourceUtil;
@@ -114,6 +116,16 @@ public class SheetDetailActivity extends BaseTitleActivity {
      */
     private TextView tv_count;
 
+    /**
+     * 评论
+     */
+    private ImageView comment;
+
+    /**
+     * 评论数
+     */
+    private TextView comment_count;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,6 +174,10 @@ public class SheetDetailActivity extends BaseTitleActivity {
 
         tv_count = view.findViewById(R.id.tv_count);
 
+        comment = view.findViewById(R.id.comment);
+
+        comment_count = view.findViewById(R.id.comment_count);
+
         return view;
     }
 
@@ -198,6 +214,18 @@ public class SheetDetailActivity extends BaseTitleActivity {
             }
         });
 
+        comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getMainActivity(),CommentActivity.class);
+
+                intent.putExtra(Constant.SHEET_ID,id);
+
+                startActivity(intent);
+            }
+        });
+
     }
 
     /**
@@ -212,9 +240,7 @@ public class SheetDetailActivity extends BaseTitleActivity {
                         @Override
                         public void onSucceeded(Response<Void> d) {
                             ToastUtil.successShort(R.string.cancel_collection_success);
-                            data.setCollection_id(null);
-                            data.setClicks_count(data.getCollections_count() - 1);
-                            showCollectionStatus();
+                            fetchData();
                         }
                     });
         }else{
@@ -224,9 +250,7 @@ public class SheetDetailActivity extends BaseTitleActivity {
                         @Override
                         public void onSucceeded(Response<Void> d) {
                             ToastUtil.successShort(R.string.collection_success);
-                            data.setCollection_id(1);
-                            data.setClicks_count(data.getCollections_count() + 1);
-                            showCollectionStatus();
+                            fetchData();
                         }
                     });
         }
@@ -342,6 +366,8 @@ public class SheetDetailActivity extends BaseTitleActivity {
         }else{
             tv_count.setText(getString(R.string.music_count,data.getSongs().size()));
         }
+
+        comment_count.setText(String.valueOf(data.getComments_count()));
 
         //显示收藏状态
         showCollectionStatus();
