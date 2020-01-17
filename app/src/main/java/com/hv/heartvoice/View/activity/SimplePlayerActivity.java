@@ -5,13 +5,17 @@ import android.app.Notification;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.hv.heartvoice.Adapter.SimplePlayerAdapter;
 import com.hv.heartvoice.Base.BaseTitleActivity;
 import com.hv.heartvoice.Domain.Song;
 import com.hv.heartvoice.Listener.MusicPlayerListener;
@@ -19,7 +23,6 @@ import com.hv.heartvoice.Manager.ListManager;
 import com.hv.heartvoice.Manager.MusicPlayerManager;
 import com.hv.heartvoice.R;
 import com.hv.heartvoice.Service.MusicPlayerService;
-import com.hv.heartvoice.Util.LogUtil;
 import com.hv.heartvoice.Util.NotificationUtil;
 import com.hv.heartvoice.Util.TimeUtil;
 import com.hv.heartvoice.Util.ToastUtil;
@@ -72,6 +75,8 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
 
     private ListManager listManager;
 
+    private SimplePlayerAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +94,12 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
 
         //设置内容到状态栏下
         setMargins(toolbar,0,getStatusBarHeight(getMainActivity()),0,0);
+
+        recyclerView.setHasFixedSize(true);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getMainActivity());
+
+        recyclerView.setLayoutManager(layoutManager);
     }
 
     @Override
@@ -121,6 +132,16 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
             }
         });
 
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Song data = listManager.getDatas().get(position);
+                if(data != null){
+                    listManager.play(data);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -133,6 +154,13 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
         musicPlayerManager = MusicPlayerService.getMusicPlayerManager(getMainActivity());
 
         showLoopModel();
+
+        //创建适配器
+        adapter = new SimplePlayerAdapter(android.R.layout.simple_expandable_list_item_1);
+
+        recyclerView.setAdapter(adapter);
+
+        adapter.replaceData(listManager.getDatas());
 
     }
 

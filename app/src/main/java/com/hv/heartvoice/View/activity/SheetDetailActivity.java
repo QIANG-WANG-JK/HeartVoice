@@ -12,6 +12,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -59,6 +60,21 @@ public class SheetDetailActivity extends BaseTitleActivity {
 
     @BindView(R.id.back)
     ImageView back;
+
+    @BindView(R.id.playControll)
+    LinearLayout playControll;
+
+    @BindView(R.id.playControllBanner)
+    ImageView playControllBanner;
+
+    @BindView(R.id.playControllSong)
+    TextView playControllSong;
+
+    @BindView(R.id.playControllPlay)
+    ImageView playControllPlay;
+
+    @BindView(R.id.playControllProgress)
+    ProgressBar playControllProgress;
 
     /**
      * 歌单ID
@@ -424,6 +440,18 @@ public class SheetDetailActivity extends BaseTitleActivity {
             bt_collection.setBackgroundResource(R.drawable.selector_register_button);
             bt_collection.setTextColor(getResources().getColorStateList(R.drawable.selector_text,null));
         }
+    }
+
+    @OnClick(R.id.playControll)
+    public void playControllContainer(){
+    }
+
+    @OnClick(R.id.playControllPlay)
+    public void playControll(){
+    }
+
+    @OnClick(R.id.playControllMusicList)
+    public void musicList(){
     }
 
     @OnClick(R.id.back)

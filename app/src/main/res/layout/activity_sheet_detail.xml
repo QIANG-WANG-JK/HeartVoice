@@ -54,10 +54,13 @@
             android:id="@+id/sheetDetailRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_0"
-            android:layout_weight="1">
+            android:layout_weight="1"/>
 
-        </androidx.recyclerview.widget.RecyclerView>
+        <include layout="@layout/play_controll_small" />
 
     </LinearLayout>
+
+
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
