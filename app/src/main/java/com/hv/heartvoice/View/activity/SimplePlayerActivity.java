@@ -169,6 +169,7 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
         Intent intent = new Intent(activity,SimplePlayerActivity.class);
 
         activity.startActivity(intent);
+
     }
 
     /**

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -30,6 +31,7 @@ import com.hv.heartvoice.Adapter.SongAdapter;
 import com.hv.heartvoice.Base.BaseTitleActivity;
 import com.hv.heartvoice.Domain.Sheet;
 import com.hv.heartvoice.Domain.Song;
+import com.hv.heartvoice.Listener.MusicPlayerListener;
 import com.hv.heartvoice.Manager.ListManager;
 import com.hv.heartvoice.Manager.MusicPlayerManager;
 import com.hv.heartvoice.Model.Api;
@@ -52,7 +54,7 @@ import retrofit2.Response;
 /**
  * 歌单详情界面
  */
-public class SheetDetailActivity extends BaseTitleActivity {
+public class SheetDetailActivity extends BaseTitleActivity implements MusicPlayerListener {
 
     private static final String TAG = "SheetDetailActivity";
 
@@ -456,8 +458,21 @@ public class SheetDetailActivity extends BaseTitleActivity {
     protected void onResume() {
         super.onResume();
 
+        //添加播放管理监听器
+        musicPlayerManager.addMusicPlayerListener(this);
+
         //显示迷你控制器数据
         showSmallPlayControlData();
+    }
+
+    /**
+     * 界面隐藏
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        musicPlayerManager.removeMusicPlayerListener(this);
     }
 
     private void showSmallPlayControlData() {
@@ -470,11 +485,10 @@ public class SheetDetailActivity extends BaseTitleActivity {
                 //显示音乐时长
                 showDuration(data);
 
-                //显示播放进度
-                showProgress(data);
-
                 //显示播放状态
                 showMusicPlayStatus();
+
+                showProgress(data);
             }
         }
     }
@@ -517,20 +531,48 @@ public class SheetDetailActivity extends BaseTitleActivity {
     }
 
     @OnClick(R.id.playControll)
-    public void playControllContainer(){
+    public void playControlContainer(){
+        SimplePlayerActivity.start(getMainActivity());
     }
 
     @OnClick(R.id.playControllPlay)
-    public void playControll(){
+    public void playControl(){
+        if (musicPlayerManager.isPlaying()){
+            listManager.pause();
+        }else{
+            listManager.resume();
+        }
     }
 
     @OnClick(R.id.playControllMusicList)
     public void musicList(){
+
     }
 
     @OnClick(R.id.back)
     public void back(){
         onBackPressed();
+    }
+
+    @Override
+    public void onPaused(Song data) {
+        showPlayStatus();
+    }
+
+    @Override
+    public void onPlaying(Song data) {
+        showPauseStatus();
+    }
+
+    @Override
+    public void onPrepared(MediaPlayer mp, Song data) {
+        showInitData(data);
+    }
+
+    @Override
+    public void onProgress(Song data) {
+        //显示播放进度
+        showProgress(data);
     }
 
 }
