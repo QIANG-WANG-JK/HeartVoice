@@ -17,6 +17,11 @@ public class Constant {
     public static final String RESOURCE_ENDPOINT = BuildConfig.RESOURCE_ENDPOINT;
 
     /**
+     * 循环模式
+     */
+    public static final String PLAY_MODEL = "PLAY_MODEL";
+
+    /**
      * 状态栏透明
      */
     public static final int Transparent = Color.TRANSPARENT;

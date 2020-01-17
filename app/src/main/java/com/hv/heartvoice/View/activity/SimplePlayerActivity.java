@@ -132,6 +132,8 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
         //初始化音乐播放器
         musicPlayerManager = MusicPlayerService.getMusicPlayerManager(getMainActivity());
 
+        showLoopModel();
+
     }
 
     public static void start(Activity activity){
@@ -191,6 +193,11 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
             Song next = listManager.next();
             if(next != null){
                 listManager.play(next);
+            }
+        }else{
+            Song data = listManager.getData();
+            if(data != null){
+                listManager.play(data);
             }
         }
     }

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.hv.heartvoice.Domain.Song;
 import com.hv.heartvoice.Service.MusicPlayerService;
+import com.hv.heartvoice.Util.PreferenceUtil;
 import com.hv.heartvoice.Util.ResourceUtil;
 
 import java.util.LinkedList;
@@ -13,6 +14,7 @@ import java.util.Random;
 import static com.hv.heartvoice.Util.Constant.MODEL_LOOP_LIST;
 import static com.hv.heartvoice.Util.Constant.MODEL_LOOP_ONE;
 import static com.hv.heartvoice.Util.Constant.MODEL_LOOP_RANDOM;
+import static com.hv.heartvoice.Util.Constant.PLAY_MODEL;
 
 /**
  * 列表管理器默认实现
@@ -48,9 +50,15 @@ public class ListManagerImpl implements ListManager{
      */
     private int model = MODEL_LOOP_LIST;
 
+    /**
+     * 缓存工具
+     */
+    private PreferenceUtil sp;
+
     private ListManagerImpl(Context context) {
         this.context = context.getApplicationContext();
-
+        sp = PreferenceUtil.getInstance(this.context);
+        model = Integer.parseInt(sp.getPlayModel(PLAY_MODEL));
         //初始化音乐播放管理器
         musicPlayerManager = MusicPlayerService.getMusicPlayerManager(this.context);
     }
@@ -156,17 +164,13 @@ public class ListManagerImpl implements ListManager{
 
     @Override
     public int changeLoopModel() {
+        sp.delete(PLAY_MODEL);
         model++;
         //判断循环模式
         if(model > MODEL_LOOP_RANDOM){
             model = MODEL_LOOP_LIST;
         }
-        if(model == MODEL_LOOP_ONE){
-            //设置单曲循环模式
-            musicPlayerManager.setLooping(true);
-        }else{
-            musicPlayerManager.setLooping(false);
-        }
+        sp.setPlayModel(String.valueOf(model));
         return model;
     }
 

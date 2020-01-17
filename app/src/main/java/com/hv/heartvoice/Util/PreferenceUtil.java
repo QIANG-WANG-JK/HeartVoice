@@ -17,6 +17,8 @@ public class PreferenceUtil {
     private static final String SESSION = "SESSION";
     private static final String USER_ID = "USER_ID";
 
+    private static final String PLAY_MODEL = "PLAY_MODEL";
+
     private static PreferenceUtil instance;
     private final SharedPreferences preference;
     private Context context;
@@ -58,6 +60,14 @@ public class PreferenceUtil {
         return preference.getString(USER_ID,null);
     }
 
+    public void setPlayModel(String value){
+        preference.edit().putString(PLAY_MODEL,value).commit();
+    }
+
+    public String getPlayModel(String value){
+        return preference.getString(PLAY_MODEL,"0");
+    }
+
     /**
      * 退出
      */
@@ -66,7 +76,7 @@ public class PreferenceUtil {
         delete(SESSION);
     }
 
-    private void delete(String key){
+    public void delete(String key){
         preference.edit().remove(key).commit();
     }
 
