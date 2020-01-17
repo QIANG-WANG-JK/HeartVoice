@@ -130,6 +130,9 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
         //显示音乐时长
         showDuration();
 
+        //显示播放进度
+        showProgress();
+
         //显示播放状态
         showMusicPlayStatus();
     }
@@ -227,7 +230,18 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
 
     @Override
     public void onProgress(Song data) {
-        LogUtil.e("onProgress",data.getProgress()+" "+data.getDuration());
+        showProgress();
+    }
+
+    /**
+     * 显示播放进度
+     */
+    private void showProgress() {
+        long progress = musicPlayerManager.getData().getProgress();
+
+        tv_start.setText(TimeUtil.formatMinuteSecond((int) progress));
+
+        sb_progress.setProgress((int) progress);
     }
 
     /**
