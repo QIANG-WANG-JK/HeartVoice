@@ -4,7 +4,9 @@ import android.content.Context;
 import android.media.MediaPlayer;
 
 import com.hv.heartvoice.Domain.Song;
+import com.hv.heartvoice.Listener.Consume;
 import com.hv.heartvoice.Listener.MusicPlayerListener;
+import com.hv.heartvoice.Util.ListUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -86,9 +88,15 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
             mediaPlayer.pause();
 
             //回调监听器
-            for (MusicPlayerListener listener : listeners) {
-                listener.onPaused(data);
-            }
+//            for (MusicPlayerListener listener : listeners) {
+//                listener.onPaused(data);
+//            }
+            ListUtil.eachListener(listeners, new Consume<MusicPlayerListener>() {
+                @Override
+                public void accept(MusicPlayerListener listener) {
+                    listener.onPaused(data);
+                }
+            });
 
         }
     }
@@ -123,9 +131,17 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
      * 发布播放中状态
      */
     private void publishPlayingStatus(){
-        for (MusicPlayerListener listener : listeners) {
-            listener.onPlaying(data);
-        }
+//        for (MusicPlayerListener listener : listeners) {
+//            listener.onPlaying(data);
+//        }
+        //重构
+        ListUtil.eachListener(listeners, new Consume<MusicPlayerListener>() {
+            @Override
+            public void accept(MusicPlayerListener listener) {
+                listener.onPlaying(data);
+            }
+        });
+
     }
 
 }
