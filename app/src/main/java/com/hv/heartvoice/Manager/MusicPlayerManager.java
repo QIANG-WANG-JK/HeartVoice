@@ -44,4 +44,10 @@ public interface MusicPlayerManager {
      */
     void removeMusicPlayerListener(MusicPlayerListener listener);
 
+    /**
+     * 获取当前播放的音乐
+     * @return
+     */
+    Song getData();
+
 }

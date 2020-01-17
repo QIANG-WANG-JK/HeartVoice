@@ -41,6 +41,34 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
 
         //初始化播放器
         mediaPlayer = new MediaPlayer();
+
+        //设置播放器监听
+        initListeners();
+    }
+
+    private void initListeners() {
+        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+
+            /**
+             * 播放器准备开始播放时
+             * @param mp
+             */
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                //播放准备时回调
+                //将总进度保存至音乐对象
+                data.setDuration(mp.getDuration());
+
+                ListUtil.eachListener(listeners, new Consume<MusicPlayerListener>() {
+                    @Override
+                    public void accept(MusicPlayerListener listener) {
+                        listener.onPrepared(mp,data);
+                    }
+                });
+
+            }
+        });
+
     }
 
     public static synchronized MusicPlayerManager getInstance(Context context){
@@ -125,6 +153,11 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
     @Override
     public void removeMusicPlayerListener(MusicPlayerListener listener) {
         listeners.remove(listener);
+    }
+
+    @Override
+    public Song getData() {
+        return this.data;
     }
 
     /**

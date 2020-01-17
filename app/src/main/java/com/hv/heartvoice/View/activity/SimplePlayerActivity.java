@@ -3,6 +3,7 @@ package com.hv.heartvoice.View.activity;
 import android.app.Activity;
 import android.app.Notification;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import com.hv.heartvoice.R;
 import com.hv.heartvoice.Service.MusicPlayerService;
 import com.hv.heartvoice.Util.LogUtil;
 import com.hv.heartvoice.Util.NotificationUtil;
+import com.hv.heartvoice.Util.TimeUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -125,6 +127,9 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
         //设置播放监听器
         musicPlayerManager.addMusicPlayerListener(this);
 
+        //显示音乐时长
+        showDuration();
+
         //显示播放状态
         showMusicPlayStatus();
     }
@@ -213,6 +218,25 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
     @Override
     public void onPlaying(Song data) {
         showPauseStatus();
+    }
+
+    @Override
+    public void onPrepared(MediaPlayer mp, Song data) {
+        showDuration();
+    }
+
+    /**
+     * 显示时长
+     */
+    private void showDuration() {
+        //获取正在播放音乐的时长
+        long end = musicPlayerManager.getData().getDuration();
+
+        //将其格式化为分钟:秒
+        tv_end.setText(TimeUtil.formatMinuteSecond((int)end));
+
+        //设置到进度条
+        sb_progress.setMax((int)end);
     }
 
     /**

@@ -53,9 +53,16 @@ public class Song extends BaseMultiItemEntity {
     private User singer;
 
     /**
-     * 单曲
-     * @return
+     * 播放总进度 单位毫秒
      */
+    private long duration;
+
+    /**
+     * 播放进度
+     */
+    private long progress;
+
+
     @Override
     public int getItemType() {
         return TYPE_SONG;
@@ -133,4 +140,19 @@ public class Song extends BaseMultiItemEntity {
         this.singer = singer;
     }
 
+    public long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
+
+    public long getProgress() {
+        return progress;
+    }
+
+    public void setProgress(long progress) {
+        this.progress = progress;
+    }
 }
