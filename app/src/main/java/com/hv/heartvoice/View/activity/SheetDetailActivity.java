@@ -477,6 +477,7 @@ public class SheetDetailActivity extends BaseTitleActivity implements MusicPlaye
 
     private void showSmallPlayControlData() {
         if(listManager.getDatas() != null && listManager.getDatas().size() > 0){
+            playControll.setVisibility(View.VISIBLE);
             Song data = listManager.getData();
             if(data != null){
                 //显示初始化数据
@@ -490,6 +491,8 @@ public class SheetDetailActivity extends BaseTitleActivity implements MusicPlaye
 
                 showProgress(data);
             }
+        }else{
+            playControll.setVisibility(View.GONE);
         }
     }
 
