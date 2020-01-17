@@ -31,6 +31,7 @@ import com.hv.heartvoice.Base.BaseTitleActivity;
 import com.hv.heartvoice.Domain.Sheet;
 import com.hv.heartvoice.Domain.Song;
 import com.hv.heartvoice.Manager.ListManager;
+import com.hv.heartvoice.Manager.MusicPlayerManager;
 import com.hv.heartvoice.Model.Api;
 import com.hv.heartvoice.Model.myObserver.HttpObserver;
 import com.hv.heartvoice.Model.response.DetailResponse;
@@ -151,6 +152,11 @@ public class SheetDetailActivity extends BaseTitleActivity {
      */
     private ListManager listManager;
 
+    /**
+     * 音乐播放管理器
+     */
+    private MusicPlayerManager musicPlayerManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -213,6 +219,7 @@ public class SheetDetailActivity extends BaseTitleActivity {
         //初始化列表管理器
         listManager = MusicPlayerService.getListManager(getMainActivity());
 
+        musicPlayerManager = MusicPlayerService.getMusicPlayerManager(getMainActivity());
         //获取传递的id
         id = extraId();
 
@@ -440,6 +447,73 @@ public class SheetDetailActivity extends BaseTitleActivity {
             bt_collection.setBackgroundResource(R.drawable.selector_register_button);
             bt_collection.setTextColor(getResources().getColorStateList(R.drawable.selector_text,null));
         }
+    }
+
+    /**
+     * 界面显示
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //显示迷你控制器数据
+        showSmallPlayControlData();
+    }
+
+    private void showSmallPlayControlData() {
+        if(listManager.getDatas() != null && listManager.getDatas().size() > 0){
+            Song data = listManager.getData();
+            if(data != null){
+                //显示初始化数据
+                showInitData(data);
+
+                //显示音乐时长
+                showDuration(data);
+
+                //显示播放进度
+                showProgress(data);
+
+                //显示播放状态
+                showMusicPlayStatus();
+            }
+        }
+    }
+
+    private void showMusicPlayStatus() {
+        if(musicPlayerManager.isPlaying()){
+            showPauseStatus();
+        }else{
+            showPlayStatus();
+        }
+    }
+
+    private void showPlayStatus() {
+        playControllPlay.setSelected(false);
+    }
+
+    private void showPauseStatus() {
+        playControllPlay.setSelected(true);
+    }
+
+    private void showProgress(Song data) {
+        playControllProgress.setProgress((int) data.getProgress());
+    }
+
+    private void showDuration(Song data) {
+        int end = (int)data.getDuration();
+        //设置到进度条
+        playControllProgress.setMax(end);
+    }
+
+    /**
+     * 显示初始化数据
+     * @param data
+     */
+    private void showInitData(Song data) {
+        //封面
+        ImageUtil.show(getMainActivity(),playControllBanner,data.getBanner(),0);
+        //标题
+        playControllSong.setText(data.getTitle());
     }
 
     @OnClick(R.id.playControll)

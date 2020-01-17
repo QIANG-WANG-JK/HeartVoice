@@ -33,6 +33,8 @@ public interface MusicPlayerListener {
      * 播放完毕回调
      * @param mp
      */
-    void onCompletion(MediaPlayer mp);
+    default void onCompletion(MediaPlayer mp){
+
+    }
 
 }
