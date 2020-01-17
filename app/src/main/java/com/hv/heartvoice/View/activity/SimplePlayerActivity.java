@@ -225,6 +225,11 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
         showDuration();
     }
 
+    @Override
+    public void onProgress(Song data) {
+        LogUtil.e("onProgress",data.getProgress()+" "+data.getDuration());
+    }
+
     /**
      * 显示时长
      */

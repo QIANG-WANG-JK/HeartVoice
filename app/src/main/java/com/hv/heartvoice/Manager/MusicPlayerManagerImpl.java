@@ -2,6 +2,11 @@ package com.hv.heartvoice.Manager;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+
+import androidx.annotation.NonNull;
 
 import com.hv.heartvoice.Domain.Song;
 import com.hv.heartvoice.Listener.Consume;
@@ -11,6 +16,11 @@ import com.hv.heartvoice.Util.ListUtil;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import static com.hv.heartvoice.Util.Constant.DEFAULT_TIME;
+import static com.hv.heartvoice.Util.Constant.MESSAGE_PROGRESS;
 
 /**
  * 实现类
@@ -35,6 +45,13 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
      * 播放器状态监听器
      */
     private List<MusicPlayerListener> listeners = new ArrayList<>();
+
+    /**
+     * 定时器
+     */
+    private TimerTask timerTask;
+
+    private Timer timer;
 
     private MusicPlayerManagerImpl(Context context){
         this.context = context.getApplicationContext();
@@ -94,10 +111,11 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
             mediaPlayer.prepare();
 
             mediaPlayer.start();
-            //playOrPause();
             
             //回调监听器
             publishPlayingStatus();
+
+            //启动播放进度通知定时器
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -114,18 +132,14 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
     public void pause() {
         if(isPlaying()){
             mediaPlayer.pause();
-
-            //回调监听器
-//            for (MusicPlayerListener listener : listeners) {
-//                listener.onPaused(data);
-//            }
             ListUtil.eachListener(listeners, new Consume<MusicPlayerListener>() {
                 @Override
                 public void accept(MusicPlayerListener listener) {
                     listener.onPaused(data);
                 }
             });
-
+            //停止进度
+            stopPublishProgress();
         }
     }
 
@@ -133,21 +147,21 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
     public void resume() {
         if(!isPlaying()){
             mediaPlayer.start();
-
             //回调监听器
             publishPlayingStatus();
+            //启动进度通知
+            startPublishProgress();
         }
     }
 
     @Override
     public void addMusicPlayerListener(MusicPlayerListener listener) {
-
-        /**
-         * 只有没有包含时才添加
-         */
         if(!listeners.contains(listener)){
             listeners.add(listener);
         }
+
+        //启动进度通知
+        startPublishProgress();
     }
 
     @Override
@@ -164,17 +178,80 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
      * 发布播放中状态
      */
     private void publishPlayingStatus(){
-//        for (MusicPlayerListener listener : listeners) {
-//            listener.onPlaying(data);
-//        }
-        //重构
         ListUtil.eachListener(listeners, new Consume<MusicPlayerListener>() {
             @Override
             public void accept(MusicPlayerListener listener) {
                 listener.onPlaying(data);
             }
         });
-
     }
+
+    /**
+     * 启动播放进度通知
+     */
+    private void startPublishProgress(){
+        if (listeners.size() == 0){
+            return;
+        }
+
+        if(timerTask != null){
+            //已经启动
+            return;
+        }
+        //创建一个任务
+        timerTask = new TimerTask() {
+
+            @Override
+            public void run() {
+                //如果没有监听器了就停止定时器
+                if(listeners.size() == 0){
+                    stopPublishProgress();
+                    return;
+                }
+                handler.obtainMessage(MESSAGE_PROGRESS).sendToTarget();
+            }
+        };
+
+        //创建一个定时器
+        timer = new Timer();
+
+        //启动一个持续的任务
+        timer.schedule(timerTask,0,DEFAULT_TIME);
+    }
+
+    /**
+     * 停止播放进度通知
+     */
+    private void stopPublishProgress() {
+        if(timerTask != null){
+            timerTask.cancel();
+            timerTask = null;
+        }
+
+        if (timer !=null){
+            timer.cancel();
+            timer = null;
+        }
+    }
+
+    private Handler handler = new Handler(Looper.getMainLooper()){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case MESSAGE_PROGRESS:
+                    data.setProgress(mediaPlayer.getCurrentPosition());
+
+                    //回调监听
+                    ListUtil.eachListener(listeners, new Consume<MusicPlayerListener>() {
+                        @Override
+                        public void accept(MusicPlayerListener listener) {
+                            listener.onProgress(data);
+                        }
+                    });
+                    break;
+            }
+        }
+    };
 
 }

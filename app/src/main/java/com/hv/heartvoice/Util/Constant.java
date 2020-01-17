@@ -72,5 +72,15 @@ public class Constant {
      */
     public static final String SHEET_ID = "SHEET_ID";
 
+    /**
+     * 播放进度通知
+     */
+    public static final int MESSAGE_PROGRESS = 0;
+
+    /**
+     * 音乐通知回调间隔
+     */
+    public static final long DEFAULT_TIME = 16;
+
 
 }
