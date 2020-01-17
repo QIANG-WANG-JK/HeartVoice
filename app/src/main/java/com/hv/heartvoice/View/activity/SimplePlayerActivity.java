@@ -202,6 +202,26 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
         showInitData();
 
         showDuration();
+
+        //选中当前音乐
+        scrollPosition();
+    }
+
+    private void scrollPosition() {
+        recyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                //获取当前音乐位置
+                int index = listManager.getDatas().indexOf(listManager.getData());
+                if(index != -1){
+                    //滚动到该位置
+                    recyclerView.smoothScrollToPosition(index);
+
+                    //选中
+                    adapter.setSelectedIndex(index);
+                }
+            }
+        });
     }
 
     private void showInitData() {
@@ -298,6 +318,9 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
 
         //显示播放状态
         showMusicPlayStatus();
+
+        //选中当前播放的音乐
+        scrollPosition();
 
     }
 

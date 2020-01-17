@@ -1,7 +1,6 @@
 package com.hv.heartvoice.View.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
@@ -39,9 +38,7 @@ import com.hv.heartvoice.Model.myObserver.HttpObserver;
 import com.hv.heartvoice.Model.response.DetailResponse;
 import com.hv.heartvoice.R;
 import com.hv.heartvoice.Service.MusicPlayerService;
-import com.hv.heartvoice.Util.Constant;
 import com.hv.heartvoice.Util.ImageUtil;
-import com.hv.heartvoice.Util.LogUtil;
 import com.hv.heartvoice.Util.ResourceUtil;
 import com.hv.heartvoice.Util.ToastUtil;
 
@@ -50,6 +47,8 @@ import org.apache.commons.lang3.StringUtils;
 import butterknife.BindView;
 import butterknife.OnClick;
 import retrofit2.Response;
+
+import static com.hv.heartvoice.Util.Constant.MODEL_LOOP_ONE;
 
 /**
  * 歌单详情界面
@@ -578,4 +577,18 @@ public class SheetDetailActivity extends BaseTitleActivity implements MusicPlaye
         showProgress(data);
     }
 
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        if(listManager.getLoopModel() != MODEL_LOOP_ONE){
+            Song next = listManager.next();
+            if(next != null){
+                listManager.play(next);
+            }
+        }else{
+            Song data = listManager.getData();
+            if(data != null){
+                listManager.play(data);
+            }
+        }
+    }
 }
