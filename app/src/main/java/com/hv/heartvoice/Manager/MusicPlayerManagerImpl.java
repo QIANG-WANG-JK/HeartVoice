@@ -12,6 +12,7 @@ import com.hv.heartvoice.Domain.Song;
 import com.hv.heartvoice.Listener.Consume;
 import com.hv.heartvoice.Listener.MusicPlayerListener;
 import com.hv.heartvoice.Util.ListUtil;
+import com.hv.heartvoice.Util.LogUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -83,6 +84,23 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
                     }
                 });
 
+            }
+        });
+
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+            /**
+             * 播放完毕回调
+             * @param mp
+             */
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                ListUtil.eachListener(listeners, new Consume<MusicPlayerListener>() {
+                    @Override
+                    public void accept(MusicPlayerListener listener) {
+                        listener.onCompletion(mp);
+                    }
+                });
             }
         });
 
@@ -194,6 +212,11 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
      */
     private void startPublishProgress(){
         if (listeners.size() == 0){
+            return;
+        }
+
+        if(!isPlaying()){
+            //没有播放音乐就不启动
             return;
         }
 

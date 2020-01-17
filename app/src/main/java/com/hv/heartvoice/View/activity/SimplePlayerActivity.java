@@ -168,12 +168,31 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
 
     @Override
     public void onPrepared(MediaPlayer mp, Song data) {
+        showInitData();
+
         showDuration();
+    }
+
+    private void showInitData() {
+        //获取当前正在播放的音乐
+        Song data = listManager.getData();
+
+        songTitle.setText(data.getTitle());
     }
 
     @Override
     public void onProgress(Song data) {
         showProgress();
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        if(listManager.getLoopModel() != MODEL_LOOP_ONE){
+            Song next = listManager.next();
+            if(next != null){
+                listManager.play(next);
+            }
+        }
     }
 
     /**
@@ -229,10 +248,11 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
     @Override
     protected void onResume() {
         super.onResume();
-        LogUtil.e(TAG,"onResume");
-
         //设置播放监听器
         musicPlayerManager.addMusicPlayerListener(this);
+
+        //显示初始化数据
+        showInitData();
 
         //显示音乐时长
         showDuration();
@@ -242,12 +262,12 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
 
         //显示播放状态
         showMusicPlayStatus();
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-
         //取消监听器
         musicPlayerManager.removeMusicPlayerListener(this);
     }
@@ -298,7 +318,6 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
 
     private void showLoopModel() {
         int model = listManager.getLoopModel();
-        ToastUtil.errorShort(model+"");
         switch (model){
             case MODEL_LOOP_LIST:
                 bt_loop_model.setText("列表循环");

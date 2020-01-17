@@ -175,4 +175,9 @@ public class ListManagerImpl implements ListManager{
         return model;
     }
 
+    @Override
+    public Song getData() {
+        return data;
+    }
+
 }

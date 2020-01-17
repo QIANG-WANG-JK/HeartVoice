@@ -61,4 +61,5 @@ public interface MusicPlayerManager {
      * @param b
      */
     void setLooping(boolean b);
+
 }

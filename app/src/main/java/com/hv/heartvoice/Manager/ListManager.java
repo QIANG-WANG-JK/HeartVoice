@@ -62,4 +62,5 @@ public interface ListManager {
      */
     int getLoopModel();
 
+    Song getData();
 }
