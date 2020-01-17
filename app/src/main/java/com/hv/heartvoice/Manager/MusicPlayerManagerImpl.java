@@ -172,6 +172,11 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
         mediaPlayer.seekTo(progress);
     }
 
+    @Override
+    public void setLooping(boolean looping) {
+        mediaPlayer.setLooping(looping);
+    }
+
     /**
      * 发布播放中状态
      */

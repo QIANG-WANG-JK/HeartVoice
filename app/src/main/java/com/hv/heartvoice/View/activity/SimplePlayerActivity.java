@@ -22,10 +22,13 @@ import com.hv.heartvoice.Service.MusicPlayerService;
 import com.hv.heartvoice.Util.LogUtil;
 import com.hv.heartvoice.Util.NotificationUtil;
 import com.hv.heartvoice.Util.TimeUtil;
+import com.hv.heartvoice.Util.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.hv.heartvoice.Util.Constant.MODEL_LOOP_LIST;
+import static com.hv.heartvoice.Util.Constant.MODEL_LOOP_ONE;
 import static com.hv.heartvoice.Util.Constant.Transparent;
 
 /**
@@ -251,7 +254,13 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
 
     @OnClick(R.id.bt_previous)
     public void previous(){
-
+        //获取下一首音乐
+        Song song = listManager.previous();
+        if(song != null){
+            listManager.play(song);
+        }else{
+            ToastUtil.errorShort(R.string.not_play);
+        }
     }
 
     @OnClick(R.id.bt_play)
@@ -267,17 +276,40 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
 
     @OnClick(R.id.bt_next)
     public void next(){
-
+        //获取下一首音乐
+        Song song = listManager.next();
+        if(song != null){
+            listManager.play(song);
+        }else{
+            ToastUtil.errorShort(R.string.not_play);
+        }
     }
 
     @OnClick(R.id.bt_loop_model)
     public void loop(){
-
+        listManager.changeLoopModel();
+        showLoopModel();
     }
 
     @OnClick(R.id.back)
     public void back(){
         onBackPressed();
+    }
+
+    private void showLoopModel() {
+        int model = listManager.getLoopModel();
+        ToastUtil.errorShort(model+"");
+        switch (model){
+            case MODEL_LOOP_LIST:
+                bt_loop_model.setText("列表循环");
+                break;
+            case MODEL_LOOP_ONE:
+                bt_loop_model.setText("单曲循环");
+                break;
+            default:
+                bt_loop_model.setText("随机循环");
+                break;
+        }
     }
 
 }

@@ -56,4 +56,9 @@ public interface MusicPlayerManager {
      */
     void seekTo(int progress);
 
+    /**
+     * 设置循环模式
+     * @param b
+     */
+    void setLooping(boolean b);
 }

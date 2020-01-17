@@ -38,4 +38,28 @@ public interface ListManager {
      */
     void resume();
 
+    /**
+     * 播放下一个
+     * @return
+     */
+    Song next();
+
+    /**
+     * 播放上一个
+     * @return
+     */
+    Song previous();
+
+    /**
+     * 更改循环模式
+     * @return
+     */
+    int changeLoopModel();
+
+    /**
+     * 获取循环模式
+     * @return
+     */
+    int getLoopModel();
+
 }
