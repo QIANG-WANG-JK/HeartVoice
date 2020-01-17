@@ -73,6 +73,19 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
     }
 
     @Override
+    protected void initViews() {
+        super.initViews();
+        //禁用ToolBar按钮
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+        //设置状态栏透明并且字体黑色
+        lightStatusBarAndBAR(Transparent);
+
+        //设置内容到状态栏下
+        setMargins(toolbar,0,getStatusBarHeight(getMainActivity()),0,0);
+    }
+
+    @Override
     public void initListeners() {
         super.initListeners();
 
@@ -86,7 +99,9 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
              */
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+                if(fromUser){
+                    musicPlayerManager.seekTo(progress);
+                }
             }
 
             @Override
@@ -116,49 +131,11 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
         musicPlayerManager.play(songUrl, song);
     }
 
-    /**
-     * 界面可见 设置监听器
-     */
-    @Override
-    protected void onResume() {
-        super.onResume();
-        LogUtil.e(TAG,"onResume");
+    public static void start(Activity activity){
 
-        //设置播放监听器
-        musicPlayerManager.addMusicPlayerListener(this);
+        Intent intent = new Intent(activity,SimplePlayerActivity.class);
 
-        //显示音乐时长
-        showDuration();
-
-        //显示播放进度
-        showProgress();
-
-        //显示播放状态
-        showMusicPlayStatus();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        //取消监听器
-        musicPlayerManager.removeMusicPlayerListener(this);
-    }
-
-    @OnClick(R.id.bt_previous)
-    public void previous(){
-
-    }
-
-    @OnClick(R.id.bt_play)
-    public void play(){
-        Notification notification = NotificationUtil.getServiceForeground(getApplicationContext());
-
-        //显示通知
-        NotificationUtil.showNotification(1,notification);
-
-        playOrPause();
-
+        activity.startActivity(intent);
     }
 
     /**
@@ -172,41 +149,6 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
             musicPlayerManager.resume();
         }
 
-    }
-
-    @OnClick(R.id.bt_next)
-    public void next(){
-
-    }
-
-    @OnClick(R.id.bt_loop_model)
-    public void loop(){
-
-    }
-
-    @Override
-    protected void initViews() {
-        super.initViews();
-        //禁用ToolBar按钮
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-
-        //设置状态栏透明并且字体黑色
-        lightStatusBarAndBAR(Transparent);
-
-        //设置内容到状态栏下
-        setMargins(toolbar,0,getStatusBarHeight(getMainActivity()),0,0);
-    }
-
-    @OnClick(R.id.back)
-    public void back(){
-        onBackPressed();
-    }
-
-    public static void start(Activity activity){
-
-        Intent intent = new Intent(activity,SimplePlayerActivity.class);
-
-        activity.startActivity(intent);
     }
 
     /**
@@ -259,6 +201,17 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
     }
 
     /**
+     * 显示音乐播放状态
+     */
+    private void showMusicPlayStatus(){
+        if(musicPlayerManager.isPlaying()) {
+            showPauseStatus();
+        }else{
+            showPlayStatus();
+        }
+    }
+
+    /**
      * 显示按钮状态
      */
     private void showPlayStatus() {
@@ -270,14 +223,63 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
     }
 
     /**
-     * 显示音乐播放状态
+     * 界面可见 设置监听器
      */
-    private void showMusicPlayStatus(){
-        if(musicPlayerManager.isPlaying()) {
-            showPauseStatus();
-        }else{
-            showPlayStatus();
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LogUtil.e(TAG,"onResume");
+
+        //设置播放监听器
+        musicPlayerManager.addMusicPlayerListener(this);
+
+        //显示音乐时长
+        showDuration();
+
+        //显示播放进度
+        showProgress();
+
+        //显示播放状态
+        showMusicPlayStatus();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        //取消监听器
+        musicPlayerManager.removeMusicPlayerListener(this);
+    }
+
+    @OnClick(R.id.bt_previous)
+    public void previous(){
+
+    }
+
+    @OnClick(R.id.bt_play)
+    public void play(){
+        Notification notification = NotificationUtil.getServiceForeground(getApplicationContext());
+
+        //显示通知
+        NotificationUtil.showNotification(1,notification);
+
+        playOrPause();
+
+    }
+
+    @OnClick(R.id.bt_next)
+    public void next(){
+
+    }
+
+    @OnClick(R.id.bt_loop_model)
+    public void loop(){
+
+    }
+
+    @OnClick(R.id.back)
+    public void back(){
+        onBackPressed();
     }
 
 }

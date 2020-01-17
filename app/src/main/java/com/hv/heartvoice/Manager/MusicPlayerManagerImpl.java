@@ -174,6 +174,11 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
         return this.data;
     }
 
+    @Override
+    public void seekTo(int progress) {
+        mediaPlayer.seekTo(progress);
+    }
+
     /**
      * 发布播放中状态
      */
