@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
 
+import com.hv.heartvoice.Manager.ListManager;
+import com.hv.heartvoice.Manager.ListManagerImpl;
 import com.hv.heartvoice.Manager.MusicPlayerManager;
 import com.hv.heartvoice.Manager.MusicPlayerManagerImpl;
 import com.hv.heartvoice.Util.LogUtil;
@@ -30,6 +32,17 @@ public class MusicPlayerService extends Service {
         context = context.getApplicationContext();
         ServiceUtil.startService(context,MusicPlayerService.class);
         return MusicPlayerManagerImpl.getInstance(context);
+    }
+
+    /**
+     * 获取列表管理器
+     * @param context
+     * @return
+     */
+    public static ListManager getListManager(Context context){
+        context = context.getApplicationContext();
+        ServiceUtil.startService(context,MusicPlayerService.class);
+        return ListManagerImpl.getInstance(context);
     }
 
     /**

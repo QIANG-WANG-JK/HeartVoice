@@ -28,10 +28,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hv.heartvoice.Adapter.SongAdapter;
 import com.hv.heartvoice.Base.BaseTitleActivity;
 import com.hv.heartvoice.Domain.Sheet;
+import com.hv.heartvoice.Domain.Song;
+import com.hv.heartvoice.Manager.ListManager;
 import com.hv.heartvoice.Model.Api;
 import com.hv.heartvoice.Model.myObserver.HttpObserver;
 import com.hv.heartvoice.Model.response.DetailResponse;
 import com.hv.heartvoice.R;
+import com.hv.heartvoice.Service.MusicPlayerService;
 import com.hv.heartvoice.Util.Constant;
 import com.hv.heartvoice.Util.ImageUtil;
 import com.hv.heartvoice.Util.LogUtil;
@@ -127,6 +130,11 @@ public class SheetDetailActivity extends BaseTitleActivity {
      */
     private TextView comment_count;
 
+    /**
+     * 列表管理器
+     */
+    private ListManager listManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -186,6 +194,9 @@ public class SheetDetailActivity extends BaseTitleActivity {
     public void initData() {
         super.initData();
 
+        //初始化列表管理器
+        listManager = MusicPlayerService.getListManager(getMainActivity());
+
         //获取传递的id
         id = extraId();
 
@@ -233,10 +244,22 @@ public class SheetDetailActivity extends BaseTitleActivity {
         songAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                SimplePlayerActivity.start(getMainActivity());
+                play(position);
             }
         });
 
+    }
+
+    /**
+     * 播放当前位置的音乐
+     * @param position
+     */
+    private void play(int position) {
+        Song data = songAdapter.getItem(position);
+        listManager.setDatas(songAdapter.getData());
+        listManager.play(data);
+        //跳转到播放界面
+        SimplePlayerActivity.start(getMainActivity());
     }
 
     /**

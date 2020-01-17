@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hv.heartvoice.Base.BaseTitleActivity;
 import com.hv.heartvoice.Domain.Song;
 import com.hv.heartvoice.Listener.MusicPlayerListener;
+import com.hv.heartvoice.Manager.ListManager;
 import com.hv.heartvoice.Manager.MusicPlayerManager;
 import com.hv.heartvoice.R;
 import com.hv.heartvoice.Service.MusicPlayerService;
@@ -65,6 +66,8 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
     Button bt_loop_model;
 
     private MusicPlayerManager musicPlayerManager;
+
+    private ListManager listManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,15 +123,12 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
     @Override
     public void initData() {
         super.initData();
+        //初始化列表管理器
+        listManager = MusicPlayerService.getListManager(getMainActivity());
+
+        //初始化音乐播放器
         musicPlayerManager = MusicPlayerService.getMusicPlayerManager(getMainActivity());
 
-        //测试音乐播放
-        String songUrl = "http://dev-courses-misuc.ixuea.com/assets/s1.mp3";
-
-        Song song=new Song();
-        song.setUri(songUrl);
-
-        musicPlayerManager.play(songUrl, song);
     }
 
     public static void start(Activity activity){
@@ -142,13 +142,11 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
      * 播放或暂停
      */
     private void playOrPause() {
-
         if(musicPlayerManager.isPlaying()){
-            musicPlayerManager.pause();
+            listManager.pause();
         }else{
-            musicPlayerManager.resume();
+            listManager.resume();
         }
-
     }
 
     /**

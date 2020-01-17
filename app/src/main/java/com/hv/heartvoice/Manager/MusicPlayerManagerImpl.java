@@ -101,22 +101,16 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
         try {
             //保存音乐对象
             this.data = data;
-
             //释放播放器
             mediaPlayer.reset();
-
             //设置数据源
             mediaPlayer.setDataSource(uri);
-
             mediaPlayer.prepare();
-
             mediaPlayer.start();
-            
             //回调监听器
             publishPlayingStatus();
-
             //启动播放进度通知定时器
-
+            startPublishProgress();
         } catch (IOException e) {
             e.printStackTrace();
             //TODO 处理错误
@@ -159,7 +153,6 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
         if(!listeners.contains(listener)){
             listeners.add(listener);
         }
-
         //启动进度通知
         startPublishProgress();
     }
