@@ -3,6 +3,7 @@ package com.hv.heartvoice.View.activity;
 import android.app.Activity;
 import android.app.Notification;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -11,10 +12,14 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
+import com.chad.library.adapter.base.listener.OnItemSwipeListener;
 import com.hv.heartvoice.Adapter.SimplePlayerAdapter;
 import com.hv.heartvoice.Base.BaseTitleActivity;
 import com.hv.heartvoice.Domain.Song;
@@ -162,6 +167,83 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
 
         adapter.replaceData(listManager.getDatas());
 
+        //列表的滑动删除功能
+        //1.item拖拽和滑动回调
+        ItemDragAndSwipeCallback swipeCallback = new ItemDragAndSwipeCallback(adapter) {
+
+            /**
+             * 获取移动的参数
+             * @param recyclerView
+             * @param viewHolder
+             * @return
+             */
+            @Override
+            public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+
+                //arg1 控制拖拽 arg2控制滑动
+                return isViewCreateByAdapter(viewHolder) ?
+                        makeMovementFlags(ItemTouchHelper.ACTION_STATE_IDLE,ItemTouchHelper.ACTION_STATE_IDLE)
+                        :makeMovementFlags(ItemTouchHelper.ACTION_STATE_IDLE,ItemTouchHelper.RIGHT);
+            }
+        };
+
+        //关联列表
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeCallback);
+
+        //将帮助类附加到RecycerView
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
+        //开启滑动
+        adapter.enableSwipeItem();
+
+        //滑动监听器
+;        OnItemSwipeListener onItemSwipeListener = new OnItemSwipeListener() {
+
+            @Override
+            public void onItemSwipeStart(RecyclerView.ViewHolder viewHolder, int i) {
+
+            }
+
+            @Override
+            public void clearView(RecyclerView.ViewHolder viewHolder, int i) {
+
+            }
+
+            /**
+             * 滑动成功
+             * @param viewHolder
+             * @param position
+             */
+            @Override
+            public void onItemSwiped(RecyclerView.ViewHolder viewHolder, int position) {
+                listManager.delete(position);
+
+                /**
+                 * 没有音乐关闭界面
+                 */
+                if(listManager.getDatas().size() == 0){
+                    finish();
+                }
+            }
+
+            @Override
+            public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float v, float v1, boolean b) {
+
+            }
+        };
+
+        //设置滑动监听
+        adapter.setOnItemSwipeListener(onItemSwipeListener);
+    }
+
+    /**
+     *
+     * @return
+     * @param viewHolder
+     */
+    private boolean isViewCreateByAdapter(RecyclerView.ViewHolder viewHolder) {
+        int type = viewHolder.getItemViewType();
+        return type == 273 || type == 546 || type == 819 || type == 1365;
     }
 
     public static void start(Activity activity){

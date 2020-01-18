@@ -63,4 +63,10 @@ public interface ListManager {
     int getLoopModel();
 
     Song getData();
+
+    /**
+     * 删除对应位置数据
+     * @param position
+     */
+    void delete(int position);
 }

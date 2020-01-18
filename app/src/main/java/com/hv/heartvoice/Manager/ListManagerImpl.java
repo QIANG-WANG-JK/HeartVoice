@@ -184,4 +184,22 @@ public class ListManagerImpl implements ListManager{
         return data;
     }
 
+    @Override
+    public void delete(int position) {
+        Song song = datas.get(position);
+
+        if(song.getId().equals(data.getId())){
+            pause();
+            Song next = next();
+
+            //判断循环模式
+            if(next.getId().equals(data.getId())){
+                data = null;
+            }else{
+                play(next);
+            }
+        }
+        datas.remove(song);
+    }
+
 }
