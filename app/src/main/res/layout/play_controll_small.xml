@@ -8,7 +8,7 @@
     android:background="@color/white"
     android:visibility="gone">
 
-    <include layout="@layout/divier_small"/>
+<!--    <include layout="@layout/divier_small"/>-->
 
     <LinearLayout
         android:gravity="center_vertical"

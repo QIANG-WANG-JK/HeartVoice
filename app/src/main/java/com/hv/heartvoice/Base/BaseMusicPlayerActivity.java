@@ -14,8 +14,10 @@ import com.hv.heartvoice.Manager.MusicPlayerManager;
 import com.hv.heartvoice.R;
 import com.hv.heartvoice.Service.MusicPlayerService;
 import com.hv.heartvoice.Util.ImageUtil;
+import com.hv.heartvoice.View.activity.SimplePlayerActivity;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.hv.heartvoice.Util.Constant.MODEL_LOOP_ONE;
 
@@ -169,6 +171,25 @@ public class BaseMusicPlayerActivity extends BaseTitleActivity implements MusicP
         }else{
             playControll.setVisibility(View.GONE);
         }
+    }
+
+    @OnClick(R.id.playControll)
+    public void playControlContainer(){
+        SimplePlayerActivity.start(getMainActivity());
+    }
+
+    @OnClick(R.id.playControllPlay)
+    public void playControl(){
+        if (musicPlayerManager.isPlaying()){
+            listManager.pause();
+        }else{
+            listManager.resume();
+        }
+    }
+
+    @OnClick(R.id.playControllMusicList)
+    public void musicList(){
+
     }
 
 }

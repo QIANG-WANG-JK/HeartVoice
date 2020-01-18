@@ -483,25 +483,6 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity {
         scrollPositionAsync();
     }
 
-    @OnClick(R.id.playControll)
-    public void playControlContainer(){
-        SimplePlayerActivity.start(getMainActivity());
-    }
-
-    @OnClick(R.id.playControllPlay)
-    public void playControl(){
-        if (musicPlayerManager.isPlaying()){
-            listManager.pause();
-        }else{
-            listManager.resume();
-        }
-    }
-
-    @OnClick(R.id.playControllMusicList)
-    public void musicList(){
-
-    }
-
     @OnClick(R.id.back)
     public void back(){
         onBackPressed();

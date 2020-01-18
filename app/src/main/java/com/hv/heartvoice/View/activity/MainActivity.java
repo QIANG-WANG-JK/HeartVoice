@@ -13,6 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.hv.heartvoice.Adapter.MainAdapter;
+import com.hv.heartvoice.Base.BaseMusicPlayerActivity;
 import com.hv.heartvoice.Base.BaseTitleActivity;
 import com.hv.heartvoice.Domain.User;
 import com.hv.heartvoice.Domain.event.CloseEvent;
@@ -43,7 +44,7 @@ import butterknife.OnClick;
 
 import static com.hv.heartvoice.Util.Constant.Transparent;
 
-public class MainActivity extends BaseTitleActivity {
+public class MainActivity extends BaseMusicPlayerActivity {
 
     public static final String TAG = "MainActivity";
 
