@@ -244,6 +244,8 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity {
 
     /**
      * 播放当前位置的音乐
+     * 处理一下当重复点击相同歌曲时，不重复播放而是跳转歌词界面
+     * 使用数据缓存类实现
      * @param position
      */
     private void play(int position) {

@@ -15,6 +15,7 @@ import com.hv.heartvoice.R;
 import com.hv.heartvoice.Service.MusicPlayerService;
 import com.hv.heartvoice.Util.ImageUtil;
 import com.hv.heartvoice.View.activity.SimplePlayerActivity;
+import com.hv.heartvoice.View.fragment.PlayListDialogFragment;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -189,7 +190,11 @@ public class BaseMusicPlayerActivity extends BaseTitleActivity implements MusicP
 
     @OnClick(R.id.playControllMusicList)
     public void musicList(){
+        showPlayListDialog();
+    }
 
+    private void showPlayListDialog() {
+        PlayListDialogFragment.show(getSupportFragmentManager());
     }
 
 }
