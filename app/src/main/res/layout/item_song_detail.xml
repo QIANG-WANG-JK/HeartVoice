@@ -41,8 +41,8 @@
        <ImageView
            android:scaleType="centerCrop"
            android:src="@mipmap/more"
-           android:layout_width="@dimen/dp_30"
-           android:layout_height="@dimen/dp_30"/>
+           android:layout_width="@dimen/dp_25"
+           android:layout_height="@dimen/dp_25"/>
 
    </LinearLayout>
 

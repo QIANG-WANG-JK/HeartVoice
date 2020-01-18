@@ -39,12 +39,13 @@ public class SimplePlayerAdapter extends BaseQuickAdapter<Song, BaseViewHolder> 
     }
 
     public void setSelectedIndex(int index){
-        //先刷新上一行数据
+
         notifyItemChanged(this.selectedIndex);
 
         this.selectedIndex = index;
 
         notifyItemChanged(this.selectedIndex);
+
     }
 
 }

@@ -236,6 +236,7 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
         showProgress();
     }
 
+
     @Override
     public void onCompletion(MediaPlayer mp) {
         if(listManager.getLoopModel() != MODEL_LOOP_ONE){

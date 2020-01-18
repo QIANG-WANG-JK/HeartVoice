@@ -16,6 +16,11 @@ import java.util.List;
 public class SongAdapter extends BaseQuickAdapter<Song, BaseViewHolder> {
 
     /**
+     * 选中索引
+     */
+    private int selectedIndex = -1;
+
+    /**
      * 构造方法
      * @param layoutResId
      */
@@ -39,6 +44,39 @@ public class SongAdapter extends BaseQuickAdapter<Song, BaseViewHolder> {
 
         //显示歌手
         helper.setText(R.id.songerTitle,item.getSinger().getNickname());
+
+        if(selectedIndex == helper.getAdapterPosition()){
+            helper.setTextColor(R.id.songPosition,mContext.getResources().getColor(R.color.colorPrimary,null));
+
+            helper.setTextColor(R.id.songTitle,mContext.getResources().getColor(R.color.colorPrimary,null));
+
+            helper.setTextColor(R.id.songerTitle,mContext.getResources().getColor(R.color.colorPrimary,null));
+        }else{
+            helper.setTextColor(R.id.songPosition,mContext.getResources().getColor(R.color.black,null));
+
+            helper.setTextColor(R.id.songTitle,mContext.getResources().getColor(R.color.black,null));
+
+            helper.setTextColor(R.id.songerTitle,mContext.getResources().getColor(R.color.black,null));
+        }
+
+    }
+
+    /**
+     * 设置选中索引
+     * @param index
+     */
+    public void setSelectedIndex(int index) {
+
+        if(this.selectedIndex != -1){
+            notifyItemChanged(this.selectedIndex);
+        }
+
+        this.selectedIndex = index;
+
+
+        if(this.selectedIndex != -1){
+            notifyItemChanged(this.selectedIndex);
+        }
 
     }
 }

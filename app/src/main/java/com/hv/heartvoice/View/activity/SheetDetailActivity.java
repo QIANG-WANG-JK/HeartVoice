@@ -44,6 +44,8 @@ import com.hv.heartvoice.Util.ToastUtil;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import retrofit2.Response;
@@ -430,6 +432,9 @@ public class SheetDetailActivity extends BaseTitleActivity implements MusicPlaye
         //显示收藏状态
         showCollectionStatus();
 
+        //选中当前播放的音乐
+        scrollPositionAsync();
+
     }
 
     @SuppressLint("ResourceType")
@@ -462,6 +467,9 @@ public class SheetDetailActivity extends BaseTitleActivity implements MusicPlaye
 
         //显示迷你控制器数据
         showSmallPlayControlData();
+
+        //选中播放的音乐
+        scrollPositionAsync();
     }
 
     /**
@@ -472,6 +480,51 @@ public class SheetDetailActivity extends BaseTitleActivity implements MusicPlaye
         super.onPause();
 
         musicPlayerManager.removeMusicPlayerListener(this);
+
+    }
+
+    /**
+     * 异步选中当前播放的音乐
+     */
+    private void scrollPositionAsync() {
+        sheetDetailRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollPosition();
+            }
+        });
+    }
+
+    /**
+     * 选中当前音乐
+     */
+    private void scrollPosition() {
+        //判断歌单是否有音乐
+        if(data != null && data.getSongs() != null && data.getSongs().size() > 0){
+            List<Song> datas = data.getSongs();
+
+            Song data = listManager.getData();
+
+            if(data != null){
+                //有正在播放的音乐
+                int index = -1;
+                Song song;
+                for (int i = 0;i < datas.size();i++){
+                    song = datas.get(i);
+                    if(song.getId().equals(data.getId())){
+                        index = i;
+                        break;
+                    }
+                }
+
+                if(index != -1){
+                    songAdapter.setSelectedIndex(index+1);
+                }else{
+                    songAdapter.setSelectedIndex(-1);
+                }
+
+            }
+        }
     }
 
     private void showSmallPlayControlData() {
@@ -569,6 +622,8 @@ public class SheetDetailActivity extends BaseTitleActivity implements MusicPlaye
     @Override
     public void onPrepared(MediaPlayer mp, Song data) {
         showInitData(data);
+
+        scrollPositionAsync();
     }
 
     @Override
