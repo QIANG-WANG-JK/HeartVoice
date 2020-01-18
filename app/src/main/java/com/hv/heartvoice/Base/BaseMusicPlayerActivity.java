@@ -150,7 +150,7 @@ public class BaseMusicPlayerActivity extends BaseTitleActivity implements MusicP
         playControllSong.setText(data.getTitle());
     }
 
-    private void showSmallPlayControlData() {
+    protected void showSmallPlayControlData() {
         if(listManager.getDatas() != null && listManager.getDatas().size() > 0){
             playControll.setVisibility(View.VISIBLE);
             Song data = listManager.getData();
