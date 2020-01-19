@@ -462,13 +462,13 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
         int model = listManager.getLoopModel();
         switch (model){
             case MODEL_LOOP_LIST:
-                bt_loop_model.setText("列表循环");
+                bt_loop_model.setText(R.string.list_loop);
                 break;
             case MODEL_LOOP_ONE:
-                bt_loop_model.setText("单曲循环");
+                bt_loop_model.setText(R.string.one_loop);
                 break;
             default:
-                bt_loop_model.setText("随机循环");
+                bt_loop_model.setText(R.string.random_loop);
                 break;
         }
     }

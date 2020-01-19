@@ -19,19 +19,19 @@
         <TextView
             android:id="@+id/loop_model"
             android:layout_marginLeft="@dimen/dp_10"
-            android:text="循环模式"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"/>
 
         <TextView
+            android:id="@+id/song_count"
             android:textColor="@color/black"
-            android:text="(0)"
             android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
 
         <Button
+            android:id="@+id/collect_all"
             android:text="@string/collection_all"
             android:background="@drawable/selector_register_button"
             android:textColor="@drawable/selector_text"
@@ -40,6 +40,7 @@
             android:layout_marginRight="@dimen/dp_5"/>
 
         <ImageView
+            android:id="@+id/close"
             android:src="@mipmap/delete"
             android:layout_marginLeft="@dimen/dp_15"
             android:layout_marginRight="@dimen/dp_10"
@@ -52,6 +53,7 @@
     <include layout="@layout/divier_small"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
