@@ -485,6 +485,11 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity {
         scrollPositionAsync();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     @OnClick(R.id.back)
     public void back(){
         onBackPressed();

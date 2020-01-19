@@ -17,12 +17,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hv.heartvoice.Adapter.PlayListAdapter;
 import com.hv.heartvoice.Base.BaseBottomSheetDialogFragment;
+import com.hv.heartvoice.Domain.event.PlayListChangedEvent;
 import com.hv.heartvoice.Manager.ListManager;
 import com.hv.heartvoice.R;
 import com.hv.heartvoice.Service.MusicPlayerService;
 import com.hv.heartvoice.Util.Constant;
 import com.hv.heartvoice.Util.PreferenceUtil;
 import com.hv.heartvoice.Util.ToastUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -167,6 +170,14 @@ public class PlayListDialogFragment extends BaseBottomSheetDialogFragment {
     }
 
     private void notifyData(){
+
+        if(listManager.getDatas().size() == 0){
+            //发送通知 关闭迷你音乐播放器
+            EventBus.getDefault().post(new PlayListChangedEvent());
+            dismiss();
+            return;
+        }
+
         showLoopModel(sp.getPlayModel(PLAY_MODEL));
         adapter.replaceData(listManager.getDatas());
         adapter.notifyDataSetChanged();

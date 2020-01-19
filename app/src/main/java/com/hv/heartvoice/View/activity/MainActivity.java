@@ -176,9 +176,6 @@ public class MainActivity extends BaseMusicPlayerActivity {
     protected void initViews() {
         super.initViews();
 
-        //注册EventBus
-        EventBus.getDefault().register(this);
-
         //透明状态栏,黑色字体
         lightStatusBarAndBAR(Transparent);
 
@@ -382,7 +379,7 @@ public class MainActivity extends BaseMusicPlayerActivity {
 
     @Override
     protected void onDestroy() {
-        EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
+
 }

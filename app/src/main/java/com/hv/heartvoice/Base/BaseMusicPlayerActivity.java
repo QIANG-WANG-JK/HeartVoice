@@ -8,6 +8,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.hv.heartvoice.Domain.Song;
+import com.hv.heartvoice.Domain.event.PlayListChangedEvent;
 import com.hv.heartvoice.Listener.MusicPlayerListener;
 import com.hv.heartvoice.Manager.ListManager;
 import com.hv.heartvoice.Manager.MusicPlayerManager;
@@ -16,6 +17,10 @@ import com.hv.heartvoice.Service.MusicPlayerService;
 import com.hv.heartvoice.Util.ImageUtil;
 import com.hv.heartvoice.View.activity.SimplePlayerActivity;
 import com.hv.heartvoice.View.fragment.PlayListDialogFragment;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -53,6 +58,12 @@ public class BaseMusicPlayerActivity extends BaseTitleActivity implements MusicP
     protected MusicPlayerManager musicPlayerManager;
 
     @Override
+    protected void initViews() {
+        super.initViews();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
     public void initData() {
         super.initData();
 
@@ -79,6 +90,20 @@ public class BaseMusicPlayerActivity extends BaseTitleActivity implements MusicP
         musicPlayerManager.removeMusicPlayerListener(this);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    /**
+     * 播放列表改变事件
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onPlayListChangeEvent(PlayListChangedEvent event){
+        showSmallPlayControlData();
+    }
 
     @Override
     public void onPaused(Song data) {
