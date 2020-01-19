@@ -222,4 +222,8 @@ public class BaseMusicPlayerActivity extends BaseTitleActivity implements MusicP
         PlayListDialogFragment.show(getSupportFragmentManager());
     }
 
+    public int getCurrentSongPosition(){
+        return listManager.getDatas().indexOf(listManager.getData());
+    }
+
 }

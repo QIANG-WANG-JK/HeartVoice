@@ -126,12 +126,15 @@ public class PlayListDialogFragment extends BaseBottomSheetDialogFragment {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 //关闭dialog
                 //dismiss();
+                int index = listManager.getDatas().indexOf(listManager.getData());
 
-                //播放点击的音乐
-                listManager.play(listManager.getDatas().get(position));
+                if(position != index){
+                    //播放点击的音乐
+                    listManager.play(listManager.getDatas().get(position));
 
-                //选中当前音乐
-                scrollPosition();
+                    //选中当前音乐
+                    scrollPosition();
+                }
             }
         });
 

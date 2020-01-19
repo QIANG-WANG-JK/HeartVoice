@@ -51,6 +51,7 @@ public class SongAdapter extends BaseQuickAdapter<Song, BaseViewHolder> {
             helper.setTextColor(R.id.songTitle,mContext.getResources().getColor(R.color.colorPrimary,null));
 
             helper.setTextColor(R.id.songerTitle,mContext.getResources().getColor(R.color.colorPrimary,null));
+
         }else{
             helper.setTextColor(R.id.songPosition,mContext.getResources().getColor(R.color.black,null));
 
