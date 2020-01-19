@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hv.heartvoice.Domain.Song;
 import com.hv.heartvoice.R;
+import com.hv.heartvoice.Util.LogUtil;
 
 import java.util.List;
 
@@ -68,16 +69,11 @@ public class SongAdapter extends BaseQuickAdapter<Song, BaseViewHolder> {
      */
     public void setSelectedIndex(int index) {
 
-        if(this.selectedIndex != -1){
-            notifyItemChanged(this.selectedIndex);
-        }
+        notifyItemChanged(this.selectedIndex);
 
         this.selectedIndex = index;
 
-
-        if(this.selectedIndex != -1){
-            notifyItemChanged(this.selectedIndex);
-        }
+        notifyItemChanged(this.selectedIndex);
 
     }
 }

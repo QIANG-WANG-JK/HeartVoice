@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Random;
 
 import static com.hv.heartvoice.Util.Constant.MODEL_LOOP_LIST;
-import static com.hv.heartvoice.Util.Constant.MODEL_LOOP_ONE;
 import static com.hv.heartvoice.Util.Constant.MODEL_LOOP_RANDOM;
 import static com.hv.heartvoice.Util.Constant.PLAY_MODEL;
 
@@ -200,6 +199,16 @@ public class ListManagerImpl implements ListManager{
             }
         }
         datas.remove(song);
+    }
+
+    @Override
+    public void deleteAll() {
+        //如果在播放音乐就暂停
+        if(musicPlayerManager.isPlaying()){
+            pause();
+        }
+
+        datas.clear();
     }
 
 }

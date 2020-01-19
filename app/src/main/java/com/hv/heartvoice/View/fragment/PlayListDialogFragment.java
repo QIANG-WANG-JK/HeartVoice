@@ -19,11 +19,10 @@ import com.hv.heartvoice.Adapter.PlayListAdapter;
 import com.hv.heartvoice.Base.BaseBottomSheetDialogFragment;
 import com.hv.heartvoice.Domain.event.PlayListChangedEvent;
 import com.hv.heartvoice.Manager.ListManager;
+import com.hv.heartvoice.Manager.MusicPlayerManager;
 import com.hv.heartvoice.R;
 import com.hv.heartvoice.Service.MusicPlayerService;
-import com.hv.heartvoice.Util.Constant;
 import com.hv.heartvoice.Util.PreferenceUtil;
-import com.hv.heartvoice.Util.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -57,11 +56,16 @@ public class PlayListDialogFragment extends BaseBottomSheetDialogFragment {
     @BindView(R.id.recycleView)
     RecyclerView recyclerView;
 
+    @BindView(R.id.play_control)
+    ImageView play_control;
+
     private PlayListAdapter adapter;
 
     private ListManager listManager;
 
     private PreferenceUtil sp;
+
+    private MusicPlayerManager musicPlayerManager;
 
     @Override
     protected View getLayoutView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -102,6 +106,8 @@ public class PlayListDialogFragment extends BaseBottomSheetDialogFragment {
     @Override
     protected void initData() {
         super.initData();
+
+        musicPlayerManager = MusicPlayerService.getMusicPlayerManager(getMainActivity());
 
         sp = PreferenceUtil.getInstance(getMainActivity());
 
@@ -203,9 +209,51 @@ public class PlayListDialogFragment extends BaseBottomSheetDialogFragment {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        showMusicPlayStatus();
+    }
+
+    @OnClick(R.id.play_control)
+    public void playControl(){
+        if(musicPlayerManager.isPlaying()){
+            listManager.pause();
+        }else{
+            listManager.resume();
+        }
+        showMusicPlayStatus();
+    }
+
+    private void showMusicPlayStatus() {
+        if(musicPlayerManager.isPlaying()){
+            showPauseStatus();
+        }else{
+            showPlayStatus();
+        }
+    }
+
+    private void showPlayStatus() {
+        play_control.setSelected(false);
+    }
+
+    private void showPauseStatus() {
+        play_control.setSelected(true);
+    }
+
     @OnClick(R.id.close)
     public void close(){
         dismiss();
+
+        //删除全部
+        listManager.deleteAll();
+
+        EventBus.getDefault().post(new PlayListChangedEvent());
+    }
+
+    @OnClick(R.id.loop_model)
+    public void changeLoopModel(){
+        showLoopModel(String.valueOf(listManager.changeLoopModel()));
     }
 
 }

@@ -254,8 +254,6 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity {
         Song data = songAdapter.getItem(position);
         listManager.setDatas(songAdapter.getData());
         listManager.play(data);
-        //跳转到播放界面
-        //SimplePlayerActivity.start(getMainActivity());
         showSmallPlayControlData();
     }
 
@@ -405,7 +403,6 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity {
 
         //选中当前播放的音乐
         scrollPositionAsync();
-
     }
 
     @SuppressLint("ResourceType")
@@ -435,6 +432,7 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity {
 
         //选中播放的音乐
         scrollPositionAsync();
+
     }
 
     /**
@@ -485,6 +483,19 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity {
     public void onPrepared(MediaPlayer mp, Song data) {
         super.onPrepared(mp, data);
         scrollPositionAsync();
+    }
+
+    @Override
+    protected void showSmallPlayControlData() {
+        super.showSmallPlayControlData();
+        if(listManager.getDatas().size() == 0){
+            sheetDetailRecyclerView.post(new Runnable() {
+                @Override
+                public void run() {
+                    songAdapter.setSelectedIndex(-1);
+                }
+            });
+        }
     }
 
     @Override
