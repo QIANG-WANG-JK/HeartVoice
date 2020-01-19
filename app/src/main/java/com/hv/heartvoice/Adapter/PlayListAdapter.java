@@ -33,11 +33,15 @@ public class PlayListAdapter extends BaseQuickAdapter<Song, BaseViewHolder> {
 //            helper.setTextColor(R.id.song_title,mContext.getResources().getColor(R.color.black,null));
 //        }
 
-        if(selectedIndex == helper.getAdapterPosition()){
+        if(item.getId().equals(listManager.getData().getId())){
+            this.selectedIndex = listManager.getDatas().indexOf(item);
             helper.setTextColor(R.id.song_title,mContext.getResources().getColor(R.color.colorPrimary,null));
         }else{
             helper.setTextColor(R.id.song_title,mContext.getResources().getColor(R.color.black,null));
         }
+
+        //删除按钮点击事件
+        helper.addOnClickListener(R.id.delete_song);
 
     }
 

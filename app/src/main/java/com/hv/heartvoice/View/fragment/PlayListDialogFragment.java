@@ -22,6 +22,7 @@ import com.hv.heartvoice.R;
 import com.hv.heartvoice.Service.MusicPlayerService;
 import com.hv.heartvoice.Util.Constant;
 import com.hv.heartvoice.Util.PreferenceUtil;
+import com.hv.heartvoice.Util.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -130,6 +131,19 @@ public class PlayListDialogFragment extends BaseBottomSheetDialogFragment {
                 scrollPosition();
             }
         });
+
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if(R.id.delete_song == view.getId()){
+                    //删除按钮点击
+                    listManager.delete(position);
+                    notifyData();
+                    scrollPosition();
+                }
+            }
+        });
+
     }
 
     private void showLoopModel(String playModel) {
@@ -150,6 +164,12 @@ public class PlayListDialogFragment extends BaseBottomSheetDialogFragment {
                 break;
         }
 
+    }
+
+    private void notifyData(){
+        showLoopModel(sp.getPlayModel(PLAY_MODEL));
+        adapter.replaceData(listManager.getDatas());
+        adapter.notifyDataSetChanged();
     }
 
     private void scrollPosition() {
