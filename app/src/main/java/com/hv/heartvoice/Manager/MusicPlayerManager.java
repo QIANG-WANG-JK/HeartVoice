@@ -3,6 +3,7 @@ package com.hv.heartvoice.Manager;
 import com.hv.heartvoice.Domain.Song;
 import com.hv.heartvoice.Listener.MusicPlayerListener;
 import com.hv.heartvoice.View.activity.SimplePlayerActivity;
+import com.hv.player.AudioPlayer;
 
 /**
  * 音乐播放器对外暴露的接口
@@ -60,6 +61,12 @@ public interface MusicPlayerManager {
      * 设置循环模式
      * @param b
      */
-    void setLooping(boolean b);
+    //void setLooping(boolean b);
+
+    /**
+     * 获取播放器对象
+     * @return
+     */
+    boolean getFistPlayer();
 
 }

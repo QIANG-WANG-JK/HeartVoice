@@ -15,8 +15,10 @@ import com.hv.heartvoice.Manager.MusicPlayerManager;
 import com.hv.heartvoice.R;
 import com.hv.heartvoice.Service.MusicPlayerService;
 import com.hv.heartvoice.Util.ImageUtil;
+import com.hv.heartvoice.Util.LogUtil;
 import com.hv.heartvoice.View.activity.SimplePlayerActivity;
 import com.hv.heartvoice.View.fragment.PlayListDialogFragment;
+import com.hv.player.AudioPlayer;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -57,6 +59,8 @@ public class BaseMusicPlayerActivity extends BaseTitleActivity implements MusicP
      */
     protected MusicPlayerManager musicPlayerManager;
 
+    protected  AudioPlayer player;
+
     @Override
     protected void initViews() {
         super.initViews();
@@ -71,6 +75,7 @@ public class BaseMusicPlayerActivity extends BaseTitleActivity implements MusicP
         listManager = MusicPlayerService.getListManager(getMainActivity());
 
         musicPlayerManager = MusicPlayerService.getMusicPlayerManager(getMainActivity());
+
     }
 
     @Override
@@ -116,7 +121,8 @@ public class BaseMusicPlayerActivity extends BaseTitleActivity implements MusicP
     }
 
     @Override
-    public void onPrepared(MediaPlayer mp, Song data) {
+    public void onPrepared(AudioPlayer player, Song data) {
+        this.player = player;
         showInitData(data);
     }
 
@@ -127,7 +133,7 @@ public class BaseMusicPlayerActivity extends BaseTitleActivity implements MusicP
     }
 
     @Override
-    public void onCompletion(MediaPlayer mp) {
+    public void onCompletion(AudioPlayer player) {
         if(listManager.getLoopModel() != MODEL_LOOP_ONE){
             Song next = listManager.next();
             if(next != null){

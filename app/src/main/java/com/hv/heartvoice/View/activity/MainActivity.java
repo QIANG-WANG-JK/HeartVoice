@@ -23,6 +23,7 @@ import com.hv.heartvoice.Model.response.DetailResponse;
 import com.hv.heartvoice.R;
 import com.hv.heartvoice.Util.ImageUtil;
 import com.hv.heartvoice.Util.ToastUtil;
+import com.hv.player.AudioPlayer;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;

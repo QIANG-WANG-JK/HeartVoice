@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.app.Notification;
 import android.content.Intent;
 import android.graphics.Canvas;
-import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -31,6 +31,7 @@ import com.hv.heartvoice.Service.MusicPlayerService;
 import com.hv.heartvoice.Util.NotificationUtil;
 import com.hv.heartvoice.Util.TimeUtil;
 import com.hv.heartvoice.Util.ToastUtil;
+import com.hv.player.AudioPlayer;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -280,7 +281,8 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
     }
 
     @Override
-    public void onPrepared(MediaPlayer mp, Song data) {
+    public void onPrepared(AudioPlayer player, Song data) {
+        Log.e("TAG","调用了");
         showInitData();
 
         showDuration();
@@ -320,7 +322,7 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
 
 
     @Override
-    public void onCompletion(MediaPlayer mp) {
+    public void onCompletion(AudioPlayer player) {
         if(listManager.getLoopModel() != MODEL_LOOP_ONE){
             Song next = listManager.next();
             if(next != null){
@@ -340,7 +342,7 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
     private void showProgress() {
         long progress = musicPlayerManager.getData().getProgress();
 
-        tv_start.setText(TimeUtil.formatMinuteSecond((int) progress));
+        tv_start.setText(TimeUtil.formatMinuteSecond((int)progress));
 
         sb_progress.setProgress((int) progress);
     }

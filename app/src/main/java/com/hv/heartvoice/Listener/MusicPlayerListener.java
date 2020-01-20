@@ -1,8 +1,7 @@
 package com.hv.heartvoice.Listener;
 
-import android.media.MediaPlayer;
-
 import com.hv.heartvoice.Domain.Song;
+import com.hv.player.AudioPlayer;
 
 public interface MusicPlayerListener {
 
@@ -18,10 +17,10 @@ public interface MusicPlayerListener {
 
     /**
      * 播放器准备完毕了
-     * @param mp
+     * @param player
      * @param data
      */
-    void onPrepared(MediaPlayer mp, Song data);
+    void onPrepared(AudioPlayer player, Song data);
 
     /**
      * 播放进度回调
@@ -31,9 +30,9 @@ public interface MusicPlayerListener {
 
     /**
      * 播放完毕回调
-     * @param mp
+     * @param player
      */
-    default void onCompletion(MediaPlayer mp){
+    default void onCompletion(AudioPlayer player){
 
     }
 

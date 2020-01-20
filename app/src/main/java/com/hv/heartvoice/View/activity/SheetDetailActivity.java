@@ -3,9 +3,10 @@ package com.hv.heartvoice.View.activity;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -36,6 +37,8 @@ import com.hv.heartvoice.R;
 import com.hv.heartvoice.Util.ImageUtil;
 import com.hv.heartvoice.Util.ResourceUtil;
 import com.hv.heartvoice.Util.ToastUtil;
+import com.hv.player.AudioPlayer;
+import com.hv.player.Listener.OnNextListener;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -44,6 +47,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import retrofit2.Response;
+
+import static com.hv.heartvoice.Util.Constant.MAIN_THREAD_TRANSCATION;
 
 /**
  * 歌单详情界面
@@ -251,11 +256,40 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity {
      * @param position
      */
     private void play(int position) {
-        Song data = songAdapter.getItem(position);
-        listManager.setDatas(songAdapter.getData());
-        listManager.play(data);
-        showSmallPlayControlData();
+        if(musicPlayerManager.getFistPlayer()){
+            Song data = songAdapter.getItem(position);
+            listManager.setDatas(songAdapter.getData());
+            listManager.play(data);
+            showSmallPlayControlData();
+        }else{
+            Song data = songAdapter.getItem(position);
+            player.stop();
+            player.setOnNextListener(new OnNextListener() {
+                @Override
+                public void onNext() {
+                    Message msg = new Message();
+                    msg.obj = data;
+                    msg.what = 1;
+                    handler.sendMessage(msg);
+                }
+            });
+        }
     }
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case MAIN_THREAD_TRANSCATION:
+                    Song data = (Song) msg.obj;
+                    listManager.setDatas(songAdapter.getData());
+                    listManager.play(data);
+                    showSmallPlayControlData();
+                    break;
+            }
+        }
+    };
 
     /**
      * 处理歌单收藏与取消
@@ -480,9 +514,10 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity {
     }
 
     @Override
-    public void onPrepared(MediaPlayer mp, Song data) {
-        super.onPrepared(mp, data);
+    public void onPrepared(AudioPlayer player, Song data) {
+        super.onPrepared(player, data);
         scrollPositionAsync();
+        showSmallPlayControlData();
     }
 
     @Override

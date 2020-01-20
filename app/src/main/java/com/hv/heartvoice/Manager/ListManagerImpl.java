@@ -81,11 +81,11 @@ public class ListManagerImpl implements ListManager{
     }
 
     @Override
-        public void play(Song data) {
-            isPlay = true;
-            this.data = data;
-            //播放音乐
-            musicPlayerManager.play(ResourceUtil.resourceUri(data.getUri()),data);
+    public void play(Song data) {
+        isPlay = true;
+        this.data = data;
+        //播放音乐
+        musicPlayerManager.play(ResourceUtil.resourceUri(data.getUri()),data);
 
     }
 

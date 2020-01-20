@@ -102,4 +102,9 @@ public class Constant {
      */
     public static final int MODEL_LOOP_RANDOM = 2;
 
+    /**
+     * 主线程
+     */
+    public static final int MAIN_THREAD_TRANSCATION = 1;
+
 }

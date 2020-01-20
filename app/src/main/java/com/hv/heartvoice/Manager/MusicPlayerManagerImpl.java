@@ -5,6 +5,7 @@ import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -13,6 +14,9 @@ import com.hv.heartvoice.Listener.Consume;
 import com.hv.heartvoice.Listener.MusicPlayerListener;
 import com.hv.heartvoice.Util.ListUtil;
 import com.hv.heartvoice.Util.LogUtil;
+import com.hv.player.AudioPlayer;
+import com.hv.player.Listener.OnCompleteListener;
+import com.hv.player.Listener.OnPreparedListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,6 +25,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.hv.heartvoice.Util.Constant.DEFAULT_TIME;
+import static com.hv.heartvoice.Util.Constant.MAIN_THREAD_TRANSCATION;
 import static com.hv.heartvoice.Util.Constant.MESSAGE_PROGRESS;
 
 /**
@@ -35,7 +40,8 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
     /**
      * 音乐播放器对象
      */
-    private final MediaPlayer mediaPlayer;
+//    private final MediaPlayer mediaPlayer;
+    private final AudioPlayer audioPlayer;
 
     /**
      * 当前播放的音乐对象
@@ -54,51 +60,92 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
 
     private Timer timer;
 
+    private boolean firstPlayer;
+
     private MusicPlayerManagerImpl(Context context){
         this.context = context.getApplicationContext();
 
         //初始化播放器
-        mediaPlayer = new MediaPlayer();
+        //mediaPlayer = new MediaPlayer();
+        audioPlayer = new AudioPlayer();
+
+        firstPlayer = true;
 
         //设置播放器监听
         initListeners();
     }
 
     private void initListeners() {
-        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//
+//            /**
+//             * 播放器准备开始播放时
+//             * @param mp
+//             */
+//            @Override
+//            public void onPrepared(MediaPlayer mp) {
+//                //播放准备时回调
+//                //将总进度保存至音乐对象
+//                data.setDuration(mp.getDuration());
+//
+//                ListUtil.eachListener(listeners, new Consume<MusicPlayerListener>() {
+//                    @Override
+//                    public void accept(MusicPlayerListener listener) {
+//                        listener.onPrepared(mp,data);
+//                    }
+//                });
+//
+//            }
+//        });
 
-            /**
-             * 播放器准备开始播放时
-             * @param mp
-             */
+        audioPlayer.setOnPreparedListener(new OnPreparedListener() {
             @Override
-            public void onPrepared(MediaPlayer mp) {
-                //播放准备时回调
-                //将总进度保存至音乐对象
-                data.setDuration(mp.getDuration());
+            public void onPrepared() {
+                //准备完成播放
+                audioPlayer.play();
 
-                ListUtil.eachListener(listeners, new Consume<MusicPlayerListener>() {
-                    @Override
-                    public void accept(MusicPlayerListener listener) {
-                        listener.onPrepared(mp,data);
-                    }
-                });
+                //设置总进度
+                data.setDuration(audioPlayer.getDuration());
 
+                /**
+                 * 播放状态定时器
+                 */
+                startPublishProgress();
+                //子线程
+                /**
+                 * 通知播放状态
+                 */
+                handler.obtainMessage(MAIN_THREAD_TRANSCATION).sendToTarget();
             }
         });
 
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+//        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+//
+//            /**
+//             * 播放完毕回调
+//             * @param mp
+//             */
+//            @Override
+//            public void onCompletion(MediaPlayer mp) {
+//                ListUtil.eachListener(listeners, new Consume<MusicPlayerListener>() {
+//                    @Override
+//                    public void accept(MusicPlayerListener listener) {
+//                        listener.onCompletion(mp);
+//                    }
+//                });
+//            }
+//        });
 
-            /**
-             * 播放完毕回调
-             * @param mp
-             */
+        /**
+         * 播放完成监听
+         */
+        audioPlayer.setOnCompleteListener(new OnCompleteListener() {
             @Override
-            public void onCompletion(MediaPlayer mp) {
+            public void onComplete() {
                 ListUtil.eachListener(listeners, new Consume<MusicPlayerListener>() {
                     @Override
                     public void accept(MusicPlayerListener listener) {
-                        listener.onCompletion(mp);
+                        listener.onCompletion(audioPlayer);
                     }
                 });
             }
@@ -116,34 +163,35 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
 
     @Override
     public void play(String uri, Song data) {
-        try {
-            //保存音乐对象
-            this.data = data;
-            //释放播放器
-            mediaPlayer.reset();
-            //设置数据源
-            mediaPlayer.setDataSource(uri);
-            mediaPlayer.prepare();
-            mediaPlayer.start();
-            //回调监听器
-            publishPlayingStatus();
-            //启动播放进度通知定时器
-            startPublishProgress();
-        } catch (IOException e) {
-            e.printStackTrace();
-            //TODO 处理错误
-        }
+        //保存音乐对象
+        this.data = data;
+        //释放播放器
+        //mediaPlayer.reset();
+        //audioPlayer.stop();
+
+        //设置数据源
+        //mediaPlayer.setDataSource(uri);
+        audioPlayer.setSource(uri);
+
+        //准备
+        //mediaPlayer.prepare();
+        audioPlayer.prepare();
+
+        firstPlayer = false;
+
+        //开始播放
+        //mediaPlayer.start();
     }
 
     @Override
     public boolean isPlaying() {
-        return mediaPlayer.isPlaying();
+        return audioPlayer.isPlaying();
     }
 
     @Override
     public void pause() {
         if(isPlaying()){
-            mediaPlayer.pause();
+            audioPlayer.pause();
             ListUtil.eachListener(listeners, new Consume<MusicPlayerListener>() {
                 @Override
                 public void accept(MusicPlayerListener listener) {
@@ -158,7 +206,7 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
     @Override
     public void resume() {
         if(!isPlaying()){
-            mediaPlayer.start();
+            audioPlayer.resume();
             //回调监听器
             publishPlayingStatus();
             //启动进度通知
@@ -187,13 +235,18 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
 
     @Override
     public void seekTo(int progress) {
-        mediaPlayer.seekTo(progress);
+        audioPlayer.seek(progress);
     }
 
     @Override
-    public void setLooping(boolean looping) {
-        mediaPlayer.setLooping(looping);
+    public boolean getFistPlayer() {
+        return firstPlayer;
     }
+
+//    @Override
+//    public void setLooping(boolean looping) {
+//        //mediaPlayer.setLooping(looping);
+//    }
 
     /**
      * 发布播放中状态
@@ -266,8 +319,7 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
             super.handleMessage(msg);
             switch (msg.what){
                 case MESSAGE_PROGRESS:
-                    data.setProgress(mediaPlayer.getCurrentPosition());
-
+                    data.setProgress(audioPlayer.getCurrent());
                     //回调监听
                     ListUtil.eachListener(listeners, new Consume<MusicPlayerListener>() {
                         @Override
@@ -276,8 +328,17 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
                         }
                     });
                     break;
+                case MAIN_THREAD_TRANSCATION:
+                    ListUtil.eachListener(listeners, new Consume<MusicPlayerListener>() {
+                        @Override
+                        public void accept(MusicPlayerListener listener) {
+                            listener.onPrepared(audioPlayer,data);
+                        }
+                    });
+                    //回调监听器
+                    publishPlayingStatus();
+                    break;
             }
         }
     };
-
 }

@@ -10,7 +10,7 @@ public class TimeUtil {
             return "00:00";
         }
 //        转秒
-        data /= 1000;
+        //data /= 1000;
 
         //计算分钟
         int minute = data / 60;
