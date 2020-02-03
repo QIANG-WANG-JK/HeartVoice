@@ -6,6 +6,8 @@ import com.hv.heartvoice.Domain.Song;
 import com.hv.heartvoice.Service.MusicPlayerService;
 import com.hv.heartvoice.Util.PreferenceUtil;
 import com.hv.heartvoice.Util.ResourceUtil;
+import com.hv.player.AudioPlayer;
+import com.hv.player.Listener.OnNextListener;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -54,12 +56,16 @@ public class ListManagerImpl implements ListManager{
      */
     private PreferenceUtil sp;
 
+    private AudioPlayer audioPlayer;
+
     private ListManagerImpl(Context context) {
         this.context = context.getApplicationContext();
         sp = PreferenceUtil.getInstance(this.context);
         model = Integer.parseInt(sp.getPlayModel(PLAY_MODEL));
         //初始化音乐播放管理器
         musicPlayerManager = MusicPlayerService.getMusicPlayerManager(this.context);
+
+        audioPlayer = musicPlayerManager.getAudioPlayer();
     }
 
     public static synchronized ListManagerImpl getInstance(Context context){
@@ -85,8 +91,8 @@ public class ListManagerImpl implements ListManager{
         isPlay = true;
         this.data = data;
         //播放音乐
-        musicPlayerManager.play(ResourceUtil.resourceUri(data.getUri()),data);
 
+        musicPlayerManager.play(ResourceUtil.resourceUri(data.getUri()),data);
     }
 
     @Override
@@ -185,17 +191,22 @@ public class ListManagerImpl implements ListManager{
 
     @Override
     public void delete(int position) {
+
         Song song = datas.get(position);
 
         if(song.getId().equals(data.getId())){
-            pause();
             Song next = next();
-
             //判断循环模式
             if(next.getId().equals(data.getId())){
                 data = null;
             }else{
-                play(next);
+                stop();
+                audioPlayer.setOnNextListener(new OnNextListener() {
+                    @Override
+                    public void onNext() {
+                        play(next);
+                    }
+                });
             }
         }
         datas.remove(song);
@@ -205,10 +216,20 @@ public class ListManagerImpl implements ListManager{
     public void deleteAll() {
         //如果在播放音乐就暂停
         if(musicPlayerManager.isPlaying()){
-            pause();
+            stop_nocall();
         }
 
         datas.clear();
+    }
+
+    @Override
+    public void stop() {
+        musicPlayerManager.stop();
+    }
+
+    @Override
+    public void stop_nocall() {
+        musicPlayerManager.stop_nocall();
     }
 
 }

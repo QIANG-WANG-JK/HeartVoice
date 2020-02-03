@@ -97,7 +97,6 @@ Java_com_hv_player_AudioPlayer_audio_1stop(JNIEnv *env, jobject instance) {
     if(!native_exit){
         return;
     }
-    //__android_log_print(ANDROID_LOG_ERROR,"停止了","");
     native_exit=false;
     jclass cls=env->GetObjectClass(instance);
     jmethodID  next_mid=env->GetMethodID(cls,"onCallNext","()V");
@@ -138,4 +137,27 @@ Java_com_hv_player_AudioPlayer_native_1duration(JNIEnv *env, jobject thiz) {
         return decoder->duration;
     }
     return 0;
+}extern "C"
+JNIEXPORT void JNICALL
+Java_com_hv_player_AudioPlayer_audio_1stop_1nocall(JNIEnv *env, jobject thiz) {
+    // TODO: implement audio_stop_nocall()
+    // TODO
+    if(!native_exit){
+        return;
+    }
+    native_exit=false;
+    if(decoder!=NULL){
+        decoder->release();
+        delete(decoder);
+        decoder=NULL;
+        if(javaListener!=NULL){
+            delete(javaListener);
+            javaListener=NULL;
+        }
+        if(status!=NULL){
+            delete(status);
+            status=NULL;
+        }
+    }
+    native_exit= true;
 }

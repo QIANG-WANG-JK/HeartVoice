@@ -1,30 +1,25 @@
 package com.hv.heartvoice.Manager;
 
 import android.content.Context;
-import android.media.MediaPlayer;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
-
-import androidx.annotation.NonNull;
 
 import com.hv.heartvoice.Domain.Song;
 import com.hv.heartvoice.Listener.Consume;
 import com.hv.heartvoice.Listener.MusicPlayerListener;
 import com.hv.heartvoice.Util.ListUtil;
-import com.hv.heartvoice.Util.LogUtil;
 import com.hv.player.AudioPlayer;
 import com.hv.player.Listener.OnCompleteListener;
 import com.hv.player.Listener.OnPreparedListener;
 
-import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.hv.heartvoice.Util.Constant.DEFAULT_TIME;
+import static com.hv.heartvoice.Util.Constant.MAIN_THREAD_FINSH;
 import static com.hv.heartvoice.Util.Constant.MAIN_THREAD_TRANSCATION;
 import static com.hv.heartvoice.Util.Constant.MESSAGE_PROGRESS;
 
@@ -61,6 +56,8 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
     private Timer timer;
 
     private boolean firstPlayer;
+
+    private InterHandler handler = new InterHandler(this);
 
     private MusicPlayerManagerImpl(Context context){
         this.context = context.getApplicationContext();
@@ -142,12 +139,7 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
         audioPlayer.setOnCompleteListener(new OnCompleteListener() {
             @Override
             public void onComplete() {
-                ListUtil.eachListener(listeners, new Consume<MusicPlayerListener>() {
-                    @Override
-                    public void accept(MusicPlayerListener listener) {
-                        listener.onCompletion(audioPlayer);
-                    }
-                });
+                //handler.obtainMessage(MESSAGE_PROGRESS).sendToTarget();
             }
         });
 
@@ -243,6 +235,21 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
         return firstPlayer;
     }
 
+    @Override
+    public AudioPlayer getAudioPlayer() {
+        return this.audioPlayer;
+    }
+
+    @Override
+    public void stop() {
+        audioPlayer.stop();
+    }
+
+    @Override
+    public void stop_nocall() {
+        audioPlayer.stop_nocall();
+    }
+
 //    @Override
 //    public void setLooping(boolean looping) {
 //        //mediaPlayer.setLooping(looping);
@@ -313,32 +320,50 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
         }
     }
 
-    private Handler handler = new Handler(Looper.getMainLooper()){
+    private static final class InterHandler extends Handler{
+        private WeakReference<MusicPlayerManagerImpl> managerHandler;
+        public InterHandler(MusicPlayerManagerImpl managerHandler){
+            this.managerHandler = new WeakReference<>(managerHandler);
+        }
         @Override
-        public void handleMessage(@NonNull Message msg) {
+        public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
-                case MESSAGE_PROGRESS:
-                    data.setProgress(audioPlayer.getCurrent());
-                    //回调监听
-                    ListUtil.eachListener(listeners, new Consume<MusicPlayerListener>() {
-                        @Override
-                        public void accept(MusicPlayerListener listener) {
-                            listener.onProgress(data);
-                        }
-                    });
-                    break;
-                case MAIN_THREAD_TRANSCATION:
-                    ListUtil.eachListener(listeners, new Consume<MusicPlayerListener>() {
-                        @Override
-                        public void accept(MusicPlayerListener listener) {
-                            listener.onPrepared(audioPlayer,data);
-                        }
-                    });
-                    //回调监听器
-                    publishPlayingStatus();
-                    break;
+            Song data = managerHandler.get().getData();
+            AudioPlayer audioPlayer = managerHandler.get().audioPlayer;
+            List<MusicPlayerListener> listeners = managerHandler.get().listeners;
+            if(data != null){
+                switch (msg.what){
+                    case MESSAGE_PROGRESS:
+                        data.setProgress(audioPlayer.getCurrent());
+                        //回调监听
+                        ListUtil.eachListener(listeners, new Consume<MusicPlayerListener>() {
+                            @Override
+                            public void accept(MusicPlayerListener listener) {
+                                listener.onProgress(data);
+                            }
+                        });
+                        break;
+                    case MAIN_THREAD_TRANSCATION:
+                        ListUtil.eachListener(listeners, new Consume<MusicPlayerListener>() {
+                            @Override
+                            public void accept(MusicPlayerListener listener) {
+                                listener.onPrepared(audioPlayer,data);
+                            }
+                        });
+                        //回调监听器
+                        managerHandler.get().publishPlayingStatus();
+                        break;
+                    case MAIN_THREAD_FINSH:
+                        ListUtil.eachListener(listeners, new Consume<MusicPlayerListener>() {
+                            @Override
+                            public void accept(MusicPlayerListener listener) {
+                                listener.onCompletion(audioPlayer);
+                            }
+                        });
+                        break;
+                }
             }
         }
-    };
+    }
+
 }

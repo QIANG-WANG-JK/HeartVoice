@@ -1,7 +1,8 @@
 package com.hv.heartvoice.View.fragment;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,18 +18,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hv.heartvoice.Adapter.PlayListAdapter;
 import com.hv.heartvoice.Base.BaseBottomSheetDialogFragment;
+import com.hv.heartvoice.Domain.Song;
 import com.hv.heartvoice.Domain.event.PlayListChangedEvent;
 import com.hv.heartvoice.Manager.ListManager;
 import com.hv.heartvoice.Manager.MusicPlayerManager;
 import com.hv.heartvoice.R;
 import com.hv.heartvoice.Service.MusicPlayerService;
 import com.hv.heartvoice.Util.PreferenceUtil;
+import com.hv.heartvoice.Util.ToastUtil;
+import com.hv.player.AudioPlayer;
+import com.hv.player.Listener.OnNextListener;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.hv.heartvoice.Util.Constant.MAIN_THREAD_TRANSCATION;
 import static com.hv.heartvoice.Util.Constant.MODEL_LOOP_LIST;
 import static com.hv.heartvoice.Util.Constant.MODEL_LOOP_ONE;
 import static com.hv.heartvoice.Util.Constant.PLAY_MODEL;
@@ -66,6 +74,10 @@ public class PlayListDialogFragment extends BaseBottomSheetDialogFragment {
     private PreferenceUtil sp;
 
     private MusicPlayerManager musicPlayerManager;
+
+    private AudioPlayer player;
+
+    private InterHandler handler = new InterHandler(this);
 
     @Override
     protected View getLayoutView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -109,6 +121,8 @@ public class PlayListDialogFragment extends BaseBottomSheetDialogFragment {
 
         musicPlayerManager = MusicPlayerService.getMusicPlayerManager(getMainActivity());
 
+        player = musicPlayerManager.getAudioPlayer();
+
         sp = PreferenceUtil.getInstance(getMainActivity());
 
         //创建列表管理器
@@ -136,10 +150,8 @@ public class PlayListDialogFragment extends BaseBottomSheetDialogFragment {
 
                 if(position != index){
                     //播放点击的音乐
-                    listManager.play(listManager.getDatas().get(position));
-
-                    //选中当前音乐
-                    scrollPosition();
+                    //listManager.play(listManager.getDatas().get(position));
+                    play(position);
                 }
             }
         });
@@ -150,12 +162,38 @@ public class PlayListDialogFragment extends BaseBottomSheetDialogFragment {
                 if(R.id.delete_song == view.getId()){
                     //删除按钮点击
                     listManager.delete(position);
-                    notifyData();
-                    scrollPosition();
                 }
+                notifyData();
+                scrollPosition();
             }
         });
 
+    }
+
+    /**
+     * 播放当前位置的音乐
+     * 处理一下当重复点击相同歌曲时，不重复播放而是跳转歌词界面
+     * 使用数据缓存类实现
+     * @param position
+     */
+    private void play(int position) {
+        if(musicPlayerManager.getFistPlayer()){
+            Song data = adapter.getItem(position);
+            listManager.setDatas(adapter.getData());
+            listManager.play(data);
+        }else{
+            Song data = adapter.getItem(position);
+            player.stop();
+            player.setOnNextListener(new OnNextListener() {
+                @Override
+                public void onNext() {
+                    Message msg = new Message();
+                    msg.obj = data;
+                    msg.what = 1;
+                    handler.sendMessage(msg);
+                }
+            });
+        }
     }
 
     private void showLoopModel(String playModel) {
@@ -241,10 +279,31 @@ public class PlayListDialogFragment extends BaseBottomSheetDialogFragment {
         play_control.setSelected(true);
     }
 
+    private static final class InterHandler extends Handler {
+        private WeakReference<PlayListDialogFragment> mPlayListDialogFragment;
+        public InterHandler(PlayListDialogFragment mPlayListDialogFragment){
+            this.mPlayListDialogFragment = new WeakReference<>(mPlayListDialogFragment);
+        }
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            ListManager listManager = mPlayListDialogFragment.get().listManager;
+            if(mPlayListDialogFragment != null){
+                switch (msg.what){
+                    case MAIN_THREAD_TRANSCATION:
+                        Song data = (Song) msg.obj;
+                        listManager.play(data);
+                        //选中当前音乐
+                        mPlayListDialogFragment.get().scrollPosition();
+                        break;
+                }
+            }
+        }
+    }
+
     @OnClick(R.id.close)
     public void close(){
         dismiss();
-
         //删除全部
         listManager.deleteAll();
 

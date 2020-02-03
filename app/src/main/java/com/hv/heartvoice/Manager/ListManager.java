@@ -74,4 +74,11 @@ public interface ListManager {
      * 删除所有音乐
      */
     void deleteAll();
+
+    /**
+     * 停止
+     */
+    void stop();
+
+    void stop_nocall();
 }

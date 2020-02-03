@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -30,6 +31,7 @@ import com.hv.heartvoice.Adapter.SongAdapter;
 import com.hv.heartvoice.Base.BaseMusicPlayerActivity;
 import com.hv.heartvoice.Domain.Sheet;
 import com.hv.heartvoice.Domain.Song;
+import com.hv.heartvoice.Manager.ListManager;
 import com.hv.heartvoice.Model.Api;
 import com.hv.heartvoice.Model.myObserver.HttpObserver;
 import com.hv.heartvoice.Model.response.DetailResponse;
@@ -40,8 +42,10 @@ import com.hv.heartvoice.Util.ToastUtil;
 import com.hv.player.AudioPlayer;
 import com.hv.player.Listener.OnNextListener;
 
+
 import org.apache.commons.lang3.StringUtils;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import butterknife.BindView;
@@ -133,7 +137,7 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity {
      */
     private TextView comment_count;
 
-
+    private InterHandler handler = new InterHandler(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -243,6 +247,7 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if(!(position == getCurrentSongPosition())){
                     play(position);
+                    Log.e(TAG,position+"");
                 }
             }
         });
@@ -275,21 +280,6 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity {
             });
         }
     }
-
-    private Handler handler = new Handler(){
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what){
-                case MAIN_THREAD_TRANSCATION:
-                    Song data = (Song) msg.obj;
-                    listManager.setDatas(songAdapter.getData());
-                    listManager.play(data);
-                    showSmallPlayControlData();
-                    break;
-            }
-        }
-    };
 
     /**
      * 处理歌单收藏与取消
@@ -530,6 +520,29 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity {
                     songAdapter.setSelectedIndex(-1);
                 }
             });
+        }
+    }
+
+    private static final class InterHandler extends Handler{
+        private WeakReference<SheetDetailActivity> mSheetDeatilActivity;
+        public InterHandler(SheetDetailActivity mSheetDeatilActivity){
+            this.mSheetDeatilActivity = new WeakReference<>(mSheetDeatilActivity);
+        }
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            ListManager listManager = mSheetDeatilActivity.get().listManager;
+            SongAdapter songAdapter = mSheetDeatilActivity.get().songAdapter;
+            if(mSheetDeatilActivity != null){
+                switch (msg.what){
+                    case MAIN_THREAD_TRANSCATION:
+                        Song data = (Song) msg.obj;
+                        listManager.setDatas(songAdapter.getData());
+                        listManager.play(data);
+                        mSheetDeatilActivity.get().showSmallPlayControlData();
+                        break;
+                }
+            }
         }
     }
 

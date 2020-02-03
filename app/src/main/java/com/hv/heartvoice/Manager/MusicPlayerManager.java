@@ -64,9 +64,15 @@ public interface MusicPlayerManager {
     //void setLooping(boolean b);
 
     /**
-     * 获取播放器对象
+     * 是否第一次播放
      * @return
      */
     boolean getFistPlayer();
+
+    AudioPlayer getAudioPlayer();
+
+    void stop();
+
+    void stop_nocall();
 
 }

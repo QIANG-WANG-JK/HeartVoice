@@ -76,6 +76,8 @@ public class BaseMusicPlayerActivity extends BaseTitleActivity implements MusicP
 
         musicPlayerManager = MusicPlayerService.getMusicPlayerManager(getMainActivity());
 
+        this.player = musicPlayerManager.getAudioPlayer();
+
     }
 
     @Override
@@ -122,7 +124,6 @@ public class BaseMusicPlayerActivity extends BaseTitleActivity implements MusicP
 
     @Override
     public void onPrepared(AudioPlayer player, Song data) {
-        this.player = player;
         showInitData(data);
     }
 

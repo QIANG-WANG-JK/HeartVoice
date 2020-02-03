@@ -107,4 +107,6 @@ public class Constant {
      */
     public static final int MAIN_THREAD_TRANSCATION = 1;
 
+    public static final int MAIN_THREAD_FINSH = 2;
+
 }
