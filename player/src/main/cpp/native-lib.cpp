@@ -137,15 +137,18 @@ Java_com_hv_player_AudioPlayer_native_1duration(JNIEnv *env, jobject thiz) {
         return decoder->duration;
     }
     return 0;
-}extern "C"
+}
+
+extern "C"
 JNIEXPORT void JNICALL
-Java_com_hv_player_AudioPlayer_audio_1stop_1nocall(JNIEnv *env, jobject thiz) {
-    // TODO: implement audio_stop_nocall()
-    // TODO
+Java_com_hv_player_AudioPlayer_audio_1stop_1complete(JNIEnv *env, jobject instance) {
+    // TODO: implement audio_stop_complete()
     if(!native_exit){
         return;
     }
     native_exit=false;
+    jclass cls=env->GetObjectClass(instance);
+    jmethodID  next_mid=env->GetMethodID(cls,"onNextComplete","()V");
     if(decoder!=NULL){
         decoder->release();
         delete(decoder);
@@ -160,4 +163,5 @@ Java_com_hv_player_AudioPlayer_audio_1stop_1nocall(JNIEnv *env, jobject thiz) {
         }
     }
     native_exit= true;
+    env->CallVoidMethod(instance,next_mid);
 }

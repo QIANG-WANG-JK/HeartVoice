@@ -8,6 +8,8 @@ import com.hv.heartvoice.Domain.Song;
 import com.hv.heartvoice.Listener.Consume;
 import com.hv.heartvoice.Listener.MusicPlayerListener;
 import com.hv.heartvoice.Util.ListUtil;
+import com.hv.heartvoice.Util.LogUtil;
+import com.hv.heartvoice.Util.ToastUtil;
 import com.hv.player.AudioPlayer;
 import com.hv.player.Listener.OnCompleteListener;
 import com.hv.player.Listener.OnPreparedListener;
@@ -139,7 +141,7 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
         audioPlayer.setOnCompleteListener(new OnCompleteListener() {
             @Override
             public void onComplete() {
-                //handler.obtainMessage(MESSAGE_PROGRESS).sendToTarget();
+                handler.obtainMessage(MAIN_THREAD_FINSH).sendToTarget();
             }
         });
 
@@ -247,7 +249,7 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
 
     @Override
     public void stop_nocall() {
-        audioPlayer.stop_nocall();
+        audioPlayer.stop_complete();
     }
 
 //    @Override

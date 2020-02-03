@@ -1,6 +1,5 @@
 package com.hv.heartvoice.Base;
 
-import android.media.MediaPlayer;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,7 +14,6 @@ import com.hv.heartvoice.Manager.MusicPlayerManager;
 import com.hv.heartvoice.R;
 import com.hv.heartvoice.Service.MusicPlayerService;
 import com.hv.heartvoice.Util.ImageUtil;
-import com.hv.heartvoice.Util.LogUtil;
 import com.hv.heartvoice.View.activity.SimplePlayerActivity;
 import com.hv.heartvoice.View.fragment.PlayListDialogFragment;
 import com.hv.player.AudioPlayer;

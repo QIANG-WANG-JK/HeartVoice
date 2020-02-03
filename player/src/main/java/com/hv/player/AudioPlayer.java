@@ -205,14 +205,14 @@ public class AudioPlayer {
         }).start();
     }
 
-    public void stop_nocall(){
+    public void stop_complete(){
         isPlaying = false;
         current = -1;
         duration = -1;
         new Thread(new Runnable() {
             @Override
             public void run() {
-                audio_stop_nocall();
+                audio_stop_complete();
             }
         }).start();
     }
@@ -269,10 +269,7 @@ public class AudioPlayer {
      * 播放完成native回调
      */
     public void onCallComplete(){
-        stop();
-        if(onCompleteListener!=null){
-            onCompleteListener.onComplete();
-        }
+        stop_complete();
     }
 
     /**
@@ -281,6 +278,12 @@ public class AudioPlayer {
     public void onCallNext(){
         if(onNextListener != null){
             onNextListener.onNext();
+        }
+    }
+
+    public void onNextComplete(){
+        if(onCompleteListener!=null){
+            onCompleteListener.onComplete();
         }
     }
 
@@ -327,7 +330,7 @@ public class AudioPlayer {
     private native void audio_pause();
     private native void audio_resume();
     private native void audio_stop();
-    private native void audio_stop_nocall();
+    private native void audio_stop_complete();
     private native void native_seek(int secds);
     private native int native_duration();
 
