@@ -252,6 +252,19 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity {
             }
         });
 
+        //设置音乐更多点击事件
+        songAdapter.setSongListener(new SongAdapter.SongListener() {
+
+            /**
+             * 音乐更多点击
+             * @param data
+             */
+            @Override
+            public void onMoreClick(Song data) {
+                Log.e(TAG,"more");
+            }
+        });
+
     }
 
     /**

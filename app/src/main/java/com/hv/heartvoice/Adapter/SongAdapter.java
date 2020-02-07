@@ -1,5 +1,7 @@
 package com.hv.heartvoice.Adapter;
 
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -15,6 +17,11 @@ import java.util.List;
  * 歌单详情适配器
  */
 public class SongAdapter extends BaseQuickAdapter<Song, BaseViewHolder> {
+
+    /**
+     * 监听器接口
+     */
+    private SongListener songListener;
 
     /**
      * 选中索引
@@ -61,6 +68,11 @@ public class SongAdapter extends BaseQuickAdapter<Song, BaseViewHolder> {
             helper.setTextColor(R.id.songerTitle,mContext.getResources().getColor(R.color.black,null));
         }
 
+        View songMore = helper.getView(R.id.songMore);
+
+        //设置点击事件
+        songMore.setOnClickListener(view->songListener.onMoreClick(item));
+
     }
 
     /**
@@ -76,4 +88,25 @@ public class SongAdapter extends BaseQuickAdapter<Song, BaseViewHolder> {
         notifyItemChanged(this.selectedIndex);
 
     }
+
+    /**
+     * 监听器注册设置
+     * @param songListener
+     */
+    public void setSongListener(SongListener songListener) {
+        this.songListener = songListener;
+    }
+
+    /**
+     * 类监听器
+     */
+    public interface SongListener{
+
+        /**
+         * 点击音乐更多
+         * @param data
+         */
+        void onMoreClick(Song data);
+    }
+
 }

@@ -6,7 +6,6 @@
 
     <TextView
         android:id="@+id/song_title"
-        android:text="歌曲名称"
         android:textColor="@color/black"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_width="@dimen/dp_0"

@@ -39,6 +39,7 @@
        </LinearLayout>
 
        <ImageView
+           android:id="@+id/songMore"
            android:scaleType="centerCrop"
            android:src="@mipmap/more"
            android:layout_width="@dimen/dp_25"
