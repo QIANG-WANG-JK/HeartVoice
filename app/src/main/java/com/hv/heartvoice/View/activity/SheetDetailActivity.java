@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -39,6 +38,7 @@ import com.hv.heartvoice.R;
 import com.hv.heartvoice.Util.ImageUtil;
 import com.hv.heartvoice.Util.ResourceUtil;
 import com.hv.heartvoice.Util.ToastUtil;
+import com.hv.heartvoice.View.fragment.SongMoreDialogFragment;
 import com.hv.player.AudioPlayer;
 import com.hv.player.Listener.OnNextListener;
 
@@ -247,7 +247,6 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if(!(position == getCurrentSongPosition())){
                     play(position);
-                    Log.e(TAG,position+"");
                 }
             }
         });
@@ -261,7 +260,8 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity {
              */
             @Override
             public void onMoreClick(Song data) {
-                Log.e(TAG,"more");
+                //显示歌曲对话框
+                SongMoreDialogFragment.show(getSupportFragmentManager(),getData(),data);
             }
         });
 
@@ -570,4 +570,7 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity {
     }
 
 
+    public Sheet getData() {
+        return this.data;
+    }
 }

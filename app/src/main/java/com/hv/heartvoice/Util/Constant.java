@@ -107,6 +107,18 @@ public class Constant {
      */
     public static final int MAIN_THREAD_TRANSCATION = 1;
 
+    /**
+     * 结束
+     */
     public static final int MAIN_THREAD_FINSH = 2;
 
+    /**
+     * 歌单
+     */
+    public static final String SHEET = "SHEET";
+
+    /**
+     * 歌曲
+     */
+    public static final String SONG = "SONG";
 }
