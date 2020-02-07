@@ -30,6 +30,7 @@ import com.hv.heartvoice.Adapter.SongAdapter;
 import com.hv.heartvoice.Base.BaseMusicPlayerActivity;
 import com.hv.heartvoice.Domain.Sheet;
 import com.hv.heartvoice.Domain.Song;
+import com.hv.heartvoice.Domain.event.CollectSongClickEvent;
 import com.hv.heartvoice.Manager.ListManager;
 import com.hv.heartvoice.Model.Api;
 import com.hv.heartvoice.Model.myObserver.HttpObserver;
@@ -44,6 +45,8 @@ import com.hv.player.Listener.OnNextListener;
 
 
 import org.apache.commons.lang3.StringUtils;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -573,4 +576,14 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity {
     public Sheet getData() {
         return this.data;
     }
+
+    /**
+     * 收藏到歌单点击回调事件
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onCollectSongClickEvent(CollectSongClickEvent event){
+
+    }
+
 }
