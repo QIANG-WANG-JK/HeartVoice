@@ -429,10 +429,10 @@ public class SimplePlayerActivity extends BaseTitleActivity implements MusicPlay
 
     @OnClick(R.id.bt_play)
     public void play(){
-        Notification notification = NotificationUtil.getServiceForeground(getApplicationContext());
-
-        //显示通知
-        NotificationUtil.showNotification(1,notification);
+//        Notification notification = NotificationUtil.getServiceForeground(getApplicationContext());
+//
+//        //显示通知
+//        NotificationUtil.showNotification(1,notification);
 
         playOrPause();
 

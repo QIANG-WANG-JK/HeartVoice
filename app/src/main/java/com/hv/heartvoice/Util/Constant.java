@@ -121,4 +121,9 @@ public class Constant {
      * 歌曲
      */
     public static final String SONG = "SONG";
+
+    /**
+     * 音乐播放通知ID
+     */
+    public static final int NOTIFICATION_MUSIC_ID = 10000;
 }
