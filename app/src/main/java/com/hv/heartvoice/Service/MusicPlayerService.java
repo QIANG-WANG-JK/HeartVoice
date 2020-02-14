@@ -1,6 +1,7 @@
 package com.hv.heartvoice.Service;
 
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.os.IBinder;
 
 import com.hv.heartvoice.Manager.ListManager;
 import com.hv.heartvoice.Manager.ListManagerImpl;
+import com.hv.heartvoice.Manager.MusicNotificationManager;
 import com.hv.heartvoice.Manager.MusicPlayerManager;
 import com.hv.heartvoice.Manager.MusicPlayerManagerImpl;
 import com.hv.heartvoice.Util.LogUtil;
@@ -19,6 +21,8 @@ import com.hv.heartvoice.Util.ServiceUtil;
  * 音乐播放相关的服务
  */
 public class MusicPlayerService extends Service {
+
+    private MusicNotificationManager musicNotificationManager;
 
     public MusicPlayerService() {
     }
@@ -51,6 +55,9 @@ public class MusicPlayerService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        //初始化音乐通知管理器
+        musicNotificationManager = MusicNotificationManager.getInstance(getApplicationContext());
     }
 
     /**
